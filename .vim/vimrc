@@ -1,3 +1,7 @@
+"
+" All the options stolen from the defauls.vim
+"
+
 " Use Vim settings, rather than Vi settings (much better!).
 set nocompatible
 
@@ -101,3 +105,10 @@ if has('langmap') && exists('+langremap')
   " compatible).
   set nolangremap
 endif
+
+"
+" Personal additions
+"
+set splitright
+set splitbelow
+set number
