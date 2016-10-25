@@ -33,7 +33,7 @@ color() {
           command tmux set window-active-style "bg=#$BG"
           command tmux set window-style "bg=#$CC"
         fi
-      fi
+     fi
     else
       echo "Scheme '$SCHEME' not found in $BASE16_DIR"
       return 1
