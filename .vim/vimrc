@@ -76,3 +76,22 @@ if has("autocmd")
 
 endif
 " }}} end Autocommands
+
+" Navigation {{{
+" nnoremap <C-h>      :tabprevious<CR>
+" nnoremap <C-l>      :tabnext<CR>
+" nnoremap <C-t>      :tabnew<CR>
+" nnoremap <C-w>      :tabclose<CR>
+" inoremap <C-Left>   <Esc>:tabprevious<CR>i
+" inoremap <C-Right>  <Esc>:tabnext<CR>i
+" inoremap <C-t>      <Esc>:tabnew<CR>
+" inoremap <C-w>      <Esc>:tabclose<CR>
+" }}} end Navigation
+
+" Plugins {{{
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-sensible'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'https://github.com/christoomey/vim-tmux-navigator.git'
+call plug#end()
+" }}} end Plugins
