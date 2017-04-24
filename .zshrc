@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/davidzager/.oh-my-zsh
+export MY_ZSH=$HOME/.config/zsh
+export ZSH=$MY_ZSH/oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -24,12 +25,12 @@ plugins=(git tmux)
 source $ZSH/oh-my-zsh.sh
 
 # Things in .zsh directory
-source $HOME/.zsh/aliases
-source $HOME/.zsh/exports
-source $HOME/.zsh/functions
+source $MY_ZSH/aliases
+source $MY_ZSH/exports
+source $MY_ZSH/functions
 
 # Integrations
-BASE16_SHELL=$HOME/.zsh/base16-shell/
+BASE16_SHELL=$MY_ZSH/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 eval "$(direnv hook zsh)"
