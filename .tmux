@@ -9,14 +9,9 @@ if tmux has-session -t $SESSION 2> /dev/null; then
   exit
 fi
 
-tmux new-session -d -s $SESSION -n Home
-
-# 1. Main window: NOTES, TODO, status
-tmux send-keys -t $SESSION:Home "vim NOTES" Enter
-tmux split-window -t $SESSION:Home -h
-tmux send-keys -t $SESSION:Home.right "vim TODO" Enter
-tmux split-window -t $SESSION:Home.2
-tmux send-keys -t $SESSION:Home.bottom-right "./status.sh" Enter
+DIR="$PWD/DevelopmentEnv/src/$SESSION"
+tmux new-session -d -s $SESSION -n Shell
+tmux new-window -t $NAME -c $DIR -n Source
 
 # 2. 
 tmux attach -t $SESSION:Home.left

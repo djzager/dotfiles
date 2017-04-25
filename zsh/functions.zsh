@@ -46,3 +46,19 @@ function _tmux() {
   SESSION_NAME=$(basename "$(pwd)")
   env SSH_AUTH_SOCK=$SOCK_SYMLINK tmux new -A -s "$SESSION_NAME"
 }
+
+function is_in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
+function fzf-down() {
+  fzf --height 50% "$@" --border
+}
+
+function gf() {
+  is_in_git_repo || return
+  git -c color.status=always status --short |
+  fzf-down -m --ansi --nth 2..,.. \
+    --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
+  cut -c4- | sed 's/.* -> //'
+}

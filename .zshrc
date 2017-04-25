@@ -25,9 +25,9 @@ plugins=(git tmux)
 source $ZSH/oh-my-zsh.sh
 
 # Things in .zsh directory
-source $MY_ZSH/aliases
-source $MY_ZSH/exports
-source $MY_ZSH/functions
+source $MY_ZSH/aliases.zsh
+source $MY_ZSH/exports.zsh
+source $MY_ZSH/functions.zsh
 
 # Integrations
 BASE16_SHELL=$MY_ZSH/base16-shell/

@@ -92,6 +92,9 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'https://github.com/christoomey/vim-tmux-navigator.git'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'junegunn/fzf' 
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-airline/vim-airline'
 call plug#end()
 " }}} end Plugins
