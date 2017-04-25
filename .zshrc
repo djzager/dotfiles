@@ -28,9 +28,12 @@ source $ZSH/oh-my-zsh.sh
 source $MY_ZSH/aliases.zsh
 source $MY_ZSH/exports.zsh
 source $MY_ZSH/functions.zsh
+source $MY_ZSH/oracle.zsh
 
 # Integrations
 BASE16_SHELL=$MY_ZSH/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-eval "$(direnv hook zsh)"
+# eval "$(direnv hook zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
