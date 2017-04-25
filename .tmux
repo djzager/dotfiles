@@ -14,4 +14,4 @@ tmux new-session -d -s $SESSION -n Shell
 tmux new-window -t $NAME -c $DIR -n Source
 
 # 2. 
-tmux attach -t $SESSION:Home.left
+tmux attach -t $SESSION
