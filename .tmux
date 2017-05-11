@@ -9,9 +9,8 @@ if tmux has-session -t $SESSION 2> /dev/null; then
   exit
 fi
 
-DIR="$PWD/DevelopmentEnv/src/$SESSION"
 tmux new-session -d -s $SESSION -n Shell
-tmux new-window -t $NAME -c $DIR -n Source
+tmux new-window -t $SESSION -n Source
 
 # 2. 
-tmux attach -t $SESSION
+tmux attach-session -t $SESSION

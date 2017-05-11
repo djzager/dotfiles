@@ -36,4 +36,5 @@ BASE16_SHELL=$MY_ZSH/base16-shell/
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 # eval "$(direnv hook zsh)"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Fuzzy Finder
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh && bindkey '^F' fzf-cd-widget

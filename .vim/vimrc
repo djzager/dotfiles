@@ -10,7 +10,9 @@ set backspace=indent,eol,start  " Allow backspacing over everything in insert mo
 syntax on                       " Syntax highlighting
 set ruler                       " show the cursor position all the time
 set number                      " Line numbers
+set relativenumber              " Relative line numbers
 set showcmd                     " display incomplete commands
+set cursorline
 " set nocursorline               " highlight current line
 " set wildmenu
 set showmatch                   " Highlight curlybraces!
@@ -74,6 +76,11 @@ if has("autocmd")
     \   exe "normal! g`\"" |
     \ endif
 
+  " Use relative numbering
+  autocmd FocusLost * :set norelativenumber
+  autocmd FocusGained * :set relativenumber
+  autocmd InsertEnter * :set norelativenumber
+  autocmd InsertLeave * :set relativenumber
 endif
 " }}} end Autocommands
 
