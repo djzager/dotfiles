@@ -1,4 +1,4 @@
 *.netrwhist
 .vim/plugged/*
 *.swp
-zsh/oracle.zsh
+zsh/work.zsh

@@ -28,7 +28,7 @@ source $ZSH/oh-my-zsh.sh
 source $MY_ZSH/aliases.zsh
 source $MY_ZSH/exports.zsh
 source $MY_ZSH/functions.zsh
-source $MY_ZSH/oracle.zsh
+[ -f $MY_ZSH/work.zsh ] && source $MY_ZSH/work.zsh
 
 # Integrations
 BASE16_SHELL=$MY_ZSH/base16-shell/
