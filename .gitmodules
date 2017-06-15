@@ -1,8 +1,8 @@
-[submodule ".vim/vim-plug"]
-	path = .vim/vim-plug
+[submodule "vim/vim-plug"]
+	path = vim/vim-plug
 	url = git@github.com:junegunn/vim-plug.git
-[submodule ".vim/autoload/vim-plug"]
-	path = .vim/autoload/vim-plug
+[submodule "vim/autoload/vim-plug"]
+	path = vim/autoload/vim-plug
 	url = git@github.com:junegunn/vim-plug.git
 [submodule "zsh/oh-my-zsh"]
 	path = zsh/oh-my-zsh

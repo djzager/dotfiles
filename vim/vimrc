@@ -76,6 +76,8 @@ if has("autocmd")
     \   exe "normal! g`\"" |
     \ endif
 
+  autocmd BufRead,BufNewFile *.pod,*.svc,*.app set filetype=yaml
+
   " Use relative numbering
   autocmd FocusLost * :set norelativenumber
   autocmd FocusGained * :set relativenumber
@@ -98,6 +100,7 @@ endif
 " Plugins {{{
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf' 
