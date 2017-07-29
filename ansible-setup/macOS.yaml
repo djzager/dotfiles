@@ -1,0 +1,70 @@
+---
+
+- hosts: localhost
+  vars:
+    brew:
+      taps:
+        - caskroom/versions
+        - caskroom/fonts
+        - homebrew/bundle
+        - homebrew/dupes
+        - homebrew/versions
+        - neovim/neovim
+      formulas:
+        - asciinema
+        - cscope
+        - ctags
+        - direnv
+        - gcc
+        - gd
+        - gdb
+        - go
+        - htop-osx
+        - libyaml
+        - macvim
+        - neovim/neovim/neovim
+        - node
+        - openssl
+        #- openssh
+        - rsync
+        - tree
+        - valgrind
+        - watch
+        - zsh
+      formulas_opt:
+        - { formula: git, options: with-pcre }
+        - { formula: tmux, options: HEAD }
+        - { formula: vim, options: HEAD }
+      apps:
+        - adium
+        - alfred
+        - firefox
+        - flux
+        - google-chrome
+        - google-chrome-canary
+        - hammerspoon
+        - iterm2
+        - java
+        - karabiner
+        - slack
+        - spotify
+        - steam
+        - transmission
+        - vagrant
+        - vagrant-manager
+        - virtualbox
+        - vlc
+        - xquartz
+      fonts:
+        - font-inconsolata
+        - font-roboto
+        - font-source-code-pro
+        - font-ubuntu
+    dotfiles:
+      repo: "git@github.com:djzager/dotfiles.git" # assumes you exchanged keys
+      dir: "{{ lookup('env', 'HOME') }}/dotfiles"
+      version: "master"
+
+  roles:
+    - osx
+    - common

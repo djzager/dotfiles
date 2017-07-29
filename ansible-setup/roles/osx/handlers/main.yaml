@@ -1,0 +1,10 @@
+---
+
+- name: killall Dock
+  command: killall -HUP Dock
+
+- name: killall Finder
+  command: killall -HUP Finder
+
+- name: killall SystemUIServer
+  command: killall -HUP SystemUIServer

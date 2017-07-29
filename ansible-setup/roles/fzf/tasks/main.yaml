@@ -1,0 +1,10 @@
+---
+
+- name: Pull fzf
+  git:
+    repo: https://github.com/junegunn/fzf.git
+    dest: "{{ ansible_user_dir }}/.fzf"
+    depth: 1
+
+- name: Install fzf
+  command: "{{ ansible_user_dir }}/.fzf/install"

@@ -1,0 +1,49 @@
+---
+
+#- name: osx keyboard tweaks | Set spotlight shortcut
+- name: osx keyboard/mouse/trackpad  defaults
+  osx_defaults:
+    domain: "{{ item.domain | default(omit) }}"
+    host: "{{ item.host | default(omit) }}"
+    key: "{{ item.key }}"
+    state: "{{ item.state | default(omit) }}"
+    type: "{{ item.type | default(omit) }}"
+    value: "{{ item.value }}"
+  with_items:
+    - description: Enable tap to click
+      domain: com.apple.driver.AppleBluetoothMultitouch.trackpad
+      key: Clicking
+      type: bool
+      value: true
+    - description: Set tap behavior in Global Domain
+      host: currentHost
+      key: com.apple.mouse.tapBehavior
+      type: int
+      value: 1
+    - description: Set tap behavior in Global Domain
+      key: com.apple.mouse.tapBehavior
+      type: int
+      value: 1
+    - description: Enable keyboard access to all controls
+      key: AppleKeyboardUIMode
+      type: int
+      value: 3
+    - description: Use scroll with Ctrl (^) modifier key to zoom
+      domain: com.apple.universalaccess
+      key: closeViewScrollWheelToggle
+      type: bool
+      value: true
+    - description: Use scroll with Ctrl (^) modifier key to zoom
+      domain: com.apple.universalaccess
+      key: HIDScrollZoomModifierMask
+      type: int
+      value: 262144 
+    - description: We want to follow keyboard focus while zoomed in
+      domain: com.apple.universalaccess
+      key: closeViewZoomFollowsFocus
+      type: bool
+      value: true
+    - description: Disable auto correct
+      key: NSAutomaticSpellingCorrectionEnabled
+      type: bool
+      value: false

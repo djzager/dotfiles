@@ -1,0 +1,17 @@
+---
+
+- name: iterm2 | create config directory
+  file: path="{{ lookup('env', 'HOME') }}/.iterm2"
+        state=directory
+        mode=0755
+  
+- name: iterm2 | move config directory into place
+  copy: src=.iterm2/
+        dest="{{ lookup('env', 'HOME') }}/.iterm2"
+
+- name: iterm2 | make iterm use this directory
+  osx_defaults:
+    domain: com.googlecode.iterm2
+    key: PrefsCustomFolder
+    type: string
+    value: "{{ lookup('env', 'HOME') }}/.iterm2/"

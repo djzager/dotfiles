@@ -1,0 +1,10 @@
+---
+
+- name: Install common RedHat packages
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    "{{ packages }}"
+  when: ansible_os_family == "RedHat"

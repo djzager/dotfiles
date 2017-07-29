@@ -1,0 +1,36 @@
+---
+
+- hosts: localhost
+  vars:
+    dotfiles_dir: "{{ playbook_dir | regex_replace('/ansible-setup', '') }}"
+    packages:
+      - asciinema
+      - cscope
+      - ctags
+      - direnv
+      - gcc
+      - gdb
+      - go
+      - htop
+      - java
+      - node
+      - openssl
+      - openssh
+      - rsync
+      - tree
+      - valgrind
+      - weechat
+  pre_tasks:
+    - name: Upgrade all installed packages
+      become: true
+      dnf:
+        name: "*"
+        state: latest
+  roles:
+    - common
+    - fzf
+    - git
+    - i3
+    - oh-my-zsh
+    - tmux
+    - vim

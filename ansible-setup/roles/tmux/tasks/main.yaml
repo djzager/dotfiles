@@ -1,0 +1,14 @@
+---
+
+- name: Install Tmux
+  become: true
+  dnf:
+    name: tmux
+    state: latest
+  when: ansible_os_family == "RedHat"
+
+- name: Link tmux config
+  file:
+    src: "{{ dotfiles_dir }}/tmux.conf"
+    dest: "{{ ansible_user_dir }}/.tmux.conf"
+    state: link

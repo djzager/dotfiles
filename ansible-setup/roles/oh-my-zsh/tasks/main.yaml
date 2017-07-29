@@ -1,0 +1,36 @@
+---
+
+- name: Install zsh
+  become: true
+  dnf:
+    name: zsh
+    state: latest
+  when: ansible_os_family == "RedHat"
+
+- name: Set default shell as zsh
+  become: true
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh
+
+- name: Verify base_16 submodule has been pulled
+  file:
+    dest: "{{ dotfiles_dir }}/zsh/base16-shell/profile_helper.sh"
+    state: file
+
+- name: Verify oh-my-zsh submodule has been pulled
+  file:
+    dest: "{{ dotfiles_dir }}/zsh/oh-my-zsh/oh-my-zsh.sh"
+    state: file
+
+- name: Link zshrc
+  file:
+    src: "{{ dotfiles_dir }}/zshrc"
+    dest: "{{ ansible_user_dir }}/.zshrc"
+    state: link
+
+- name: Link zsh directory
+  file:
+    src: "{{ dotfiles_dir }}/zsh"
+    dest: "{{ ansible_user_dir }}/.config/zsh"
+    state: link

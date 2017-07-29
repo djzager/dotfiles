@@ -1,0 +1,37 @@
+---
+
+- include: homebrew.yaml
+  tags:
+    - homebrew
+
+- include: general.yaml
+  tags: 
+    - general
+
+- include: keyboard.yaml
+  tags:
+    - keyboard
+
+- include: ssd.yaml
+  tags:
+    - ssd
+
+- include: screen.yaml
+  tags:
+    - screen
+
+- include: finder.yaml
+  tags:
+    - finder
+
+- include: dock.yaml
+  tags:
+    - dock
+
+- include: macApps.yaml
+  tags:
+    - macApps
+
+- include: iterm.yaml
+  tags:
+    - iterm

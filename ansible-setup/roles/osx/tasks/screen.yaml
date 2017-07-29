@@ -1,0 +1,40 @@
+---
+- name: osx screen* defaults
+  osx_defaults:
+    domain: "{{ item.domain }}"
+    host: "{{ item.host | default(omit) }}"
+    key: "{{ item.key }}"
+    state: "{{ item.state | default(omit) }}"
+    type: "{{ item.type | default(omit) }}"
+    value: "{{ item.value }}"
+  with_items:
+    - description: Ask for password when waking from sleep
+      domain: com.apple.screensaver
+      key: askForPassword
+      type: int
+      value: 1
+    - description: Ask for password immediately after sleep
+      domain: com.apple.screensaver
+      key: askForPasswordDelay
+      type: float
+      value: 0
+    - description: Save screenshots to desktop
+      domain: com.apple.screencapture
+      key: location
+      type: string
+      value: "{{ lookup('env','HOME') }}/Desktop"
+    - description: Save screenshots as png
+      domain: com.apple.screencapture
+      key: type
+      type: string
+      value: "png"
+    - description: Disable shadow in screenshot
+      domain: com.apple.screencapture
+      key: disable-shadow
+      type: bool
+      value: true
+    - description: Enable font smoothing
+      domain: NSGlobalDomain
+      key: AppleFontSmoothing
+      type: int
+      value: 2

@@ -1,0 +1,111 @@
+---
+
+- name: osx general settings | Set our computer name
+  command: scutil --set ComputerName "davidjz"
+  become: true
+
+- name: osx general settings | Set our host name
+  command: scutil --set HostName "davidjz"
+  become: true
+
+- name: osx general settings | Set our local host name
+  command: scutil --set LocalHostName "davidjz"
+  become: true
+
+- name: osx general settings | Set standby delay time
+  command: pmset -a standbydelay 86400
+  become: true
+
+- name: osx general settings | Disable boot sound effect
+  command: "nvram SystemAudioVolume=\" \""
+  become: true
+
+- name: osx general settings | Restart when we freeze
+  command: systemsetup -setrestartfreeze on
+  become: true
+
+- name: osx general settings | No sleep, ever
+  command: "systemsetup -setcomputersleep Off > /dev/null"
+  become: true
+
+- name: osx general settings
+  osx_defaults:
+    domain: "{{ item.domain | default(omit) }}"
+    host: "{{ item.host | default(omit) }}"
+    key: "{{ item.key }}"
+    state: "{{ item.state | default(omit) }}"
+    type: "{{ item.type | default(omit) }}"
+    value: "{{ item.value }}"
+  with_items:
+    - description: Set the interface theme for osx
+      key: AppleInterfaceStyle
+      type: string
+      value: Dark
+    - description: Set the highlight color to green
+      key: AppleHighlightColor
+      type: string
+      value: "0.764700 0.976500 0.568600"
+    - description: Always show the scrollbar
+      key: AppleShowScrollBars 
+      type: string
+      value: "Always"
+    - description: Disable focus ring animation
+      key: NSUseAnimatedFocusRing
+      type: bool
+      value: false
+    - description: Speed up window resize animation
+      key: NSWindowResizeTime
+      type: float
+      value: 0.001
+    - description: Show expanded print panel by default
+      key: PMPrintingExpandedStateForPrint
+      type: bool
+      value: true
+    - description: Show expanded print panel by default
+      key: PMPrintingExpandedStateForPrint2
+      type: bool
+      value: true
+    - description: Show expanded save panel by default
+      key: NSNavPanelExpandedStateForSaveMode
+      type: bool
+      value: true
+    - description: Show expanded save panel by default
+      key: NSNavPanelExpandedStateForSaveMode2
+      type: bool
+      value: true
+    - description: Disable the \"Are you sure you want to open this application?\" dialog
+      domain: com.apple.LaunchServices
+      key: LSQuarantine
+      type: bool
+      value: false
+    - description: Disable resume system-wide
+      domain: com.apple.systempreferences
+      key: NSQuitAlwaysKeepWindows
+      type: bool
+      value: false
+    - description: Make login window more useful
+      domain: com.apple.loginwindow
+      key: AdminHostInfo
+      type: string
+      value: HostName
+    - description: Disable smart quotes
+      key: NSAutomaticQuoteSubstitutionEnabled
+      type: bool
+      value: false
+    - description: Disable smart dashes
+      key: NSAutomaticDashSubstitutionEnabled
+      type: bool
+      value: false
+    - description: Do not show battery percentage
+      domain: com.apple.menuextra.battery
+      key: ShowPercent
+      type: string
+      value: NO
+    - description: Show battery time remaining
+      domain: com.apple.menuextra.battery
+      key: ShowTime
+      type: string
+      value: YES
+  notify:
+    - killall SystemUIServer
+

@@ -1,0 +1,26 @@
+---
+
+- name: Install VIM
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - vim
+    - gvim
+  when: ansible_os_family == "RedHat"
+
+- name: Link vim directory
+  file:
+    src: "{{ dotfiles_dir }}/vim"
+    dest: "{{ ansible_user_dir }}/.vim"
+    state: link
+    force: yes
+
+- name: Verify vim-plug is in autoload directory
+  file:
+    dest: "{{ dotfiles_dir }}/vim/autoload/plug.vim"
+    state: file
+
+- name: Install plugins
+  command: vim -c ":PlugInstall" -c q -c q -c q

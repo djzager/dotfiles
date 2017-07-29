@@ -1,0 +1,45 @@
+---
+
+- name: osx dock defaults
+  osx_defaults:
+    domain: "{{ item.domain | default('com.apple.dock') }}"
+    host: "{{ item.host | default(omit) }}"
+    key: "{{ item.key }}"
+    state: "{{ item.state | default(omit) }}"
+    type: "{{ item.type | default(omit) }}"
+    value: "{{ item.value }}"
+  with_items:
+    - description: Set icon size for dock
+      key: tilesize
+      type: float
+      value: 20
+    - description: Set dock to autohide
+      key: autohide
+      type: bool
+      value: false
+    #- description: Set dock autohide delay
+    #    key: autohide-delay
+    #    type: float
+    #    value: 0.2
+    - description: Set dock orientation
+      key: orientation
+      type: string
+      value: bottom
+    - description: Show apps in dock # Only show open apps in dock
+      key: static-only
+      type: bool
+      value: false 
+    - description: Minimize applications to their icon
+      key: minimize-to-application
+      type: bool
+      value: true
+    - description: Disable animation when opening application from the dock
+      key: launchanim
+      type: bool
+      value: false
+    - description: Prevent spaces from being rearranged by recent use
+      key: mru-spaces
+      type: bool
+      value: false
+  notify:
+    - killall Dock

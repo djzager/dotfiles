@@ -1,0 +1,99 @@
+---
+
+#
+# Mail
+#
+- name: osx mail settings
+  osx_defaults:
+    domain: "{{ item.domain | default('com.apple.mail') }}"
+    host: "{{ item.host | default(omit) }}"
+    key: "{{ item.key }}"
+    state: "{{ item.state | default(omit) }}"
+    type: "{{ item.type | default(omit) }}"
+    value: "{{ item.value }}"
+  with_items:
+    - description: Disable send animation in mail app
+      key: DisableSendAnimations
+      type: bool
+      value: true
+    - description: Disable reply animation in mail app
+      key: DisableReplyAnimations
+      type: bool
+      value: true
+    - description: Exclude name from email addresses in mail app
+      key: AddressesIncludeNameOnPasteboard
+      type: bool
+      value: false
+    - description: Disable inline attachments in mail app
+      key: DisableInlineAttachmentViewing
+      type: bool
+      value: true
+    - description: Disable spell check in mail app
+      key: SpellCheckingBehavior
+      type: string
+      value: "NoSpellCheckingEnabled"
+
+- name: Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
+  command: defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
+
+- name: Display emails in threaded mode
+  command: defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
+
+- name: Display emails sorted descending
+  command: defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
+
+- name: Display emails sorted by receive date
+  command: defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
+
+#
+# App store
+#
+- name: osx mac apps
+  osx_defaults:
+    domain: "{{ item.domain | default(omit) }}"
+    host: "{{ item.host | default(omit) }}"
+    key: "{{ item.key }}"
+    state: "{{ item.state | default(omit) }}"
+    type: "{{ item.type | default(omit) }}"
+    value: "{{ item.value }}"
+  with_items:
+    - description: Enable Debug Menu in the Mac App Store
+      domain: com.apple.appstore
+      key: ShowDebugMenu
+      type: bool
+      value: true
+    - description: Enable the automatic update check
+      domain: com.apple.SoftwareUpdate
+      key: AutomaticCheckEnabled
+      type: bool
+      value: true
+    - description: Check for software updates daily, not just once per week
+      domain: com.apple.SoftwareUpdate
+      key: ScheduleFrequency
+      type: int
+      value: 1
+    - description: Download newly available updates in background
+      domain: com.apple.SoftwareUpdate
+      key: AutomaticDownload
+      type: int
+      value: 1
+    - description: Install System data files & security updates
+      domain: com.apple.SoftwareUpdate
+      key: CriticalUpdateInstall
+      type: int
+      value: 1
+    - description: Turn on app auto-update
+      domain: com.apple.commerce
+      key: AutoUpdate
+      type: bool
+      value: true
+    - description: Allow the App Store to reboot machine on macOS updates
+      domain: com.apple.commerce
+      key: AutoUpdateRestartRequired
+      type: bool
+      value: true
+    - description: Prevent photos from opening automatically when devices are plugged in
+      domain: com.apple.ImageCapture
+      key: disableHotPlug
+      type: bool
+      value: true

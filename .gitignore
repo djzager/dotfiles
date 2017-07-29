@@ -1,4 +1,5 @@
 *.netrwhist
 vim/plugged/*
 *.swp
+.vagrant
 zsh/work.zsh

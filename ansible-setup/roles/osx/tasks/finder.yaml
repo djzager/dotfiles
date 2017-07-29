@@ -1,0 +1,85 @@
+---
+
+- name: osx finder defaults | Show the ~/Library folder
+  command: chflags nohidden "{{ lookup('env', 'HOME') }}/Library"
+
+- name: osx finder defaults | Show /Volumes
+  command: chflags nohidden /Volumes
+  become: true
+
+- name: osx finder defaults
+  osx_defaults:
+    domain: "{{ item.domain | default('com.apple.finder') }}"
+    host: "{{ item.host | default(omit) }}"
+    key: "{{ item.key }}"
+    state: "{{ item.state | default(omit) }}"
+    type: "{{ item.type | default(omit) }}"
+    value: "{{ item.value }}"
+  with_items:
+    - description: Allow quitting via ⌘ + Q; doing so will also hide desktop icons
+      key: QuitMenuItem
+      type: bool
+      value: true
+    - description: Disable all animations
+      key: DisableAllAnimations
+      type: bool
+      value: true
+    - description: New finder window target
+      key: NewWindowTarget
+      type: string
+      value: "PfDe"
+    - description: New finder window target path
+      key: NewWindowTargetPath
+      type: string
+      value: "file://{{ lookup('env', 'HOME') }}/Desktop/"
+    - description: Show external hard drives on desktop
+      key: ShowExternalHardDrivesOnDesktop
+      type: bool
+      value: true
+    - description: Don't show all hard drives on desktop
+      key: ShowHardDrivesOnDesktop
+      type: bool
+      value: false
+    - description: Don't show mounted servers on desktop
+      key: ShowMountedServersOnDesktop
+      type: bool
+      value: false
+    - description: Show removable media on desktop
+      key: ShowRemovableMediaOnDesktop
+      type: bool
+      value: true
+    - description: Show all fill extensions
+      key: AppleShowAllExtensions
+      type: bool
+      value: true
+    - description: Show status bar in finder  
+      key: ShowStatusBar
+      type: bool
+      value: true
+    - description: Show path bar in finder
+      key: ShowPathBar
+      type: bool
+      value: true
+    - description: Show full POSIX path as window title
+      key: _FXShowPosixPathInTitle
+      type: bool
+      value: true
+    - description: Disable warning when changing file extension
+      key: FXEnableExtensionChangeWarning
+      type: bool
+      value: false
+    - description: Use column view in finder by default
+      key: FXPreferredViewStyle
+      type: string
+      value: "clmv"
+    - description: Disable warning when emptying trash
+      key: WarnOnEmptyTrash
+      type: bool
+      value: false
+    - description: Use small sidebar icons in finder
+      domain: NSGlobalDomain
+      key: NSTableViewDefaultSizeMode
+      type: int
+      value: 1
+  notify:
+    - killall Finder

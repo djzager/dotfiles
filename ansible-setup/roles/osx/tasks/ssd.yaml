@@ -1,0 +1,9 @@
+---
+
+- name: osx ssd tweak | Disable hibernate
+  command: pmset -a hibernatemode 0
+  become: true
+
+- name: osx ssd tweak | Disable sudden motion sensor
+  command: pmset -a sms 0
+  become: true
