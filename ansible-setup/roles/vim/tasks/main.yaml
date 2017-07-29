@@ -10,6 +10,11 @@
     - gvim
   when: ansible_os_family == "RedHat"
 
+- name: Remove default vim dir
+  file:
+    dest: "{{ ansible_user_dir }}/.vim"
+    state: absent
+
 - name: Link vim directory
   file:
     src: "{{ dotfiles_dir }}/vim"

@@ -13,6 +13,17 @@
     name: "{{ ansible_user_id }}"
     shell: /bin/zsh
 
+- name: Remove default zshrc
+  file:
+    dest: "{{ ansible_user_dir }}/.zshrc"
+    state: absent
+
+- name: Link zshrc
+  file:
+    src: "{{ dotfiles_dir }}/zshrc"
+    dest: "{{ ansible_user_dir }}/.zshrc"
+    state: link
+
 - name: Verify base_16 submodule has been pulled
   file:
     dest: "{{ dotfiles_dir }}/zsh/base16-shell/profile_helper.sh"
@@ -22,12 +33,6 @@
   file:
     dest: "{{ dotfiles_dir }}/zsh/oh-my-zsh/oh-my-zsh.sh"
     state: file
-
-- name: Link zshrc
-  file:
-    src: "{{ dotfiles_dir }}/zshrc"
-    dest: "{{ ansible_user_dir }}/.zshrc"
-    state: link
 
 - name: Link zsh directory
   file:
