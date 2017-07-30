@@ -1,8 +1,7 @@
 ---
 
-sudo: required
-os: fedora
-dist: 26
+services:
+    - docker
 
 language: python
 python: "2.7"
@@ -12,7 +11,12 @@ branches:
     - master
 
 env:
-  - ANSIBLE_VERSION=latest
+  global:
+    - ANSIBLE_VERSION=latest
+  matrix:
+    - OS=fedora DIST=24
+    - OS=fedora DIST=25
+    - OS=fedora DIST=26
 
 before_install:
   - sudo dnf upgrade
@@ -21,5 +25,5 @@ install:
   - pip install ansible
 
 script:
-  - ansible-playbook -i ansible-setup/inventory ansible-setup/fed26.yaml --syntax-check
-  - ansible-playbook -i ansible-setup/inventory ansible-setup/fed26.yaml -vvvv
+  - ansible-playbook -i ansible-setup/inventory ansible-setup/fedora.yaml --syntax-check
+  - ansible-playbook -i ansible-setup/inventory ansible-setup/fedora.yaml -vvvv
