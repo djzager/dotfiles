@@ -1,10 +1,13 @@
 ---
 
-services:
-    - docker
-
 language: python
 python: "2.7"
+sudo: required
+services:
+  - docker
+
+git:
+  submodules: false
 
 branches:
   only:
@@ -19,11 +22,20 @@ env:
     - OS=fedora DIST=26
 
 before_install:
-  - sudo dnf upgrade
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
+  - docker pull ${OS}:${DIST}
+  - container_id=$(docker run --detach --volume=${PWD}:/workspace:ro ${OS}:${DIST} /bin/sh & )
 
 install:
-  - pip install ansible
+  - docker exec ${container_id} sudo dnf upgrade
+  - docker exec ${container_id} sudo dnf install python
+  - docker exec ${container_id} pip install ansible
 
 script:
-  - ansible-playbook -i ansible-setup/inventory ansible-setup/fedora.yaml --syntax-check
-  - ansible-playbook -i ansible-setup/inventory ansible-setup/fedora.yaml -vvvv
+  - >
+    docker exec --tty ${container_ id} env TERM=xterm
+    ansible-playbook -i /workspace/ansible-setup/inventory /workspace/ansible-setup/fedora.yaml --syntax-check
+  - >
+    docker exec --tty ${container_id} env TERM=xterm
+    ansible-playbook -i /workspace/ansible-setup/inventory /workspace/ansible-setup/fedora.yaml -vvvv
