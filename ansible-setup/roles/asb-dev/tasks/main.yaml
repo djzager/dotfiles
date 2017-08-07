@@ -1,0 +1,68 @@
+---
+
+- name: Install
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  when: ansible_os_family == "RedHat"
+  with_items:
+    - btrfs-progs-devel
+    - device-mapper-devel
+    - etcd
+
+# TODO: Need to install oc and glide binaries
+
+# Docker Setup
+- name: Add insecure registry
+  become: true
+  blockinfile:
+    path: /etc/sysconfig/docker
+    block: |
+      # Following Instructions:
+      # https://github.com/openshift/origin/blob/master/docs/cluster_up_down.md#linux
+      INSECURE_REGISTRY='--insecure-registry 172.30.0.0/16'
+
+- name: Restart docker
+  become: true
+  service:
+    name: docker
+    daemon_reload: yes
+    state: restarted
+
+- name: Get firewall zones
+  become: true
+  command: firewall-cmd --permanent --get-zones
+  register: firewall_zones
+
+- name: Create dockerc firewall zone
+  become: true
+  command: firewall-cmd --permanent --new-zone dockerc
+  when: firewall_zones.stdout.find('dockerc') == -1
+
+- name: Get dockerc sources
+  become: true
+  command: firewall-cmd --permanent --zone dockerc --list-sources
+  register: dockerc_sources
+
+- name: Add dockerc source
+  become: true
+  command: firewall-cmd --permanent --zone dockerc --add-source 172.17.0.0/16
+  when: dockerc_sources.stdout.find('172.17.0.0/16') == -1
+
+- name: Get dockerc ports
+  become: true
+  command: firewall-cmd --permanent --zone dockerc --list-ports
+
+- name: Add dockerc ports
+  become: true
+  command: firewall-cmd --permanent --zone dockerc --add-port "{{ item }}"
+  when: dockerc_sources.stdout.find( item ) == -1
+  with_items:
+    - 8443/tcp
+    - 53/udp
+    - 8053/udp
+
+- name: Reload firewall rules
+  become: true
+  command: firewall-cmd --reload

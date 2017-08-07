@@ -1,0 +1,23 @@
+---
+
+- name: Install
+  become: true
+  dnf:
+    name: go
+    state: latest
+  when: ansible_os_family == "RedHat"
+
+- name: Create go workspace
+  file:
+    path: "{{ ansible_user_dir + '/' + item }}"
+    state: directory
+  with_items:
+    - go/bin
+    - go/pkg
+    - go/src
+
+- name: Go get it
+  command: go get -u "{{ item }}"
+  with_items:
+    - github.com/gpmgo/gopm
+    - github.com/golang/lint/golint

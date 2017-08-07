@@ -1,5 +1,24 @@
 ---
 
+- name: Install necessary repos
+  become: true
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    baseurl: "{{ item.baseurl }}"
+    gpgkey: "{{ item.gpgkey }}"
+    enabled: yes
+    gpgcheck: yes
+  with_items:
+    - name: google-chrome
+      description: The google chrome repository
+      baseurl: http://dl.google.com/linux/chrome/rpm/stable/$basearch
+      gpgkey: https://dl-ssl.google.com/linux/linux_signing_key.pub
+    - name: virtualbox
+      description: The virtual box repository
+      baseurl: http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch
+      gpgkey: https://www.virtualbox.org/download/oracle_vbox.asc
+
 - name: Install common RedHat packages
   become: true
   dnf:

@@ -10,16 +10,26 @@
       - direnv
       - gcc
       - gdb
-      - go
+      - google-chrome-stable
       - htop
+      - ImageMagick
       - java
+      - libselinux-python
+      - make
       - node
       - openssl
       - openssh
+      - patch
       - rsync
+      - scrot
       - tree
+      - vagrant
+      - VirtualBox-5.1
       - valgrind
       - weechat
+      - xbacklight
+      - xorg-x11-drv-synaptics-legacy
+      - xsel
   pre_tasks:
     - name: Upgrade all installed packages
       become: true
@@ -28,8 +38,11 @@
         state: latest
   roles:
     - common
+    - docker
+    - asb-dev
     - fzf
     - git
+    - golang
     - i3
     - oh-my-zsh
     - tmux
