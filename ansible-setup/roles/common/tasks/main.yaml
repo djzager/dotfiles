@@ -27,3 +27,12 @@
   with_items:
     "{{ packages }}"
   when: ansible_os_family == "RedHat"
+
+- name: Install fonts
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    "{{ fonts }}"
+  when: ansible_os_family == "RedHat"

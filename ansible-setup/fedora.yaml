@@ -30,6 +30,8 @@
       - xbacklight
       - xorg-x11-drv-synaptics-legacy
       - xsel
+    fonts:
+      - adobe-source-code-pro-fonts
   pre_tasks:
     - name: Upgrade all installed packages
       become: true

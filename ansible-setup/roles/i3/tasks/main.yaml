@@ -15,14 +15,22 @@
     - conky
   when: ansible_os_family == "RedHat"
 
-- name: Make sure .config directory exists
+- name: Make sure .config directories exists
   file:
-    dest: "{{ ansible_user_dir }}/.config/i3"
+    dest: "{{ ansible_user_dir }}/{{ item }}"
     recurse: yes
     state: directory
+  with_items:
+    - .config/i3
+    - .config/i3status
 
 - name: Link configuration files
   file:
-    src: "{{ dotfiles_dir }}/i3/config"
-    dest: "{{ ansible_user_dir }}/.config/i3/config"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     state: link
+  with_items:
+    - src: "{{ dotfiles_dir }}/i3/config"
+      dest: "{{ ansible_user_dir }}/.config/i3/config"
+    - src: "{{ dotfiles_dir }}/i3/status"
+      dest: "{{ ansible_user_dir }}/.config/i3status/config"
