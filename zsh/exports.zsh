@@ -5,3 +5,4 @@ export TERMINAL=$(which tilix)
 export GOROOT=$(go env GOROOT)
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
+export WORKSPACE=$HOME/Workspace

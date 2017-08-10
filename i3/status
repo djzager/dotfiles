@@ -12,7 +12,7 @@ general {
 }
 
 order += "run_watch Docker"
-order += "path_exists VPN"
+order += "ethernet redhat0"
 order += "wireless _first_"
 order += "ethernet _first_"
 order += "battery all"
@@ -23,8 +23,9 @@ run_watch Docker {
 	pidfile = "/run/docker.pid"
 }
 
-path_exists VPN {
-	path = "/proc/sys/net/ipv4/conf/tun0"
+ethernet redhat0 {
+	format_up = "VPN: yes"
+	format_down = ""
 }
 
 wireless _first_ {
