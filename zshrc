@@ -37,3 +37,5 @@ eval "$(direnv hook zsh)"
 
 # Fuzzy Finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh && bindkey '^F' fzf-cd-widget
+
+bindkey '^p' __dz_project_select

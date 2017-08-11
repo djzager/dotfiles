@@ -26,7 +26,7 @@ function _gcb() {
   git checkout $(git branch | fzf-tmux -d 15)
 }
 
-function tp() {
+function __dz_project_select() {
   local project=$(ls $WORKSPACE | fzf-tmux -d 15)
   local dir=$WORKSPACE/$project
 
@@ -37,3 +37,4 @@ function tp() {
     tmux new-session -A -s $project
   fi
 }
+zle -N __dz_project_select

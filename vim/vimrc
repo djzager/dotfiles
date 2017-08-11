@@ -4,6 +4,10 @@
 " Basic {{{
 set ttyfast                     " Draw faster
 set backspace=indent,eol,start  " Allow backspacing over everything in insert mode.
+scriptencoding utf-8
+set encoding=utf-8
+" set list
+" set listchars=tab:¬\ 
 " }}} end Basic
 
 " UI {{{
@@ -103,6 +107,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf' 
 Plug 'airblade/vim-gitgutter'
