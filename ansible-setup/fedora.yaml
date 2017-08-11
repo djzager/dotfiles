@@ -39,9 +39,10 @@
         name: "*"
         state: latest
   roles:
+    - asb-dev
+    - atom
     - common
     - docker
-    - asb-dev
     - fzf
     - git
     - golang

@@ -1,0 +1,12 @@
+---
+
+- name: Get rpm
+  get_url:
+    url: https://atom.io/download/rpm
+    dest: "{{ ansible_user_dir }}/Downloads/atom.rpm"
+
+- name: Install rpm
+  become: true
+  dnf:
+    name: "{{ ansible_user_dir }}/Downloads/atom.rpm"
+    state: present
