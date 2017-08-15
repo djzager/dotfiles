@@ -5,6 +5,8 @@
     dotfiles_dir: "{{ playbook_dir | regex_replace('/ansible-setup', '') }}"
     packages:
       - asciinema
+      - aspell
+      - aspell-en
       - cscope
       - ctags
       - direnv
