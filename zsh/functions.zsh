@@ -37,4 +37,3 @@ function __dz_project_select() {
     tmux new-session -A -s $project
   fi
 }
-zle -N __dz_project_select
