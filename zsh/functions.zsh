@@ -28,12 +28,15 @@ function _gcb() {
 
 function __dz_project_select() {
   local project=$(ls $WORKSPACE | fzf-tmux -d 15)
-  local dir=$WORKSPACE/$project
+  local dir=$(realpath $WORKSPACE/$project)
+
+  if ! tmux has-session -t $project &> /dev/null; then
+    tmux new-session -A -s $project -c $dir -d
+  fi
 
   if [[ -n "$TMUX" ]]; then
     tmux switch-client -t $project
   else
-    cd -P $dir
-    tmux new-session -A -s $project
+    tmux attach-session -t $project
   fi
 }
