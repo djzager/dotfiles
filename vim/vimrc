@@ -82,6 +82,7 @@ if has("autocmd")
 
   autocmd BufRead,BufNewFile *.pod,*.svc,*.app set filetype=yaml
   autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+  autocmd BufRead,BufNewFile *.zsh-theme set filetype=conf
 
   " Use relative numbering
   autocmd FocusLost * :set norelativenumber
