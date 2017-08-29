@@ -19,6 +19,16 @@
       baseurl: http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch
       gpgkey: https://www.virtualbox.org/download/oracle_vbox.asc
 
+- name: Install the rpmfusion repo packages
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    - http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+  when: ansible_os_family == "RedHat"
+
 - name: Install common RedHat packages
   become: true
   dnf:
@@ -27,6 +37,17 @@
   with_items:
     "{{ packages }}"
   when: ansible_os_family == "RedHat"
+
+- name: Install headers
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - kernel-devel
+    - kernel-headers
+  when: ansible_os_family == "RedHat"
+
 
 - name: Install fonts
   become: true

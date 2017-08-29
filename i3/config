@@ -166,17 +166,19 @@ bar {
 exec --no-startup-id synclient \
 	HorizEdgeScroll=1 \
 	VertEdgeScroll=1 \
-	TapButton1=1 \
-	TapButton2=2 \
-	MaxTapTime=125 \
-	PalmDetect=1 \
-	PalmMinWidth=6 \
-	PalmMinZ=100 \
+	MaxTapTime=0 \
 	VertScrollDelta=-111
+#	TapButton1=1 \
+#	TapButton2=2 \
+#	MaxTapTime=125 \
+#	PalmDetect=1 \
+#	PalmMinWidth=6 \
+#	PalmMinZ=100 \
 
 # Colors
 client.focused          #4c7899 #285577 #ffffff #2e9ef4 #ff0000
 exec --no-startup-id feh --bg-scale ~/wallpaper
+exec --no-startup-id dunst
 
 bindsym XF86MonBrightnessUp exec sudo $HOME/bin/brightness_control +80
 bindsym XF86MonBrightnessDown exec sudo $HOME/bin/brightness_control -80

@@ -22,8 +22,10 @@
       - openssl
       - openssh
       - patch
+      - python-virtualenv
       - rsync
       - scrot
+      - telegram-desktop
       - tree
       - vagrant
       - VirtualBox-5.1
@@ -41,14 +43,16 @@
         name: "*"
         state: latest
   roles:
-    - asb-dev
-    - atom
-    - common
-    - docker
-    - fzf
-    - git
-    - golang
-    - i3
-    - oh-my-zsh
-    - tmux
-    - vim
+    - { role: asb-dev, tags: [ 'asb-dev' ] }
+    - { role: atom, tags: [ 'atom' ] }
+    - { role: common, tags: [ 'common' ] }
+    - { role: docker, tags: [ 'docker' ] }
+    - { role: dunst, tags: [ 'dunst' ] }
+    - { role: fzf, tags: [ 'fzf' ] }
+    - { role: git, tags: [ 'git' ] }
+    - { role: golang, tags: [ 'golang' ] }
+    - { role: i3, tags: [ 'i3' ] }
+    - { role: oh-my-zsh, tags: [ 'oh-my-zsh' ] }
+    - { role: tmux, tags: [ 'tmux' ] }
+    - { role: vim, tags: [ 'vim' ] }
+    - { role: weechat, tags: [ 'weechat' ] }
