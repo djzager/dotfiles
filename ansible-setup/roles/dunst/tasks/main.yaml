@@ -1,0 +1,19 @@
+- name: Install packages
+  become: true
+  dnf:
+    name: dunst
+    state: latest
+  when: ansible_os_family == "RedHat"
+
+- name: Make sure .config directory exists
+  file:
+    dest: "{{ ansible_user_dir }}/.config/dunst"
+    recurse: yes
+    state: directory
+
+- name: Link config files
+  file:
+    src: "{{ dotfiles_dir }}/dunstrc"
+    dest: "{{ ansible_user_dir }}/.config/dunst/dunstrc"
+    state: link
+    force: yes

@@ -1,0 +1,13 @@
+- name: Install weechat
+  become: true
+  dnf:
+    name: weechat
+    state: latest
+  when: ansible_os_family == "RedHat"
+
+- name: Link weechat directory
+  file:
+    src: "{{ dotfiles_dir }}/weechat.conf"
+    dest: "{{ ansible_user_dir }}/.weechat/weechat.conf"
+    state: link
+    force: yes
