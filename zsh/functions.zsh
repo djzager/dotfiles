@@ -14,6 +14,12 @@ function fzf-down() {
   fzf --height 50% "$@" --border
 }
 
+function zsh_theme() {
+  export PROMPT=""
+  export RPROMPT=""
+  source $(find $HOME/.config/zsh/ -name '*.zsh-theme' | fzf)
+}
+
 function gf() {
   is_in_git_repo || return
   git -c color.status=always status --short |

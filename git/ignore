@@ -1,2 +1,2 @@
 .tmux
-.nfs*
+*.swp
