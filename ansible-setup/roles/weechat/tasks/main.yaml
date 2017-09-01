@@ -5,9 +5,17 @@
     state: latest
   when: ansible_os_family == "RedHat"
 
+- name: Create weechat directory
+  file:
+    dest: "{{ ansible_user_dir }}/.weechat"
+    state: directory
+
 - name: Link weechat directory
   file:
-    src: "{{ dotfiles_dir }}/weechat.conf"
-    dest: "{{ ansible_user_dir }}/.weechat/weechat.conf"
+    src: "{{ dotfiles_dir }}/weechat/{{ item }}"
+    dest: "{{ ansible_user_dir }}/.weechat/{{ item }}"
     state: link
     force: yes
+  with_items:
+    - weechat.conf
+    - irc.conf

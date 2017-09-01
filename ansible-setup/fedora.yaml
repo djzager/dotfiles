@@ -56,3 +56,4 @@
     - { role: tmux, tags: [ 'tmux' ] }
     - { role: vim, tags: [ 'vim' ] }
     - { role: weechat, tags: [ 'weechat' ] }
+    - { role: znc, tags: [ 'znc' ] }
