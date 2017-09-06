@@ -18,4 +18,5 @@
     force: yes
   with_items:
     - weechat.conf
+    - trigger.conf
     - irc.conf
