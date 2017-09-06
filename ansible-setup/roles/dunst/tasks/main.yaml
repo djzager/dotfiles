@@ -13,7 +13,27 @@
 
 - name: Link config files
   file:
-    src: "{{ dotfiles_dir }}/dunstrc"
+    src: "{{ dotfiles_dir }}/dunst/dunstrc"
     dest: "{{ ansible_user_dir }}/.config/dunst/dunstrc"
     state: link
     force: yes
+
+- name: Make sure systemd config directory exists
+  file:
+    dest: "{{ ansible_user_dir }}/.config/systemd/user"
+    recurse: yes
+    state: directory
+
+- name: Link systemd unit file for dunst
+  file:
+    src: "{{ dotfiles_dir }}/dunst/dunst.service"
+    dest: "{{ ansible_user_dir }}/.config/systemd/user/dunst.service"
+    state: link
+    force: yes
+
+- name: Start dunst
+  systemd:
+    name: dunst
+    user: yes
+    state: restarted
+    enabled: yes

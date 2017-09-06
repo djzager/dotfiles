@@ -1,0 +1,10 @@
+[Unit]
+Description=Dunst notification daemon
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/dunst
+Environment=DISPLAY=:0
+
+[Install]
+WantedBy=multi-user.target

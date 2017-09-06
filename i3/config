@@ -178,7 +178,6 @@ exec --no-startup-id synclient \
 # Colors
 client.focused          #4c7899 #285577 #ffffff #2e9ef4 #ff0000
 exec --no-startup-id feh --bg-scale ~/wallpaper
-exec --no-startup-id dunst
 
 bindsym XF86MonBrightnessUp exec sudo $HOME/bin/brightness_control +80
 bindsym XF86MonBrightnessDown exec sudo $HOME/bin/brightness_control -80
