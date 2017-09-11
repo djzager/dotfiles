@@ -33,6 +33,7 @@
 
 - name: Start dunst
   systemd:
+    daemon_reload: yes
     name: dunst
     user: yes
     state: restarted

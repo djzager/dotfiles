@@ -7,4 +7,4 @@
     depth: 1
 
 - name: Install fzf
-  command: "{{ ansible_user_dir }}/.fzf/install"
+  command: "{{ ansible_user_dir }}/.fzf/install --all"
