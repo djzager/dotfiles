@@ -2,6 +2,30 @@ function david() {
   echo "Hello David!"
 }
 
+# from https://github.com/jessfraz/dotfiles/blob/12ddc7c4766fdcbbd0555f58df8a8c3acfaeefb6/.dockerfunc
+function dcleanup() {
+  local containers
+  containers=( $(docker ps -aq 2>/dev/null) )
+  docker rm "${containers[@]}" 2>/dev/null
+  local volumes
+  volumes=( $(docker ps --filter status=exited -q 2>/dev/null) )
+  docker rm -v "${volumes[@]}" 2>/dev/null
+  local images
+  images=( $(docker images --filter dangling=true -q 2>/dev/null) )
+  docker rmi "${images[@]}" 2>/dev/null
+}
+
+# from https://github.com/jessfraz/dotfiles/blob/12ddc7c4766fdcbbd0555f58df8a8c3acfaeefb6/.dockerfunc
+function dstopped(){
+  local name=$1
+  local state
+  state=$(docker inspect --format "{{.State.Running}}" "$name" 2>/dev/null)
+
+  if [[ "$state" == "false" ]]; then
+    docker rm "$name"
+  fi
+}
+
 function _clear_known_host() {
   gsed -i '$(1)d' ~/.ssh/known_hosts
 }

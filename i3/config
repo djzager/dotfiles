@@ -151,13 +151,14 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
     position top
+    tray_output none
     #font pango:Ubuntu Mono 8
     font pango:Source Code Pro Mono 8
     status_command i3status
 }
 
+for_window [class="^.*"] border pixel 2
 # I3-Gaps Config
-# for_window [class="^.*"] border pixel 2
 # gaps inner 20
 # gaps outer 5
 # smart_gaps on
@@ -177,7 +178,11 @@ exec --no-startup-id synclient \
 
 # Colors
 client.focused          #4c7899 #285577 #ffffff #2e9ef4 #ff0000
-exec --no-startup-id feh --bg-scale ~/wallpaper
+exec --no-startup-id feh --bg-fill ~/wallpaper
+
+# Screenshots
+# bindsym Print exec scrot "${HOME}/Pictures/screenshots/%Y%m%d_%H%M%S_scrot.png"
+# bindsym Print exec scrot --select "${HOME}/Pictures/screenshots/%Y%m%d_%H%M%S_scrot.png"
 
 bindsym XF86MonBrightnessUp exec sudo $HOME/bin/brightness_control +80
 bindsym XF86MonBrightnessDown exec sudo $HOME/bin/brightness_control -80
