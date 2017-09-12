@@ -153,12 +153,12 @@
     # Otherwise the '#' and following  would be interpreted as a comment.
     background = "#1D596B"
     foreground = "#7BA8B5"
-    timeout = 10
+    timeout = 0
 
 [urgency_normal]
     background = "#E3AD0B"
     foreground = "#524218"
-    timeout = 10
+    timeout = 0
 
 [urgency_critical]
     background = "#BA3220"
