@@ -7,6 +7,7 @@
       - asciinema
       - aspell
       - aspell-en
+      - copr-cli
       - cscope
       - ctags
       - direnv
@@ -26,6 +27,7 @@
       - rsync
       - scrot
       - telegram-desktop
+      - tito
       - tree
       - vagrant
       - VirtualBox-5.1
