@@ -30,6 +30,7 @@
       - tito
       - tree
       - vagrant
+      - "@virtualization"
       - VirtualBox-5.1
       - valgrind
       - weechat
@@ -38,6 +39,10 @@
       - xsel
     fonts:
       - adobe-source-code-pro-fonts
+      - dejavu-sans-mono-fonts
+      - google-droid-sans-mono-fonts
+      - levien-inconsolata-fonts
+      - mozilla-fira-mono-fonts
   pre_tasks:
     - name: Upgrade all installed packages
       become: true
@@ -56,6 +61,7 @@
     - { role: i3, tags: [ 'i3' ] }
     - { role: oh-my-zsh, tags: [ 'oh-my-zsh' ] }
     - { role: tmux, tags: [ 'tmux' ] }
+    - { role: vagrant, tags: [ 'vagrant' ] }
     - { role: vim, tags: [ 'vim' ] }
     - { role: weechat, tags: [ 'weechat' ] }
     - { role: znc, tags: [ 'znc' ] }

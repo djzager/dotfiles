@@ -1,0 +1,4 @@
+---
+
+- name: Install vagrant plugins
+  command: vagrant plugin install ansible
