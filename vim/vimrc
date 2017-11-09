@@ -106,6 +106,7 @@ endif
 " Plugins {{{
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
+Plug 'kopischke/vim-fetch'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
