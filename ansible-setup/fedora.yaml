@@ -3,46 +3,6 @@
 - hosts: localhost
   vars:
     dotfiles_dir: "{{ playbook_dir | regex_replace('/ansible-setup', '') }}"
-    packages:
-      - asciinema
-      - aspell
-      - aspell-en
-      - copr-cli
-      - cscope
-      - ctags
-      - direnv
-      - gcc
-      - gdb
-      - google-chrome-stable
-      - htop
-      - ImageMagick
-      - java
-      - libselinux-python
-      - make
-      - node
-      - openssl
-      - openssh
-      - patch
-      - python-virtualenv
-      - rsync
-      - scrot
-      - telegram-desktop
-      - tito
-      - tree
-      - vagrant
-      - "@virtualization"
-      - VirtualBox-5.1
-      - valgrind
-      - weechat
-      - xbacklight
-      - xorg-x11-drv-synaptics-legacy
-      - xsel
-    fonts:
-      - adobe-source-code-pro-fonts
-      - dejavu-sans-mono-fonts
-      - google-droid-sans-mono-fonts
-      - levien-inconsolata-fonts
-      - mozilla-fira-mono-fonts
   pre_tasks:
     - name: Upgrade all installed packages
       become: true

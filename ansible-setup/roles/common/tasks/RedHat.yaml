@@ -1,0 +1,98 @@
+---
+
+- name: Install necessary repos
+  become: true
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    baseurl: "{{ item.baseurl }}"
+    gpgkey: "{{ item.gpgkey }}"
+    enabled: yes
+    gpgcheck: yes
+  with_items:
+    - name: google-chrome
+      description: The google chrome repository
+      baseurl: http://dl.google.com/linux/chrome/rpm/stable/$basearch
+      gpgkey: https://dl-ssl.google.com/linux/linux_signing_key.pub
+    - name: virtualbox
+      description: The virtual box repository
+      baseurl: http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch
+      gpgkey: https://www.virtualbox.org/download/oracle_vbox.asc
+
+- name: Install rpmfusion repo packages
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    - http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+
+- name: Enable ripgrep repo
+  become: true
+  command: "dnf copr enable -y carlwgeorge/ripgrep"
+  args:
+    creates: /etc/yum.repos.d/_copr_carlwgeorge-ripgrep.repo
+
+- name: Install common RedHat packages
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - asciinema
+    - aspell
+    - aspell-en
+    - copr-cli
+    - cscope
+    - ctags
+    - direnv
+    - gcc
+    - gdb
+    - google-chrome-stable
+    - htop
+    - ImageMagick
+    - java
+    - libselinux-python
+    - make
+    - node
+    - openssl
+    - openssh
+    - patch
+    - python-virtualenv
+    - ripgrep
+    - rsync
+    - scrot
+    - telegram-desktop
+    - tito
+    - tree
+    - vagrant
+    - "@virtualization"
+    - VirtualBox-5.1
+    - valgrind
+    - weechat
+    - xbacklight
+    - xorg-x11-drv-synaptics-legacy
+    - xsel
+
+- name: Install headers
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - kernel-devel
+    - kernel-headers
+
+
+- name: Install fonts
+  become: true
+  dnf:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - adobe-source-code-pro-fonts
+    - dejavu-sans-mono-fonts
+    - google-droid-sans-mono-fonts
+    - levien-inconsolata-fonts
+    - mozilla-fira-mono-fonts
