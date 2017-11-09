@@ -18,13 +18,37 @@ function is_in_git_repo() {
 }
 
 function fzf-down() {
-  fzf --height 50% "$@" --border
+  fzf --height 30% "$@" --border
 }
 
-function zsh_theme() {
-  export PROMPT=""
-  export RPROMPT=""
-  source $(find $HOME/.config/zsh/ -name '*.zsh-theme' | fzf)
+function bt() {
+  eval $(print -l ${(ok)aliases} | fzf --query="base16_")
+}
+
+function zt() {
+  local theme=$(find $HOME/.config/zsh/ -name '*.zsh-theme' | fzf)
+  if [[ -n $theme ]]; then
+    export PROMPT=""
+    export RPROMPT=""
+    source $theme
+  fi
+}
+
+function vf() {
+  file=$(fzf-down)
+  if [[ -n "$file" ]]; then
+    vim $file
+  fi
+}
+
+function sf() {
+  if [ "$#" -lt 1 ]; then echo "Supply string to search for!"; return 1; fi
+  printf -v search "%q" "$*"
+  include="yml,js,json,php,md,styl,pug,jade,html,config,py,cpp,c,go,hs,rb,conf,fa,lst"
+  exclude=".config,.git,node_modules,vendor,build,yarn.lock,*.sty,*.bst,*.coffee,dist"
+  rg_command='rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "*.{'$include'}" -g "!{'$exclude'}/*"'
+  files=`eval $rg_command $search | fzf --ansi --multi --reverse | awk -F ':' '{print $1":"$2":"$3}'`
+  [[ -n "$files" ]] && ${EDITOR:-vim} $files
 }
 
 function gf() {
