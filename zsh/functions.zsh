@@ -18,7 +18,7 @@ function is_in_git_repo() {
 }
 
 function fzf-down() {
-  fzf --height 30% "$@" --border
+  fzf --height 40% "$@" --border
 }
 
 function bt() {
@@ -54,16 +54,29 @@ function sf() {
 function gf() {
   is_in_git_repo || return
   git -c color.status=always status --short |
-  fzf-down -m --ansi --nth 2..,.. \
-    --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
+  fzf-down -m --ansi --nth 2..,.. --preview '(git diff --color=always -- {-1} | sed 1,4d; cat {-1}) | head -500' |
   cut -c4- | sed 's/.* -> //'
 }
 
-function _gcb() {
-  git checkout $(git branch | fzf-tmux -d 15)
+unalias gb
+function gb() {
+  is_in_git_repo || return
+  git branch -a --color=always | grep -v '/HEAD\s' | sort |
+  fzf-down --ansi --multi --tac --preview-window right:70% \
+    --preview 'git log --oneline --graph --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+  sed 's/^..//' | cut -d' ' -f1 |
+  sed 's#^remotes/##'
 }
 
-function __dz_project_select() {
+unalias gcb
+function gcb() {
+  local branch=$(gb)
+  if [[ -n "$branch" ]]; then
+    git checkout "$branch"
+  fi
+}
+
+function dps() {
   local project=$(ls $WORKSPACE | fzf-tmux -d 15)
   local dir=$(realpath $WORKSPACE/$project)
 
@@ -76,4 +89,12 @@ function __dz_project_select() {
   else
     tmux attach-session -t $project
   fi
+}
+
+function tm() {
+  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+  if [ $1 ]; then
+     tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+  fi
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 }
