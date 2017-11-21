@@ -6,6 +6,7 @@ set ttyfast                     " Draw faster
 set backspace=indent,eol,start  " Allow backspacing over everything in insert mode.
 scriptencoding utf-8
 set encoding=utf-8
+set winwidth=120
 " set list
 " set listchars=tab:¬\ 
 " }}} end Basic

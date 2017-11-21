@@ -18,7 +18,7 @@ function is_in_git_repo() {
 }
 
 function fzf-down() {
-  fzf --height 40% "$@" --border
+  fzf --height 20 "$@" --border
 }
 
 function bt() {
@@ -77,7 +77,10 @@ function gcb() {
 }
 
 function dps() {
-  local project=$(ls $WORKSPACE | fzf-tmux -d 15)
+  local project=$(ls $WORKSPACE | fzf-down)
+  if [[ -z "$project" ]]; then
+    return
+  fi
   local dir=$(realpath $WORKSPACE/$project)
 
   if ! tmux has-session -t $project &> /dev/null; then
@@ -96,5 +99,5 @@ function tm() {
   if [ $1 ]; then
      tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
   fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf-down --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 }
