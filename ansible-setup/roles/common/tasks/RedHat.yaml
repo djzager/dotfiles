@@ -55,6 +55,7 @@
     - java
     - libselinux-python
     - make
+    - mercurial
     - node
     - openssl
     - openssh
