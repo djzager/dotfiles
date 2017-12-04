@@ -47,6 +47,7 @@
     - cscope
     - ctags
     - direnv
+    - firefox
     - gcc
     - gdb
     - google-chrome-stable

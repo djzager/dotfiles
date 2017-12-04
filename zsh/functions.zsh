@@ -6,6 +6,8 @@ function david() {
 function dcleanup() {
   echo "Docker cleanup..."
   docker system prune -f
+  local images=( $(docker images --filter dangling=true -q 2>/dev/null) )
+  docker rmi "${images[@]}" 2>/dev/null
   echo "...Done"
 }
 
