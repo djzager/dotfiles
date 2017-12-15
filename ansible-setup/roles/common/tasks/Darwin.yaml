@@ -48,6 +48,9 @@
     #- valgrind
     - watch
 
+- name: homebrew | install gnu-which
+  homebrew: formula=gnu-which install_options=with-default-names state=present
+
 - name: homebrew | brew cask
   homebrew_cask: name={{item}} state=present
   with_items:
