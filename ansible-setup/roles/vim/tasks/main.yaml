@@ -10,6 +10,19 @@
     - gvim
   when: ansible_os_family == "RedHat"
 
+- name: Install MacVIM
+  homebrew:
+    formula: macvim
+    state: latest
+  when: ansible_os_family == "Darwin"
+
+- name: Install VIM
+  homebrew:
+    formula: vim
+    install_options: HEAD
+    state: latest
+  when: ansible_os_family == "Darwin"
+
 - name: Remove default vim dir
   file:
     dest: "{{ ansible_user_dir }}/.vim"

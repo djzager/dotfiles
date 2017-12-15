@@ -7,6 +7,13 @@
     state: latest
   when: ansible_os_family == "RedHat"
 
+- name: Install Tmux
+  homebrew:
+    formula: tmux
+    install_options: HEAD
+    state: latest
+  when: ansible_os_family == "Darwin"
+
 - name: Link tmux config
   file:
     src: "{{ dotfiles_dir }}/tmux.conf"

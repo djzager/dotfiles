@@ -1,9 +1,5 @@
 ---
 
-- include: homebrew.yaml
-  tags:
-    - homebrew
-
 - include: general.yaml
   tags: 
     - general
