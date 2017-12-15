@@ -1,0 +1,4 @@
+---
+
+- name: Install docker from cask
+  homebrew_cask: name=docker state=present

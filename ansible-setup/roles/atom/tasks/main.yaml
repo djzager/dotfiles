@@ -1,12 +1,20 @@
 ---
 
-- name: Get rpm
+- name: Get atom rpm
   get_url:
     url: https://atom.io/download/rpm
     dest: "{{ ansible_user_dir }}/Downloads/atom.rpm"
+  when: ansible_os_family == "RedHat"
 
-- name: Install rpm
+- name: Install atom on RedHat
   become: true
   dnf:
     name: "{{ ansible_user_dir }}/Downloads/atom.rpm"
     state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Install atom
+  homebrew_cask:
+    name: atom
+    state: present
+  when: ansible_os_family == "Darwin"
