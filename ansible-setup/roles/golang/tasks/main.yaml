@@ -7,6 +7,12 @@
     state: latest
   when: ansible_os_family == "RedHat"
 
+- name: Install
+  homebrew:
+    formula: go
+    state: latest
+  when: ansible_os_family == "Darwin"
+
 - name: Create go workspace
   file:
     path: "{{ ansible_user_dir + '/' + item }}"
