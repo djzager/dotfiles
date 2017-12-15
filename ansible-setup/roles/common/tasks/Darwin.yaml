@@ -1,0 +1,92 @@
+---
+
+- name: Save where we are installing homebrew
+  set_fact:
+    homebrew_install: ~/Downloads/homebrew_install
+
+- name: homebrew | download Homebrew install script
+  get_url:
+    url=https://raw.githubusercontent.com/Homebrew/install/master/install
+    dest="{{ homebrew_install }}"
+
+- name: homebrew | install Homebrew
+  command: ruby "{{ homebrew_install }}" creates=/usr/local/bin/brew
+
+- name: homebrew | update Homebrew
+  homebrew: update_homebrew=yes
+
+- name: homebrew | brew tap
+  homebrew_tap: tap={{item}} state=present
+  with_items:
+    - caskroom/versions
+    - caskroom/fonts
+    - homebrew/bundle
+    - homebrew/dupes
+    - homebrew/versions
+    - neovim/neovim
+
+- name: homebrew | brew install
+  homebrew: formula={{item}} state=latest
+  with_items:
+    - asciinema
+    - coreutils
+    - cscope
+    - ctags
+    - direnv
+    - gcc
+    - gd
+    - gdb
+    - htop-osx
+    - libyaml
+    - node
+    - openssl
+    #- openssh
+    - python
+    - rsync
+    - ripgrep
+    - tree
+    #- valgrind
+    - watch
+
+- name: homebrew | brew cask
+  homebrew_cask: name={{item}} state=present
+  with_items:
+    #- adium
+    - alfred
+    - firefox
+    - flux
+    - google-chrome
+    #- google-chrome-canary
+    #- hammerspoon
+    - iterm2
+    - java
+    #- karabiner
+    - slack
+    - spotify
+    #- steam
+    - transmission
+    #- vagrant
+    #- vagrant-manager
+    #- virtualbox
+    - vlc
+    - xquartz
+
+- name: homebrew | install fonts
+  homebrew_cask: name={{item}} state=present
+  with_items:
+    - font-inconsolata
+    - font-roboto
+    - font-source-code-pro
+    - font-ubuntu
+
+- name: homebrew | clean up old versions
+  command: brew cleanup
+
+- name: homebrew | clean up old casks
+  command: brew cask cleanup
+
+- name: homebrew | remove install script
+  file: path="{{ homebrew_install }}" state=absent
+
+- name: install terminal settings
+  command: tic "{{ role_path }}/files/tmux-256color.terminfo"
