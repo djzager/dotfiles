@@ -1,0 +1,57 @@
+---
+
+- name: Install common ArchLinux packages
+  become: true
+  pacman:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - broadcom-wl-dkms 				# Wifi Adapter
+    - cscope
+    - ctags
+    - direnv
+    - gcc
+    - gdb
+    - git
+    - make
+    - openssl
+    - openssh
+    - ripgrep
+    - rsync
+    - scrot
+    - xbacklight
+    - xsel
+    - xf86-video-intel     		# Video drivers
+    - mesa-libgl
+    - libva-intel-driver
+    - libva
+    - xorg-server					 		# X window
+		- xorg-server-utils
+    - xf86-input-synaptics
+    - lightdm              		# Display manager
+    - lightdm-gtk-greeter
+		- networkmanager					# Network manager
+    - network-manager-applet
+
+- name: Activate/Deactivate Services
+  become: true
+	systemd:
+		name: "{{ item.name }}"
+		enabled: "{{ item.enabled }}"
+		masked: no
+	with_items:
+		- { name: lightdm, enabled: yes }
+    - { name: dhcpcd, enabled: no }
+    - { name: NetworkManager, enabled: yes }
+
+- name: Install fonts
+  become: true
+  pacman:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - adobe-source-code-pro-fonts
+    - ttf-dejavu
+    - ttf-fira-mono
+    - ttf-inconsolata
+    - ttf-ubuntu-font-family

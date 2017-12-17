@@ -1,0 +1,26 @@
+---
+
+- hosts: localhost
+  vars:
+    dotfiles_dir: "{{ playbook_dir | regex_replace('/ansible-setup', '') }}"
+  pre_tasks:
+    - name: Upgrade all installed packages
+      become: true
+      dnf:
+        name: "*"
+        state: latest
+  roles:
+    - { role: common, tags: [ 'common' ] }
+      #- { role: atom, tags: [ 'atom' ] }
+      #- { role: docker, tags: [ 'docker' ] }
+      #- { role: dunst, tags: [ 'dunst' ] }
+      #- { role: fzf, tags: [ 'fzf' ] }
+      #- { role: git, tags: [ 'git' ] }
+      #- { role: golang, tags: [ 'golang' ] }
+      #- { role: i3, tags: [ 'i3' ] }
+      #- { role: oh-my-zsh, tags: [ 'oh-my-zsh' ] }
+      #- { role: tmux, tags: [ 'tmux' ] }
+      #- { role: vagrant, tags: [ 'vagrant' ] }
+      #- { role: vim, tags: [ 'vim' ] }
+      #- { role: weechat, tags: [ 'weechat' ] }
+      #- { role: znc, tags: [ 'znc' ] }
