@@ -6,12 +6,7 @@
     name: "{{ item }}"
     state: latest
   with_items:
-    - broadcom-wl-dkms 				# Wifi Adapter
-    - cscope
-    - ctags
-    - direnv
-    - gcc
-    - gdb
+    # Very common
     - git
     - make
     - openssl
@@ -19,28 +14,35 @@
     - ripgrep
     - rsync
     - scrot
-    - xbacklight
     - xsel
-    - xf86-video-intel     		# Video drivers
+    # Networking + Wireless
+    - iw
+    - wpa_supplicant
+    - broadcom-wl-dkms
+    - networkmanager
+    - network-manager-applet
+    # Video
+    - xf86-video-intel
     - mesa-libgl
     - libva-intel-driver
     - libva
-    - xorg-server					 		# X window
-		- xorg-server-utils
+    # X server
+    - xorg-server
+    - xorg-xbacklight
+    - xorg-server-utils
     - xf86-input-synaptics
-    - lightdm              		# Display manager
+    # Display Manager
+    - lightdm
     - lightdm-gtk-greeter
-		- networkmanager					# Network manager
-    - network-manager-applet
 
 - name: Activate/Deactivate Services
   become: true
-	systemd:
-		name: "{{ item.name }}"
-		enabled: "{{ item.enabled }}"
-		masked: no
-	with_items:
-		- { name: lightdm, enabled: yes }
+  systemd:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled }}"
+    masked: no
+  with_items:
+    - { name: lightdm, enabled: yes }
     - { name: dhcpcd, enabled: no }
     - { name: NetworkManager, enabled: yes }
 

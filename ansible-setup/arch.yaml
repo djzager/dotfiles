@@ -4,11 +4,11 @@
   vars:
     dotfiles_dir: "{{ playbook_dir | regex_replace('/ansible-setup', '') }}"
   pre_tasks:
-    - name: Upgrade all installed packages
+    - name: Upgrade
       become: true
-      dnf:
-        name: "*"
-        state: latest
+      pacman:
+        update_cache: yes
+        upgrade: yes
   roles:
     - { role: common, tags: [ 'common' ] }
       #- { role: atom, tags: [ 'atom' ] }
