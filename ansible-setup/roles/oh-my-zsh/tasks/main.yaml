@@ -13,6 +13,12 @@
     state: latest
   when: ansible_os_family == "Darwin"
 
+- name: Install zsh
+  pacman:
+    name: zsh
+    state: latest
+  when: ansible_os_family == "Archlinux"
+
 - name: Set default shell as zsh
   become: true
   user:

@@ -10,6 +10,16 @@
     - gvim
   when: ansible_os_family == "RedHat"
 
+- name: Install VIM
+  become: true
+  pacman:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - vim
+    - gvim
+  when: ansible_os_family == "Archlinux"
+
 - name: Install MacVIM
   homebrew:
     formula: macvim

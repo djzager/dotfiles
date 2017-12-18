@@ -11,16 +11,17 @@
         upgrade: yes
   roles:
     - { role: common, tags: [ 'common' ] }
-      #- { role: atom, tags: [ 'atom' ] }
+    - { role: atom, tags: [ 'atom' ] }
       #- { role: docker, tags: [ 'docker' ] }
-      #- { role: dunst, tags: [ 'dunst' ] }
-      #- { role: fzf, tags: [ 'fzf' ] }
-      #- { role: git, tags: [ 'git' ] }
-      #- { role: golang, tags: [ 'golang' ] }
-      #- { role: i3, tags: [ 'i3' ] }
-      #- { role: oh-my-zsh, tags: [ 'oh-my-zsh' ] }
-      #- { role: tmux, tags: [ 'tmux' ] }
+    - { role: dunst, tags: [ 'dunst' ] }
+    - { role: fzf, tags: [ 'fzf' ] }
+    - { role: git, tags: [ 'git' ] }
+    - { role: golang, tags: [ 'golang' ] }
+    - { role: i3, tags: [ 'i3' ] }
+    - { role: lightdm, tags: [ 'lightdm' ] }
+    - { role: oh-my-zsh, tags: [ 'oh-my-zsh' ] }
+    - { role: tmux, tags: [ 'tmux' ] }
       #- { role: vagrant, tags: [ 'vagrant' ] }
-      #- { role: vim, tags: [ 'vim' ] }
-      #- { role: weechat, tags: [ 'weechat' ] }
+    - { role: vim, tags: [ 'vim' ] }
+    - { role: weechat, tags: [ 'weechat' ] }
       #- { role: znc, tags: [ 'znc' ] }

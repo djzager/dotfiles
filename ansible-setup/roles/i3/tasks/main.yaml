@@ -15,6 +15,22 @@
     - conky
   when: ansible_os_family == "RedHat"
 
+- name: Install packages
+  become: true
+  pacman:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - i3
+    - i3status
+    - dmenu
+    - i3lock
+    - xorg-server
+    - xorg-xbacklight
+    - feh
+    - conky
+  when: ansible_os_family == "Archlinux"
+
 - name: Make sure .config directories exists
   file:
     dest: "{{ ansible_user_dir }}/{{ item }}"

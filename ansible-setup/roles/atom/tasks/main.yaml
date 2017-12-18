@@ -18,3 +18,10 @@
     name: atom
     state: present
   when: ansible_os_family == "Darwin"
+
+- name: Install atom
+  become: true
+  pacman:
+    name: atom
+    state: present
+  when: ansible_os_family == "Archlinux"

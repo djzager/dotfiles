@@ -8,6 +8,13 @@
   when: ansible_os_family == "RedHat"
 
 - name: Install Tmux
+  become: true
+  pacman:
+    name: tmux
+    state: latest
+  when: ansible_os_family == "Archlinux"
+
+- name: Install Tmux
   homebrew:
     formula: tmux
     install_options: HEAD

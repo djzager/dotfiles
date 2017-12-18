@@ -50,7 +50,6 @@
     - firefox
     - gcc
     - gdb
-    - git
     - google-chrome-stable
     - htop
     - ImageMagick

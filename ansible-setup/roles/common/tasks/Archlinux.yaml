@@ -7,7 +7,6 @@
     state: latest
   with_items:
     # Very common
-    - git
     - make
     - openssl
     - openssh
@@ -15,9 +14,12 @@
     - rsync
     - scrot
     - xsel
+    # Input
+    - xf86-input-synaptics
     # Networking + Wireless
     - iw
     - wpa_supplicant
+    - linux-headers
     - broadcom-wl-dkms
     - networkmanager
     - network-manager-applet
@@ -26,14 +28,6 @@
     - mesa-libgl
     - libva-intel-driver
     - libva
-    # X server
-    - xorg-server
-    - xorg-xbacklight
-    - xorg-server-utils
-    - xf86-input-synaptics
-    # Display Manager
-    - lightdm
-    - lightdm-gtk-greeter
 
 - name: Activate/Deactivate Services
   become: true

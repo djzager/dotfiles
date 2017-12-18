@@ -5,6 +5,13 @@
     state: latest
   when: ansible_os_family == "RedHat"
 
+- name: Install packages
+  become: true
+  pacman:
+    name: dunst
+    state: latest
+  when: ansible_os_family == "Archlinux"
+
 - name: Make sure .config directory exists
   file:
     dest: "{{ ansible_user_dir }}/.config/dunst"

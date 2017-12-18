@@ -5,6 +5,13 @@
     state: latest
   when: ansible_os_family == "RedHat"
 
+- name: Install weechat
+  become: true
+  pacman:
+    name: weechat
+    state: latest
+  when: ansible_os_family == "Archlinux"
+
 - name: Create weechat directory
   file:
     dest: "{{ ansible_user_dir }}/.weechat"

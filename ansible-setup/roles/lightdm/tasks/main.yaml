@@ -1,0 +1,11 @@
+---
+
+- name: Install packages
+  become: true
+  pacman:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - lightdm
+    - lightdm-gtk-greeter
+  when: ansible_os_family == "Archlinux"
