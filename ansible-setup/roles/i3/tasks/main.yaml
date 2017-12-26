@@ -27,6 +27,8 @@
     - i3lock
     - xorg-server
     - xorg-xbacklight
+    - xorg-xhost
+    - xorg-xrandr
     - feh
     - conky
   when: ansible_os_family == "Archlinux"

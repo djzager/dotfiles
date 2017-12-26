@@ -8,4 +8,6 @@
   with_items:
     - lightdm
     - lightdm-gtk-greeter
+    - arc-gtk-theme
+    - arc-icon-theme
   when: ansible_os_family == "Archlinux"
