@@ -7,13 +7,16 @@
     state: latest
   with_items:
     # Very common
+    - imagemagick
     - make
     - openssl
     - openssh
+    - openvpn
     - ripgrep
     - rsync
     - scrot
     - xsel
+    - wget
     # Input
     - xf86-input-synaptics
     # Networking + Wireless
@@ -25,20 +28,38 @@
     - network-manager-applet
     # Video
     - xf86-video-intel
-    - mesa-libgl
+    - xf86-video-nouveau
+    - mesa
     - libva-intel-driver
     - libva
+    # Power management
+    - lm_sensors
+    - tlp
+    # Sound management
+    - alsa-utils
+    # Bluetooth
+    - bluez
+    - bluez-utils
+    # Intel microcode updates
+    - intel-ucode
 
 - name: Activate/Deactivate Services
   become: true
   systemd:
     name: "{{ item.name }}"
     enabled: "{{ item.enabled }}"
-    masked: no
+    masked: "{{ item.masked }}"
   with_items:
-    - { name: lightdm, enabled: yes }
-    - { name: dhcpcd, enabled: no }
-    - { name: NetworkManager, enabled: yes }
+    - { name: lightdm, enabled: yes, masked: no }
+    - { name: dhcpcd, enabled: no, masked: no }
+    - { name: NetworkManager, enabled: yes, masked: no }
+    - { name: lm_sensors, enabled: yes, masked: no }
+    - { name: fancontrol, enabled: yes, masked: no }
+    - { name: tlp, enabled: yes, masked: no }
+    - { name: tlp-sleep, enabled: yes, masked: no }
+    - { name: bluetooth, enabled: yes, masked: no }
+    - { name: systemd-rfkill.service, enabled: no, masked: yes }
+    - { name: systemd-rfkill.socket, enabled: no, masked: yes }
 
 - name: Install fonts
   become: true

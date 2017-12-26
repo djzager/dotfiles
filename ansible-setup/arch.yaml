@@ -12,7 +12,7 @@
   roles:
     - { role: common, tags: [ 'common' ] }
     - { role: atom, tags: [ 'atom' ] }
-      #- { role: docker, tags: [ 'docker' ] }
+    - { role: docker, tags: [ 'docker' ] }
     - { role: dunst, tags: [ 'dunst' ] }
     - { role: fzf, tags: [ 'fzf' ] }
     - { role: git, tags: [ 'git' ] }
