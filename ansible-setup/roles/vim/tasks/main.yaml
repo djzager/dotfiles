@@ -13,11 +13,8 @@
 - name: Install VIM
   become: true
   pacman:
-    name: "{{ item }}"
+    name: vim
     state: latest
-  with_items:
-    - vim
-    - gvim
   when: ansible_os_family == "Archlinux"
 
 - name: Install MacVIM

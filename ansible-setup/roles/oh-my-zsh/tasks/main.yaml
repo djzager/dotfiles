@@ -14,6 +14,7 @@
   when: ansible_os_family == "Darwin"
 
 - name: Install zsh
+  become: true
   pacman:
     name: zsh
     state: latest
