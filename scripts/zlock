@@ -1,11 +1,15 @@
-#!env bash
+#!/usr/bin/bash
+
 IMAGE=/tmp/i3lock.png
 PAD=$HOME/Pictures/pad.png
 BACKGROUND=$HOME/wallpaper
 
-convert $BACKGROUND $IMAGE
+# convert $BACKGROUND $IMAGE
+if [ ! -f $IMAGE ]; then
+    res=$(xrandr | grep ' connected' | awk '{ print $3 }' | sed -r 's/^([0-9]+)x([0-9]+).*/\1x\2/')
+    convert $BACKGROUND -resize "$res^" -gravity center -extent "$res" -fill black -colorize 40% -blur 0x5 $IMAGE
+fi
 # composite -size 2560x1440 -gravity center $PAD $IMAGE $IMAGE
 # composite -size 2560x1440 -gravity center $PAD $BACKGROUND $IMAGE
 
 i3lock -i $IMAGE
-rm $IMAGE
