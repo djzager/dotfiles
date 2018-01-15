@@ -81,6 +81,7 @@ if has("autocmd")
     \   exe "normal! g`\"" |
     \ endif
 
+  autocmd BufRead,BufNewFile *.py.stub set filetype=python
   autocmd BufRead,BufNewFile *.pod,*.svc,*.app set filetype=yaml
   autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
   autocmd BufRead,BufNewFile *.zsh-theme set filetype=conf
