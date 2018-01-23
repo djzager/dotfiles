@@ -67,3 +67,18 @@
 - name: Reload firewall rules
   become: true
   command: firewall-cmd --reload
+
+# Minishift
+- name: Get docker kvm plugin
+  become: true
+  get_url:
+    url: https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.7.0/docker-machine-driver-kvm
+    dest: /usr/local/bin/docker-machine-driver-kvm
+    mode: +x
+
+- name: Add self to libvirt group
+  become: true
+  user:
+      name: "{{ ansible_user_id }}"
+      groups: libvirt
+      append: yes

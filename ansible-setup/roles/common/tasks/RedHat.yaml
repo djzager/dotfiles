@@ -55,6 +55,7 @@
     - ImageMagick
     - java
     - libselinux-python
+    - libvirt
     - make
     - mercurial
     - node
@@ -62,6 +63,7 @@
     - openssh
     - patch
     - python-virtualenv
+    - qemu-kvm
     - ripgrep
     - rsync
     - scrot
