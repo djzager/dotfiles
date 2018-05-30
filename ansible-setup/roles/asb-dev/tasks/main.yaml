@@ -21,7 +21,7 @@
     block: |
       # Following Instructions:
       # https://github.com/openshift/origin/blob/master/docs/cluster_up_down.md#linux
-      INSECURE_REGISTRY='--insecure-registry 172.30.0.0/16'
+      INSECURE_REGISTRY='--insecure-registry 172.30.0.0/16 --insecure-registry asb-registry.usersys.redhat.com:5000'
       DOCKER_NETWORK_OPTIONS='--dns 10.11.5.19 --dns 10.5.30.160'
 
 - name: Restart docker
@@ -68,12 +68,12 @@
   become: true
   command: firewall-cmd --reload
 
-# Minishift
+# Minishift + Minikube
 - name: Get docker kvm plugin
   become: true
   get_url:
-    url: https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.7.0/docker-machine-driver-kvm
-    dest: /usr/local/bin/docker-machine-driver-kvm
+    url: https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2
+    dest: /usr/local/bin/docker-machine-driver-kvm2
     mode: +x
 
 - name: Add self to libvirt group
@@ -82,3 +82,9 @@
       name: "{{ ansible_user_id }}"
       groups: libvirt
       append: yes
+
+- name: Install minikube
+  get_url:
+    url: https://storage.googleapis.com/minikube/releases/v0.25.0/minikube-linux-amd64
+    dest: "{{ ansible_user_dir }}/bin/minikube"
+    mode: +x

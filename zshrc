@@ -30,6 +30,7 @@ source $MY_ZSH/aliases.zsh
 source $MY_ZSH/exports.zsh
 source $MY_ZSH/funcs.zsh
 source $MY_ZSH/dockerfunc.zsh
+source $MY_ZSH/history.zsh
 
 # Integrations
 BASE16_SHELL=$MY_ZSH/base16-shell/

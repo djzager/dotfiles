@@ -5,7 +5,7 @@ function david() {
 # from https://github.com/jessfraz/dotfiles/blob/12ddc7c4766fdcbbd0555f58df8a8c3acfaeefb6/.dockerfunc
 function dcleanup() {
   echo "Docker cleanup..."
-  docker system prune -f
+  docker system prune -a -f
   local images=( $(docker images --filter dangling=true -q 2>/dev/null) )
   docker rmi "${images[@]}" 2>/dev/null
   echo "...Done"
@@ -46,7 +46,7 @@ function vf() {
 function sf() {
   if [ "$#" -lt 1 ]; then echo "Supply string to search for!"; return 1; fi
   printf -v search "%q" "$*"
-  include="yaml,yml,js,json,php,md,styl,pug,jade,html,config,py,cpp,c,go,hs,rb,conf,fa,lst"
+  include="sh,yaml,yml,js,json,php,md,styl,pug,jade,html,config,py,cpp,c,go,hs,rb,conf,fa,lst"
   exclude=".config,.git,cover,node_modules,vendor,build,yarn.lock,*.sty,*.bst,*.coffee,dist"
   rg_command='rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "*.{'$include'}" -g "!{'$exclude'}/*"'
   files=`eval $rg_command $search | fzf --ansi --multi --reverse | awk -F ':' '{print $1":"$2":"$3}'`
