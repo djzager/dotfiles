@@ -7,6 +7,7 @@
     state: latest
   with_items:
     # Very common
+    - dnsmasq
     - imagemagick
     - make
     - openssl
@@ -27,8 +28,8 @@
     - networkmanager
     - network-manager-applet
     # Video
-    - xf86-video-intel
-    - xf86-video-nouveau
+    - nvidia
+    - nvidia-settings
     - mesa
     - libva-intel-driver
     - libva
@@ -72,3 +73,23 @@
     - ttf-fira-mono
     - ttf-inconsolata
     - ttf-ubuntu-font-family
+
+#- name: Install linux-macbook kernel
+#  block:
+#    - name: Update pacman.conf
+#      become: true
+#      blockinfile:
+#        path: /etc/pacman.conf
+#        block: |
+#          [linux-macbook]
+#          SigLevel = Optional TrustAll
+#          Server = http://libpcap.net/repo/linux-macbook
+#    - name: Update pacman cache
+#      become: true
+#      pacman:
+#        update_cache: yes
+#    - name: Clone/Update linux-macbook project
+#      git:
+#        repo: "https://aur.archlinux.org/linux-macbook.git"
+#        dest: "{{ ansible_user_dir }}/aur_packages/linux-macbook"
+#        update: yes

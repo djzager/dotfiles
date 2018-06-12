@@ -21,7 +21,7 @@
     name: "{{ item }}"
     state: latest
   with_items:
-    - i3
+    - i3-wm
     - i3status
     - dmenu
     - i3lock
@@ -29,6 +29,7 @@
     - xorg-xbacklight
     - xorg-xhost
     - xorg-xrandr
+    - xorg-xrdb
     - feh
     - conky
   when: ansible_os_family == "Archlinux"

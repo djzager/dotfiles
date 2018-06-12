@@ -154,12 +154,18 @@ bar {
     mode hide
     tray_output none
     #font pango:Ubuntu Mono 8
-    font pango:Source Code Pro Mono 8
+    #font pango:Source Code Pro Mono 10
     status_command i3status
 }
 
 for_window [class="^.*"] border pixel 1
 hide_edge_borders smart
+
+# I3-Gaps Config
+# gaps inner 20
+# gaps outer 5
+# smart_gaps on
+# smart_borders on
 
 exec --no-startup-id synclient \
 	HorizEdgeScroll=1 \
@@ -181,5 +187,12 @@ exec --no-startup-id feh --bg-fill ~/wallpaper
 # bindsym Print exec scrot "${HOME}/Pictures/screenshots/%Y%m%d_%H%M%S_scrot.png"
 # bindsym Print exec scrot --select "${HOME}/Pictures/screenshots/%Y%m%d_%H%M%S_scrot.png"
 
-bindsym XF86MonBrightnessUp exec sudo $HOME/bin/brightness_control +80
-bindsym XF86MonBrightnessDown exec sudo $HOME/bin/brightness_control -80
+bindsym XF86AudioRaiseVolume exec amixer set Master playback 5%+ unmute && notify-send --urgency=low --expire-time=10 "Volume Up"
+bindsym XF86AudioLowerVolume exec amixer set Master playback 5%- unmute && notify-send --urgency=low --expire-time=10 "Volume Down"
+bindsym XF86AudioMute exec amixer set Master toggle && notify-send --urgency=low --expire-time=10 "Toggle mute"
+
+bindsym XF86MonBrightnessUp exec sudo screen-backlight up
+bindsym XF86MonBrightnessDown exec sudo screen-backlight down
+
+bindsym XF86KbdBrightnessUp exec sudo keyboard-backlight up
+bindsym XF86KbdBrightnessDown exec sudo keyboard-backlight down
