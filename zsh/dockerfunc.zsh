@@ -27,25 +27,26 @@ function chrome(){
 
   # one day remove /etc/hosts bind mount when effing
   # overlay support inotify, such bullshit
-  #  -v $HOME/.config/chrome:/home/chrome/data \
+  #  -v "${HOME}/.config/chrome:/home/chrome/data" \
+  #  -v "${HOME}/Downloads:/home/chrome/Downloads" \
+  #  -v "${HOME}/Pictures:/home/chrome/Pictures" \
+  #  -v "${HOME}/Torrents:/home/chrome/Torrents" \
+  #  --device /dev/usb \
+  #  --device /dev/bus/usb \
+  #  --device /dev/dri \
   #  ${DOCKER_REPO_PREFIX}/chrome --user-data-dir=/home/chrome/data \
   docker run -d \
     --memory 2048mb \
+    -e "DISPLAY=unix${DISPLAY}" \
     -v /etc/localtime:/etc/localtime:ro \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -e "DISPLAY=unix${DISPLAY}" \
-    -v "${HOME}/Downloads:/home/chrome/Downloads" \
-    -v "${HOME}/Pictures:/home/chrome/Pictures" \
-    -v "${HOME}/Torrents:/home/chrome/Torrents" \
+    -v /var/run/dbus:/var/run/dbus \
     -v /dev/shm:/dev/shm \
     -v /etc/hosts:/etc/hosts \
     --security-opt seccomp:${HOME}/Downloads/chrome.json \
     --device /dev/snd \
-    --device /dev/dri \
-    --device /dev/usb \
-    --device /dev/bus/usb \
-    --group-add audio \
-    --group-add video \
+    --group-add $(getent group audio | cut -d: -f3) \
+    --group-add $(getent group video | cut -d: -f3) \
     --name chrome \
     ${DOCKER_REPO_PREFIX}/chrome \
     --proxy-server="$proxy" \
@@ -62,10 +63,32 @@ function spotify(){
     --security-opt seccomp:unconfined \
     --device /dev/snd \
     --device /dev/dri \
-    --group-add audio \
-    --group-add video \
+    --group-add $(getent group audio | cut -d: -f3) \
+    --group-add $(getent group video | cut -d: -f3) \
     --name spotify \
     ${DOCKER_REPO_PREFIX}/spotify
+}
+function telegram() {
+  del_stopped telegram
+
+  docker run -d \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -e "DISPLAY=unix${DISPLAY}" \
+    -e QT_DEVICE_PIXEL_RATIO \
+    --security-opt seccomp:unconfined \
+    --name telegram \
+    telegram
+}
+function weechatt(){
+  del_stopped weechat
+
+  docker run --rm -it \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v "${HOME}/.weechat:/home/user/.weechat" \
+    --name weechat \
+    --user $(id -u):$(id -g) \
+    weechat
 }
 function ykman(){
   del_stopped ykman
