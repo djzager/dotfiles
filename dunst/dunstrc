@@ -11,7 +11,7 @@
     #
     # for a complete reference see http://developer.gnome.org/pango/stable/PangoMarkupFormat.html
     # If markup is not allowed, those tags will be stripped out of the message.
-    allow_markup = yes
+    markup = yes
 
     # The format of the message. Possible variables are:
     #   %a  appname
@@ -114,6 +114,9 @@
     #  * anything else will be interpreted as a X color
     separator_color = frame
 
+    frame_width = 2
+    frame_color = "#00c3ff"
+
     # print a notification on startup
     # This is mainly for error detection, since dbus (re-)starts dunst
     # automatically after a crash.
@@ -124,10 +127,6 @@
 
     # browser for opening urls in context menu
     browser = /usr/bin/google-chrome
-
-[frame]
-    width = 2
-    color = "#00c3ff"
 
 [shortcuts]
     # shortcuts are specified as [modifier+][modifier+]...key
@@ -153,20 +152,18 @@
     # Otherwise the '#' and following  would be interpreted as a comment.
     background = "#1D596B"
     foreground = "#7BA8B5"
-    timeout = 5
+    timeout = 1
 
 [urgency_normal]
     background = "#E3AD0B"
     foreground = "#524218"
-    timeout = 0
+    timeout = 5
 
 [urgency_critical]
     background = "#BA3220"
     foreground = "#F0D1C5"
     timeout = 0
 
-
-# Every section that isn't one of the above is interpreted as a rules
 # to override settings for certain messages.
 # Messages can be matched by 'appname', 'summary', 'body' or 'icon'
 # and you can override the 'timeout', 'urgency', 'foreground', 'background'
@@ -216,11 +213,11 @@
 #    appname = Pidgin
 #    summary = *twitter.com*
 #    urgency = normal
-#
-#[scrot]
-#    summary = scrot
-#    format = "<b> %s</b>\n%b"
-#
+
+[scrot]
+    summary = scrot
+    format = "<b> %s</b>\n%b"
+
 #[mopidy]
 #    summary = Mopidy
 #    appname = notify-send

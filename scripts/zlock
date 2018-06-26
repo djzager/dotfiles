@@ -1,11 +1,9 @@
-#!env bash
-IMAGE=/tmp/i3lock.png
-PAD=$HOME/Pictures/pad.png
-BACKGROUND=$HOME/wallpaper
-
-convert $BACKGROUND $IMAGE
+#!/bin/bash
+#convert $BACKGROUND $IMAGE
 # composite -size 2560x1440 -gravity center $PAD $IMAGE $IMAGE
 # composite -size 2560x1440 -gravity center $PAD $BACKGROUND $IMAGE
+LOCK=$(xrandr | grep 'DP2-1' | grep ' connected' >/dev/null 2>&1 && echo "$HOME/multilockscreen" || echo "$HOME/lockscreen")
 
-i3lock -i $IMAGE
-rm $IMAGE
+#i3lock -i $IMAGE
+i3lock -i $LOCK
+#rm $IMAGE

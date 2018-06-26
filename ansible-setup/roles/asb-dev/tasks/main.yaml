@@ -85,6 +85,6 @@
 
 - name: Install minikube
   get_url:
-    url: https://storage.googleapis.com/minikube/releases/v0.25.0/minikube-linux-amd64
+    url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
     dest: "{{ ansible_user_dir }}/bin/minikube"
     mode: +x

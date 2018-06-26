@@ -11,17 +11,14 @@ general {
         interval = 5
 }
 
-order += "run_watch Docker"
 order += "ethernet redhat0"
 order += "wireless _first_"
 order += "ethernet _first_"
-order += "battery all"
 order += "load"
+order += "disk /"
+order += "volume master"
+order += "battery all"
 order += "tztime local"
-
-run_watch Docker {
-	pidfile = "/run/docker.pid"
-}
 
 ethernet redhat0 {
 	format_up = "VPN: yes"
@@ -39,13 +36,28 @@ ethernet _first_ {
         format_down = "E: down"
 }
 
+volume master {
+        format = "♪: %volume"
+        format_muted = "♪: muted"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
 battery all {
         format = "%status %percentage %remaining"
-	format_down = ""
+	integer_battery_capacity = true
+        hide_seconds = true
+#	format_down = ""
+#	status_chr = "🔌"
+#	status_bat = "🔋"
+#	status_unk = "?"
+#	status_full = "☻ FULL"
 }
 
 tztime local {
-        format = "%Y%m%d %H:%M"
+	format = "%Y%m%d | %H:%M"
+        #format = "%Y%m%d %H:%M"
 }
 
 load {
@@ -53,5 +65,6 @@ load {
 }
 
 disk "/" {
-        format = "%avail"
+        #format = "%free (%avail)/ %total"
+        format = "/   %percentage_used used"
 }

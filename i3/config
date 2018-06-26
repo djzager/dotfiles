@@ -30,6 +30,9 @@ floating_modifier $mod
 # bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return exec gnome-terminal
 
+# Lock screen
+bindsym $mod+Shift+x exec zlock
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -114,6 +117,11 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+# workspace assignments
+# https://github.com/bastelfreak/scripts/blob/master/i3-config
+# https://i3wm.org/docs/userguide.html#assign_workspace
+assign [class="gnome-terminal"] "2"
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -165,7 +173,8 @@ exec --no-startup-id synclient \
 	HorizEdgeScroll=1 \
 	VertEdgeScroll=1 \
 	MaxTapTime=0 \
-	VertScrollDelta=-111
+	VertScrollDelta=-111 \
+	TouchpadOff=1 # Turn off touchpad
 #	TapButton1=1 \
 #	TapButton2=2 \
 #	MaxTapTime=125 \
@@ -181,5 +190,11 @@ exec --no-startup-id feh --bg-fill ~/wallpaper
 # bindsym Print exec scrot "${HOME}/Pictures/screenshots/%Y%m%d_%H%M%S_scrot.png"
 # bindsym Print exec scrot --select "${HOME}/Pictures/screenshots/%Y%m%d_%H%M%S_scrot.png"
 
-bindsym XF86MonBrightnessUp exec sudo $HOME/bin/brightness_control +80
-bindsym XF86MonBrightnessDown exec sudo $HOME/bin/brightness_control -80
+bindsym XF86AudioMute exec amixer set Master toggle
+bindsym XF86AudioLowerVolume exec amixer set Master 5%-
+bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
+
+bindsym XF86MonBrightnessUp exec xbacklight +10
+bindsym XF86MonBrightnessDown exec xbacklight -10
+
+bindsym XF86WLAN exec zwifi
