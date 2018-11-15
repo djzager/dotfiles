@@ -28,11 +28,10 @@
 - name: Install repo packages
   become: true
   dnf:
-    name: "{{ item }}"
     state: present
-  with_items:
-    - http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
-    - http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    name:
+      - http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+      - http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
 
 - name: Enable ripgrep repo
   become: true
@@ -43,67 +42,63 @@
 - name: Install common RedHat packages
   become: true
   dnf:
-    name: "{{ item }}"
     state: latest
-  with_items:
-    - asciinema
-    - aspell
-    - aspell-en
-    - copr-cli
-    - cscope
-    - ctags
-    - direnv
-    - firefox
-    - gcc
-    - gdb
-    - google-chrome-stable
-    - htop
-    - ImageMagick
-    - java
-    - libselinux-python
-    - libvirt
-    - make
-    - mercurial
-    - node
-    - openssl
-    - openssh
-    - patch
-    - python-virtualenv
-    - qemu-kvm
-    - ripgrep
-    - rsync
-    - scrot
-    - telegram-desktop
-    - tito
-    - tree
-    - vagrant
-    - "@virtualization"
-    - VirtualBox-5.1
-    - valgrind
-    - vlc
-    - weechat
-    - xbacklight
-    - xorg-x11-drv-synaptics-legacy
-    - xsel
+    name:
+      - asciinema
+      - aspell
+      - aspell-en
+      - copr-cli
+      - cscope
+      - ctags
+      - direnv
+      - firefox
+      - gcc
+      - gdb
+      - google-chrome-stable
+      - htop
+      - ImageMagick
+      - java
+      - libselinux-python
+      - libvirt
+      - make
+      - mercurial
+      - node
+      - openssl
+      - openssh
+      - patch
+      - python-virtualenv
+      - qemu-kvm
+      - ripgrep
+      - rsync
+      - scrot
+      - telegram-desktop
+      - tito
+      - tree
+      - vagrant
+      - "@virtualization"
+      - VirtualBox
+      - valgrind
+      - vlc
+      - weechat
+      - xbacklight
+      - xorg-x11-drv-synaptics-legacy
+      - xsel
 
 - name: Install headers
   become: true
   dnf:
-    name: "{{ item }}"
     state: latest
-  with_items:
-    - kernel-devel
-    - kernel-headers
-
+    name:
+      - kernel-devel
+      - kernel-headers
 
 - name: Install fonts
   become: true
   dnf:
-    name: "{{ item }}"
     state: latest
-  with_items:
-    - adobe-source-code-pro-fonts
-    - dejavu-sans-mono-fonts
-    - google-droid-sans-mono-fonts
-    - levien-inconsolata-fonts
-    - mozilla-fira-mono-fonts
+    name:
+      - adobe-source-code-pro-fonts
+      - dejavu-sans-mono-fonts
+      - google-droid-sans-mono-fonts
+      - levien-inconsolata-fonts
+      - mozilla-fira-mono-fonts

@@ -37,18 +37,23 @@ function zt() {
 }
 
 function vf() {
-  file=$(fzf-down)
-  if [[ -n "$file" ]]; then
-    vim $file
-  fi
+  file=$(rg --files | fzf --preview 'head -200 {}')
+  [[ -n "$file" ]] && </dev/tty vim "$file"
 }
 
-function sf() {
+dz-vim-widget() {
+  vf
+  zle fzf-redraw-prompt
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+}
+zle     -N   dz-vim-widget
+bindkey '^p' dz-vim-widget
+
+function vg() {
   if [ "$#" -lt 1 ]; then echo "Supply string to search for!"; return 1; fi
   printf -v search "%q" "$*"
-  include="sh,yaml,yml,js,json,php,md,styl,pug,jade,html,config,py,cpp,c,go,hs,rb,conf,fa,lst"
   exclude=".config,.git,cover,node_modules,vendor,build,yarn.lock,*.sty,*.bst,*.coffee,dist"
-  rg_command='rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "*.{'$include'}" -g "!{'$exclude'}/*"'
+  rg_command='rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always" -g "!{'$exclude'}/*"'
   files=`eval $rg_command $search | fzf --ansi --multi --reverse | awk -F ':' '{print $1":"$2":"$3}'`
   [[ -n "$files" ]] && ${EDITOR:-vim} $files
 }
@@ -102,4 +107,36 @@ function tm() {
      tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
   fi
   session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf-down --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+}
+
+function kns() {
+  local namespace=$(
+    kubectl get ns --no-headers -o custom-columns=:.metadata.name | \
+    fzf --preview "kubectl get all -n {}" \
+  )
+  kubectl get all -n $namespace
+}
+
+function klog() {
+  local namespace=$(
+    kubectl get ns --no-headers -o custom-columns=:.metadata.name | \
+    fzf --preview "kubectl get pods -n {}" \
+  )
+  local pod=$(
+    kubectl get pods -n $namespace --no-headers -o custom-columns=:.metadata.name | \
+    fzf \
+  )
+  kubectl logs -n $namespace $pod
+}
+
+function klogf() {
+  local namespace=$(
+    kubectl get ns --no-headers -o custom-columns=:.metadata.name | \
+    fzf --preview "kubectl get pods -n {}" \
+  )
+  local pod=$(
+    kubectl get pods -n $namespace --no-headers -o custom-columns=:.metadata.name | \
+    fzf \
+  )
+  kubectl logs -n $namespace $pod -f
 }
