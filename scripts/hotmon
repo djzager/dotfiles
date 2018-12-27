@@ -1,24 +1,17 @@
 #!/bin/bash
 
-HDMI1_STATUS=$(</sys/class/drm/card0/card0-HDMI-A-1/status)
-DP_STATUS=$(</sys/class/drm/card0/card0-DP-3/status)
-
 set -e
 
-if [ "connected" == "$HDMI1_STATUS" ]; then
-    /usr/bin/xrandr --output DP2-1 --off
-    /usr/bin/xrandr --output HDMI1 --auto --above eDP1
-    /usr/bin/notify-send --urgency=low -t 5000 "Graphics Update" "HDMI plugged in"
-elif [ "connected" == "$DP_STATUS" ]; then
-    /usr/bin/xrandr --output HDMI1 --off
-    /usr/bin/xrandr --output DP2-1 --auto --right-of eDP1
-    /usr/bin/i3-msg workspace 1
-    /usr/bin/i3-msg move workspace to output DP2-1
-    /usr/bin/i3-msg workspace 2
-    /usr/bin/i3-msg move workspace to output DP2-1
-    /usr/bin/notify-send --urgency=low -t 5000 "Graphics Update" "DisplayPort plugged in"
+INTERNAL="eDP1"
+EXTERNAL="DP2-1"
+HDMI="HDMI1"
+
+if /usr/bin/xrandr | grep "${EXTERNAL} connected"; then
+    /usr/bin/xrandr --output ${INTERNAL} --off --output ${EXTERNAL} --auto
+elif /usr/bin/xrandr | grep "${HDMI} connected"; then
+    /usr/bin/xrandr --output ${INTERNAL} --auto --output ${HDMI} --auto --above ${INTERNAL}
 else
-    /usr/bin/xrandr --output HDMI1 --off
-    /usr/bin/xrandr --output DP2-1 --off
-    /usr/bin/notify-send --urgency=low -t 5000 "Graphics Update" "Unplugged"
+    /usr/bin/xrandr --output ${EXTERNAL} --off --output ${HDMI} --off --output ${INTERNAL} --auto
 fi
+
+feh --bg-fill ~/wallpaper

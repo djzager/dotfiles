@@ -23,10 +23,6 @@ function fzf-down() {
   fzf --height 20 "$@" --border
 }
 
-function bt() {
-  eval $(print -l ${(ok)aliases} | fzf --query="base16_")
-}
-
 function zt() {
   local theme=$(find $HOME/.config/zsh/ -name '*.zsh-theme' | fzf)
   if [[ -n $theme ]]; then
@@ -37,17 +33,17 @@ function zt() {
 }
 
 function vf() {
-  file=$(rg --files | fzf --preview 'head -200 {}')
+  file=$(rg --files | fzf --preview 'highlight -O ansi --force {}')
   [[ -n "$file" ]] && </dev/tty vim "$file"
 }
 
-dz-vim-widget() {
-  vf
-  zle fzf-redraw-prompt
-  typeset -f zle-line-init >/dev/null && zle zle-line-init
-}
-zle     -N   dz-vim-widget
-bindkey '^p' dz-vim-widget
+# dz-vim-widget() {
+#  vf
+#  zle fzf-redraw-prompt
+#  typeset -f zle-line-init >/dev/null && zle zle-line-init
+#}
+#zle     -N   dz-vim-widget
+#bindkey '^p' dz-vim-widget
 
 function vg() {
   if [ "$#" -lt 1 ]; then echo "Supply string to search for!"; return 1; fi
@@ -139,4 +135,21 @@ function klogf() {
     fzf \
   )
   kubectl logs -n $namespace $pod -f
+}
+
+function start_operator() {
+  local operator=$1
+  kubectl create -f deploy/service_account.yaml \
+                 -f deploy/role.yaml \
+                 -f deploy/role_binding.yaml \
+                 -f deploy/crds/*_crd.yaml
+  sed "s|REPLACE_IMAGE|${operator}|g; s|Always|Never|" deploy/operator.yaml | kubectl create -f -
+}
+
+function stop_operator() {
+  kubectl delete -f deploy/service_account.yaml \
+                 -f deploy/role.yaml \
+                 -f deploy/role_binding.yaml \
+                 -f deploy/crds/*_crd.yaml \
+                 -f deploy/operator.yaml
 }

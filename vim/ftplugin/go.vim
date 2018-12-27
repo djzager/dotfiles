@@ -1,12 +1,9 @@
 setlocal noexpandtab
-setlocal tabstop=4
-setlocal shiftwidth=4
-setlocal softtabstop=4
 
 " nmap <Leader>dd <Plug>(go-def-vertical)
 " nmap <Leader>dv <Plug>(go-doc-vertical)
 " nmap <Leader>db <Plug>(go-doc-browser)
-" 
+"
 " nmap <leader>r  <Plug>(go-run)
 " nmap <leader>t  <Plug>(go-test)
 " nmap <Leader>gt <Plug>(go-coverage-toggle)

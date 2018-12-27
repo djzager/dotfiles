@@ -1,9 +1,22 @@
 #!/bin/bash
-#convert $BACKGROUND $IMAGE
-# composite -size 2560x1440 -gravity center $PAD $IMAGE $IMAGE
-# composite -size 2560x1440 -gravity center $PAD $BACKGROUND $IMAGE
-LOCK=$(xrandr | grep 'DP2-1' | grep ' connected' >/dev/null 2>&1 && echo "$HOME/multilockscreen" || echo "$HOME/lockscreen")
 
-#i3lock -i $IMAGE
-i3lock -i $LOCK
-#rm $IMAGE
+WALLPAPER="$HOME/wallpaper"
+LOCKSCREEN="$HOME/lockscreen.png"
+XRANDR_OUTPUT=$(xrandr | sed -e 's/,//g' | grep -w current)
+X_SIZE=$(echo $XRANDR_OUTPUT | awk '{ print $8 }')
+Y_SIZE=$(echo $XRANDR_OUTPUT | awk '{ print $10 }')
+
+if [ -f $LOCKSCREEN ]; then
+  FILE_OUTPUT=$(file $LOCKSCREEN | sed -e 's/,//g')
+  FILE_X=$(echo $FILE_OUTPUT | awk '{ print $5 }')
+  FILE_Y=$(echo $FILE_OUTPUT | awk '{ print $7 }')
+
+  if [ "${X_SIZE}x${Y_SIZE}" = "${FILE_X}x${FILE_Y}" ]; then
+    i3lock -i $LOCKSCREEN
+    exit 0
+  fi
+  echo "${X_SIZE}x${Y_SIZE} != ${FILE_X}x${FILE_Y}"
+fi
+
+convert $WALLPAPER -resize "${X_SIZE}x${Y_SIZE}^" -gravity center -crop "${X_SIZE}x${Y_SIZE}+0+0" +repage $LOCKSCREEN
+i3lock -i $LOCKSCREEN

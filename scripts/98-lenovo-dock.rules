@@ -1,0 +1,2 @@
+KERNEL=="hidraw3", SUBSYSTEM=="hidraw", ACTION=="remove", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/run/user/1000/gdm/Xauthority", RUN+="/bin/bash /home/dzager/bin/hotmon 0"
+KERNEL=="hidraw3", SUBSYSTEM=="hidraw", ACTION=="add", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/run/user/1000/gdm/Xauthority", RUN+="/bin/bash /home/dzager/bin/hotmon 1"

@@ -6,3 +6,4 @@ export GOROOT=$(go env GOROOT)
 export GOPATH=$HOME/go
 export WORKSPACE=$HOME/Workspace
 export KEYTIMEOUT=1
+export QT_QPA_PLATFORMTHEME="qt5ct"

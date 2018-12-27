@@ -1,134 +1,88 @@
-" vim:foldmethod=marker:foldlevel=0
-" David Zager
+" Most helpful other configs I have taken from:
+" https://github.com/LukeSmithxyz/voidrice
+" https://github.com/wincent/wincent
+" https://github.com/jessfraz/dotfiles
+let mapleader = " "
 
-" Basic {{{
-set ttyfast                     " Draw faster
-set backspace=indent,eol,start  " Allow backspacing over everything in insert mode.
-scriptencoding utf-8
-set encoding=utf-8
-set winwidth=120
-" set list
-" set listchars=tab:¬\ 
-" }}} end Basic
-
-" UI {{{
-syntax on                       " Syntax highlighting
-set ruler                       " show the cursor position all the time
-set number                      " Line numbers
-set relativenumber              " Relative line numbers
-set showcmd                     " display incomplete commands
-set cursorline
-" set nocursorline               " highlight current line
-" set wildmenu
-set showmatch                   " Highlight curlybraces!
-" }}} end UI
-
-" Search {{{
-set ignorecase                  " ignore case when searching
-set incsearch                   " search as we enter text
-set hlsearch                    " highlight matches
-" }}} end Search
-
-" Folding {{{
-set foldmethod=indent           " fold on indent level
-set foldnestmax=10              " max depth 10
-set foldenable                  " enable folding
-nnoremap <space> za
-set foldlevelstart=1            " starting fold level
-" }}} end Folding
-
-" notsure {{{
-set nocompatible                " Use Vim settings, rather than Vi settings (much better!).
-set history=200                 " keep 200 lines of command line history
-set wildmenu                    " display completion matches in a status line
-set ttimeout                    " time out for key codes
-set ttimeoutlen=100             " wait up to 100ms after Esc for special key
-set scrolloff=5                 " Show a few lines of context around the cursor.
-set splitright                  " New splits →
-set splitbelow                  " New splits ↓
-set modeline                    " Check new files for specific vim settings
-set modelines=1                 " Only look for one line though
-
-if has('mouse')
-  set mouse=a                   " If we have mouse support, use it
-endif
-
-" Don't use Ex mode, use Q for formatting.
-map Q gq
-
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-" Revert with ":iunmap <C-U>".
-inoremap <C-U> <C-G>u<C-U>
-
-" Convenient command to see the difference between the current buffer and the
-if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-      \ | wincmd p | diffthis
-endif
-" }}} end notsure
-
-" Autocommands {{{
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-
-  " Enable file type detection.
-  filetype plugin indent on
-
-  " When editing a file, always jump to the last known cursor position.
-  autocmd BufReadPost *
-    \ if line("'\"") >= 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-
-  autocmd BufRead,BufNewFile *.py.stub set filetype=python
-  autocmd BufRead,BufNewFile *.pod,*.svc,*.app,*.yml set filetype=yaml
-  autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
-  autocmd BufRead,BufNewFile *.zsh-theme set filetype=conf
-
-  " Use relative numbering
-  autocmd FocusLost * :set norelativenumber
-  autocmd FocusGained * :set relativenumber
-  autocmd InsertEnter * :set norelativenumber
-  autocmd InsertLeave * :set relativenumber
-endif
-" }}} end Autocommands
-
-" Navigation {{{
-" nnoremap <C-h>      :tabprevious<CR>
-" nnoremap <C-l>      :tabnext<CR>
-" nnoremap <C-t>      :tabnew<CR>
-" nnoremap <C-w>      :tabclose<CR>
-" inoremap <C-Left>   <Esc>:tabprevious<CR>i
-" inoremap <C-Right>  <Esc>:tabnext<CR>i
-" inoremap <C-t>      <Esc>:tabnew<CR>
-" inoremap <C-w>      <Esc>:tabclose<CR>
-" }}} end Navigation
-
-" Plugins {{{
+" Plugins
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
-Plug 'kopischke/vim-fetch'
-Plug 'bronson/vim-trailing-whitespace'
+Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
-Plug 'pearofducks/ansible-vim'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'kopischke/vim-fetch'
+Plug 'pearofducks/ansible-vim'
+Plug 'plasticboy/vim-markdown'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'w0rp/ale'
 call plug#end()
-" }}} end Plugins
 
-" Custom Commands {{{
-let g:rg_command = '
-  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
-  \ -g "*.{sh,yaml,yml,js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf,zsh}"
-  \ -g "!{.git,node_modules,vendor}/*" '
+" Basic
+	set nocompatible                " Use Vim settings, rather than Vi settings (much better!).
+	set ttyfast                     " Draw faster
+	set number relativenumber       " Relative line numbers
+	set wildmode=longest,list,full  " Command autocompletion
+	syntax on                       " Syntax highlighting
+	set showmatch                   " Highlight curlybraces!
+	set backspace=indent,eol,start  " Allow backspacing over everything in insert mode.
+	set encoding=utf-8              " Use utf-8 when displaying
+	set winwidth=120                " Minimum number of columns for current window
+	set list listchars=tab:¬\       " Show hidden characters
+	set tabstop=2 shiftwidth=2      " Handle <Tab> and indent
+	set splitright splitbelow       " New splits → New splits ↓
+	set scrolloff=10                " Show a few lines of context around the cursor.
+	set ignorecase                  " ignore case when searching
+	set incsearch                   " search as we enter text
+	set hlsearch                    " highlight matches
+	set foldmethod=indent           " fold on indent level
+	set foldnestmax=10              " max depth 10
+	set foldlevelstart=1            " starting fold level
 
-command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+" Autocommands
+	if has("autocmd")
+		" Enable file type detection.
+		filetype plugin on
+
+		" When editing a file, always jump to the last known cursor position.
+		autocmd BufReadPost *
+		\ if line("'\"") >= 1 && line("'\"") <= line("$") |
+		\   exe "normal! g`\"" |
+		\ endif
+
+		autocmd BufRead,BufNewFile *.py.stub set filetype=python
+		autocmd BufRead,BufNewFile *.pod,*.svc,*.app,*.yml set filetype=yaml
+		autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+		autocmd BufRead,BufNewFile *.zsh-theme set filetype=conf
+
+		" Use relative numbering
+		autocmd FocusLost * :set norelativenumber
+		autocmd FocusGained * :set relativenumber
+		autocmd InsertEnter * :set norelativenumber
+		autocmd InsertLeave * :set relativenumber
+
+		" Automatically delete all trailing whitespace on save.
+		autocmd BufWritePre * %s/\s\+$//e
+
+		" Disables automatic commenting on newline:
+		autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+	endif
+
+" Custom Commands
+" Likewise, Files command with preview window
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 nnoremap <C-p> :Files<cr>
-" }}} end Custom Commands
+
+" Git Related Shortcuts
+	map <leader>gb :Gblame<cr>
+	map <leader>gd :Gdiff<cr>
+	map <leader>gdm :Gdiff master<cr>
+	map <leader>gs :Gstatus<cr>
+	map <leader>gc :Gcommit<cr>
+
+" Spell-check set to <leader>o, 'o' for 'orthography':
+	map <leader>o :setlocal spell! spelllang=en_us<cr>

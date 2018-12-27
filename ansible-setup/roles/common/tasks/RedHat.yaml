@@ -45,15 +45,16 @@
     state: latest
     name:
       - asciinema
-      - aspell
-      - aspell-en
       - copr-cli
       - cscope
       - ctags
+      - darktable
       - direnv
       - firefox
+      - ffmpeg
       - gcc
       - gdb
+      - gimp
       - google-chrome-stable
       - htop
       - ImageMagick
@@ -62,16 +63,19 @@
       - libvirt
       - make
       - mercurial
+      - mpv
       - node
       - openssl
       - openssh
       - patch
       - python-virtualenv
       - qemu-kvm
+      - qt5ct
+      - ranger
+      - rawtherapee
       - ripgrep
       - rsync
       - scrot
-      - telegram-desktop
       - tito
       - tree
       - vagrant
@@ -79,6 +83,7 @@
       - VirtualBox
       - valgrind
       - vlc
+      - w3m-img
       - weechat
       - xbacklight
       - xorg-x11-drv-synaptics-legacy
