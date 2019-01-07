@@ -1,14 +1,8 @@
-# i3status configuration file.
-# see "man i3status" for documentation.
-
-# It is important that this file is edited as UTF-8.
-# The following line should contain a sharp s:
-# ß
-# If the above line is not correctly displayed, fix your editor first!
-
 general {
-        colors = true
-        interval = 5
+  output_format = "i3bar"
+  colors = false
+  markup = pango
+  interval = 5
 }
 
 order += "ethernet redhat0"
@@ -16,55 +10,58 @@ order += "wireless _first_"
 order += "ethernet _first_"
 order += "load"
 order += "disk /"
+order += "disk /home"
 order += "volume master"
 order += "battery all"
 order += "tztime local"
 
 ethernet redhat0 {
-	format_up = "VPN: yes"
-	format_down = ""
+  format_up= "<span background='#bf616a'>  VPN </span>"
+  format_down = ""
 }
 
 wireless _first_ {
-        format_up = "W: (%quality at %essid) %ip"
-        format_down = "W: down"
+  format_up = "<span background='#b48ead'>  %essid </span>"
+  format_down = ""
 }
 
 ethernet _first_ {
-        # if you use %speed, i3status requires root privileges
-        format_up = "E: %ip (%speed)"
-        format_down = "E: down"
-}
-
-volume master {
-        format = "♪: %volume"
-        format_muted = "♪: muted"
-        device = "default"
-        mixer = "Master"
-        mixer_idx = 0
-}
-
-battery all {
-        format = "%status %percentage %remaining"
-	integer_battery_capacity = true
-        hide_seconds = true
-#	format_down = ""
-#	status_chr = "🔌"
-#	status_bat = "🔋"
-#	status_unk = "?"
-#	status_full = "☻ FULL"
-}
-
-tztime local {
-	format = "%Y%m%d | %H:%M"
-        #format = "%Y%m%d %H:%M"
+  format_up = "<span background='#88c0d0'>  %ip </span>"
+  format_down = ""
 }
 
 load {
-        format = "Load: %1min"
+  format = "<span background='#f59335'>  %1min </span>"
 }
 
 disk "/" {
-        #format = "%free (%avail)/ %total"
-        format = "/   %percentage_used used"
+  format = "<span background='#fec7cd'>  %free Free </span>"
+}
+
+disk "/home" {
+  format = "<span background='#a1d569'>  %free Free </span>"
+}
+
+volume master {
+  format = "<span background='#ebcb8b'>  %volume </span>"
+  format_muted = "<span background='#ebcb8b'>  Muted </span>"
+  min_width = 47
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+}
+
+battery all {
+  format = "<span background='#a3be8c'> %status %percentage </span>"
+  integer_battery_capacity = true
+  hide_seconds = true
+  status_chr = ""
+  status_bat = ""
+  status_unk = "🤔"
+  status_full = ""
+}
+
+tztime local {
+  format = "<span background='#81a1c1'> %time </span>"
+  format_time = " %m/%d %H:%M"
 }

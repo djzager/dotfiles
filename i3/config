@@ -1,9 +1,14 @@
 # Basic Definitions
   set $mod Mod4
   set $term --no-startup-id st
-  font pango:DejaVu Sans Mono 8
-  for_window [class="^.*"] border pixel 1
+  #font pango: Source Code Pro 10
+  #font pango:DejaVu Sans Mono 9
+  font pango: Noto Sans 9, FontAwesome 10
+  for_window [class="^.*"] border pixel 2
   hide_edge_borders smart
+
+  set $workspace1 "1: "
+  set $workspace2 "2: "
 
 # Startup
   # Wallpaper
@@ -30,32 +35,35 @@
   set_from_resource $cyan         color14 #000000
   set_from_resource $darkwhite    color7  #000000
   set_from_resource $white        color15 #000000
+  set $transparent  #00000000
 
-  #               BORDER    BACKGROUND    TEXT      INDICATOR       CHILD_BORDER
-  client.focused  $red      $red          $magenta  $darkmagenta    $darkblue
-  client.urgent   $darkred  $darkred      $black    $darkred        $darkred
+  #                       BORDER        BACKGROUND    TEXT      INDICATOR       CHILD_BORDER
+  client.focused          $red          $red          $white    $darkmagenta    $darkblue
+  client.unfocused        $transparent  $darkblack    $white    $darkblue       $darkblack
+  client.focused_inactive $transparent  $blue         $white    $darkblue       $darkblack
+  client.urgent           $darkred      $darkred      $black    $darkred        $darkred
+  client.background       $black
 
 # Bar
   bar {
     position bottom
     #mode hide
     tray_output none
-    #font pango:Ubuntu Mono 8
-    font pango:Source Code Pro Mono 8
     status_command i3status
     colors {
       background $darkblack
-      statusline $white
-      separator $cyan
-      focused_workspace  $blue $darkblue $darkblack
-      active_workspace   $blue $blue $darkwhite
-      inactive_workspace $darkblack $darkblack $white
-      urgent_workspace   $darkblack $darkblack $white
+      statusline $darkblack
+      separator $darkblack
+      #                  BORDER       BACKGROUND     TEXT
+      focused_workspace  $red         $red           $white
+      active_workspace   $blue        $blue          $darkwhite
+      inactive_workspace $darkblack   $darkblack     $white
+      urgent_workspace   $darkblack   $darkblack     $white
     }
   }
 
 # start dmenu (a program launcher)
-bindsym $mod+space exec dmenu_run -nb '$blue' -nf '$white' -sb '$darkblack' -sf '$darkwhite'
+bindsym $mod+space exec dmenu_run
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -108,8 +116,8 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
 bindsym $mod+3 workspace 3
 bindsym $mod+4 workspace 4
 bindsym $mod+5 workspace 5
@@ -120,8 +128,8 @@ bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+2 move container to workspace $workspace2
 bindsym $mod+Shift+3 move container to workspace 3
 bindsym $mod+Shift+4 move container to workspace 4
 bindsym $mod+Shift+5 move container to workspace 5
