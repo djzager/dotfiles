@@ -1,2 +1,2 @@
 #!env bash
-scrot --select "${HOME}/Pictures/screenshots/%Y%m%d_%H%M%S_scrot.png"
+scrot --select "${HOME}/Pictures/Screenshots/%Y%m%d_%H%M%S_scrot.png"

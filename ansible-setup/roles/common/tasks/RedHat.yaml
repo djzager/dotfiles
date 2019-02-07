@@ -50,6 +50,8 @@
       - ctags
       - darktable
       - direnv
+      - feh
+      - sxiv
       - firefox
       - ffmpeg
       - gcc
@@ -64,6 +66,8 @@
       - make
       - mercurial
       - mpv
+      - ranger
+      - nnn
       - node
       - openssl
       - openssh
@@ -71,7 +75,6 @@
       - python-virtualenv
       - qemu-kvm
       - qt5ct
-      - ranger
       - rawtherapee
       - ripgrep
       - rsync

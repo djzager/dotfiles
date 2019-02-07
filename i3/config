@@ -1,17 +1,20 @@
 # Basic Definitions
   set $mod Mod4
-  set $term --no-startup-id st
+  set $term --no-startup-id gnome-terminal
   #font pango: Source Code Pro 10
   #font pango:DejaVu Sans Mono 9
   font pango: Noto Sans 9, FontAwesome 10
   for_window [class="^.*"] border pixel 2
   hide_edge_borders smart
 
+  # Use Mouse+$mod to drag floating windows to their wanted position
+  floating_modifier $mod
+
   set $workspace1 "1: "
   set $workspace2 "2: "
 
 # Startup
-  # Wallpaper
+   # Wallpaper
   exec --no-startup-id feh --bg-fill ~/wallpaper
   # Turn off touchpad
   exec --no-startup-id synclient TouchpadOff=1
@@ -19,22 +22,22 @@
   exec --no-startup-id dunst
 
 # Colors
-  set_from_resource $darkblack    color0  #000000
-  set_from_resource $black        color8  #000000
-  set_from_resource $darkred      color1  #000000
-  set_from_resource $red          color9  #000000
-  set_from_resource $darkgreen    color2  #000000
-  set_from_resource $green        color10 #000000
-  set_from_resource $darkyellow   color3  #000000
-  set_from_resource $yellow       color11 #000000
-  set_from_resource $darkblue     color4  #000000
-  set_from_resource $blue         color12 #000000
-  set_from_resource $darkmagenta  color5  #000000
-  set_from_resource $magenta      color13 #000000
-  set_from_resource $darkcyan     color6  #000000
-  set_from_resource $cyan         color14 #000000
-  set_from_resource $darkwhite    color7  #000000
-  set_from_resource $white        color15 #000000
+  set_from_resource $darkblack    color0  #181818
+  set_from_resource $black        color8  #585858
+  set_from_resource $darkred      color1  #ab4642
+  set_from_resource $red          color9  #fb4934
+  set_from_resource $darkgreen    color2  #a1b56c
+  set_from_resource $green        color10 #282828
+  set_from_resource $darkyellow   color3  #f7ca88
+  set_from_resource $yellow       color11 #383838
+  set_from_resource $darkblue     color4  #7cafc2
+  set_from_resource $blue         color12 #b8b8b8
+  set_from_resource $darkmagenta  color5  #ba8baf
+  set_from_resource $magenta      color13 #e8e8e8
+  set_from_resource $darkcyan     color6  #86c1b9
+  set_from_resource $cyan         color14 #a16946
+  set_from_resource $darkwhite    color7  #d8d8d8
+  set_from_resource $white        color15 #f8f8f8
   set $transparent  #00000000
 
   #                       BORDER        BACKGROUND    TEXT      INDICATOR       CHILD_BORDER
@@ -46,7 +49,7 @@
 
 # Bar
   bar {
-    position bottom
+    position top
     #mode hide
     tray_output none
     status_command i3status
@@ -62,125 +65,146 @@
     }
   }
 
-# start dmenu (a program launcher)
-bindsym $mod+space exec dmenu_run
+# Key Bindings
+  bindsym $mod+Return         exec $term
+  bindsym $mod+Shift+space    floating toggle
+  bindsym $mod+space          focus mode_toggle
+  bindsym $mod+d              exec dmenu_run
+  bindsym $mod+i              exec $term -- htop
+  bindsym $mod+o              exec $term -- ranger
+  bindsym $mod+m              exec --no-startup-id flatpak run com.spotify.Client
+  bindsym $mod+Shift+q        kill
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+  # XF86 Keys
+  bindsym XF86AudioMute exec amixer set Master toggle
+  bindsym XF86AudioLowerVolume exec amixer set Master 5%-
+  bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
+  bindsym XF86MonBrightnessUp exec xbacklight +5
+  bindsym XF86MonBrightnessDown exec xbacklight -5
+  bindsym XF86WLAN exec zwifi
 
-# start a terminal
-bindsym $mod+Return exec $term
-bindsym $mod+i exec $term -e htop
-bindsym $mod+o exec $term -e ranger
+# Workspace Management
+  # switch to workspace
+  bindsym $mod+1 workspace $workspace1
+  bindsym $mod+2 workspace $workspace2
+  bindsym $mod+3 workspace 3
+  bindsym $mod+4 workspace 4
+  bindsym $mod+5 workspace 5
+  bindsym $mod+6 workspace 6
+  bindsym $mod+7 workspace 7
+  bindsym $mod+8 workspace 8
+  bindsym $mod+9 workspace 9
+  bindsym $mod+0 workspace 10
 
-# Lock screen
-bindsym $mod+Shift+x exec zlock
+  # move focused container to workspace
+  bindsym $mod+Shift+1 move container to workspace $workspace1
+  bindsym $mod+Shift+2 move container to workspace $workspace2
+  bindsym $mod+Shift+3 move container to workspace 3
+  bindsym $mod+Shift+4 move container to workspace 4
+  bindsym $mod+Shift+5 move container to workspace 5
+  bindsym $mod+Shift+6 move container to workspace 6
+  bindsym $mod+Shift+7 move container to workspace 7
+  bindsym $mod+Shift+8 move container to workspace 8
+  bindsym $mod+Shift+9 move container to workspace 9
+  bindsym $mod+Shift+0 move container to workspace 10
 
-# kill focused window
-bindsym $mod+Shift+q kill
+# Window Management
+  # change|move focus
+  bindsym $mod+h focus left
+  bindsym $mod+Shift+h move left 30
+  bindsym $mod+k focus down
+  bindsym $mod+Shift+k move down 30
+  bindsym $mod+j focus up
+  bindsym $mod+Shift+j move up 30
+  bindsym $mod+l focus right
+  bindsym $mod+Shift+l move right 30
 
-# change focus
-bindsym $mod+h focus left
-bindsym $mod+k focus down
-bindsym $mod+j focus up
-bindsym $mod+l focus right
+  # enter fullscreen mode for the focused container
+  bindsym $mod+f fullscreen toggle
 
-# move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+j move up
-bindsym $mod+Shift+l move right
+  # change container layout (stacked, tabbed, toggle split)
+  bindsym $mod+s              layout stacking
+  bindsym $mod+w              layout tabbed
+  bindsym $mod+e              layout toggle split
 
-# split
-bindsym $mod+bar split h
-bindsym $mod+minus split v
+  # split
+  bindsym $mod+bar            split h
+  bindsym $mod+minus          split v
 
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+  # General dropdown window traits. The order can matter.
+  for_window [instance="dropdown_*"] floating enable
+  for_window [instance="dropdown_*"] move scratchpad
+  for_window [instance="dropdown_*"] sticky enable
+  for_window [instance="dropdown_*"] scratchpad show
+  for_window [instance="dropdown_task"] resize set 800 450
+  # last
+  for_window [instance="dropdown_*"] move position center
 
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+  # Special windows
+  for_window [class="Spotify"] move to workspace 10
+  for_window [class="Bluejeans"] move to workspace 9
 
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+# i3 Modes
+  # Resize Windows
+  set $mode_resize Resize control: (h) shrink width, (k) grow height, (j) shrink height, (l) grow width
+  bindsym $mod+r mode "$mode_resize"
+  mode "$mode_resize" {
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize shrink height 10 px or 10 ppt
+    bindsym k resize grow height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
 
-# change focus between tiling / floating windows
-# bindsym $mod+space focus mode_toggle
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+  }
 
-# focus the parent container
-bindsym $mod+a focus parent
+  # Brightness
+  set $mode_bright Brightness control: (Shift+j) darkest, (j) darker, (k) brighter, (K) brightest
+  bindsym $mod+Shift+b mode "$mode_bright"
+  mode "$mode_bright" {
+    bindsym Shift+j   exec --no-startup-id echo "1" | sudo tee /sys/class/backlight/intel_backlight/brightness
+    bindsym j         exec --no-startup-id xbacklight -5
+    bindsym k         exec --no-startup-id xbacklight +5
+    bindsym Shift+k   exec --no-startup-id xbacklight -set 100
 
-# focus the child container
-#bindsym $mod+d focus child
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+  }
 
-# switch to workspace
-bindsym $mod+1 workspace $workspace1
-bindsym $mod+2 workspace $workspace2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+  # Volume Config
+  set $mode_volume Volume control: (k) volume up, (j) volume down, (x) toggle mute
+  bindsym $mod+Shift+v mode "$mode_volume"
+  mode "$mode_volume" {
+    bindsym k exec --no-startup-id amixer set Master 5%+
+    bindsym j exec --no-startup-id amixer set Master 5%-
+    bindsym x exec --no-startup-id amixer set Master toggle
 
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $workspace1
-bindsym $mod+Shift+2 move container to workspace $workspace2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+  }
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+  # i3 Config
+  set $mode_i3 i3 control: (r)eload, (Shift+r)estart
+  bindsym $mod+Shift+i mode "$mode_i3"
+  mode "$mode_i3" {
+    bindsym r        reload
+    bindsym Shift+r  restart
 
-# resize window (you can also use the mouse for that)
-mode "resize" {
-  # These bindings trigger as soon as you enter the resize mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+  }
 
-  # Pressing left will shrink the window’s width.
-  # Pressing right will grow the window’s width.
-  # Pressing up will shrink the window’s height.
-  # Pressing down will grow the window’s height.
-  bindsym h resize shrink width 10 px or 10 ppt
-  bindsym k resize grow height 10 px or 10 ppt
-  bindsym j resize shrink height 10 px or 10 ppt
-  bindsym l resize grow width 10 px or 10 ppt
+  # Set shut down, restart and locking features
+  set $mode_system System control: (l)ock, (e)xit, (r)eboot, (Shift+s)hutdown
+  bindsym $mod+Shift+s mode "$mode_system"
+  mode "$mode_system" {
+    bindsym l exec --no-startup-id zlock, mode "default"
+    bindsym e exec --no-startup-id exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'", mode "default"
+    bindsym r exec --no-startup-id reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id shutdown, mode "default"
 
-  # same bindings, but for the arrow keys
-  bindsym Left resize shrink width 10 px or 10 ppt
-  bindsym Down resize grow height 10 px or 10 ppt
-  bindsym Up resize shrink height 10 px or 10 ppt
-  bindsym Right resize grow width 10 px or 10 ppt
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+  }
 
-  # back to normal: Enter or Escape
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
-
-bindsym $mod+r mode "resize"
-
-# Screenshots
-# bindsym Print exec scrot "${HOME}/Pictures/screenshots/%Y%m%d_%H%M%S_scrot.png"
-# bindsym Print exec scrot --select "${HOME}/Pictures/screenshots/%Y%m%d_%H%M%S_scrot.png"
-
-bindsym XF86AudioMute exec amixer set Master toggle
-bindsym XF86AudioLowerVolume exec amixer set Master 5%-
-bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
-
-bindsym XF86MonBrightnessUp exec xbacklight +10
-bindsym XF86MonBrightnessDown exec xbacklight -10
-
-bindsym XF86WLAN exec zwifi

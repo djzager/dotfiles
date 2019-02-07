@@ -14,4 +14,4 @@ else
     /usr/bin/xrandr --output ${EXTERNAL} --off --output ${HDMI} --off --output ${INTERNAL} --auto
 fi
 
-feh --bg-fill ~/wallpaper
+feh --bg-fill /home/dzager/wallpaper

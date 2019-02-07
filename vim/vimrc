@@ -9,14 +9,15 @@ call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'kopischke/vim-fetch'
-Plug 'pearofducks/ansible-vim'
-Plug 'plasticboy/vim-markdown'
+Plug 'Raimondi/delimitMate'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'w0rp/ale'
 call plug#end()
@@ -33,12 +34,14 @@ call plug#end()
 	set winwidth=120                " Minimum number of columns for current window
 	set list listchars=tab:¬\       " Show hidden characters
 	set tabstop=2 shiftwidth=2      " Handle <Tab> and indent
+	set expandtab
 	set splitright splitbelow       " New splits → New splits ↓
 	set scrolloff=10                " Show a few lines of context around the cursor.
 	set ignorecase                  " ignore case when searching
 	set incsearch                   " search as we enter text
 	set hlsearch                    " highlight matches
 	set foldmethod=indent           " fold on indent level
+	set foldignore=                 " don't ignore #
 	set foldnestmax=10              " max depth 10
 	set foldlevelstart=1            " starting fold level
 
