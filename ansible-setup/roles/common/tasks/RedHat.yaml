@@ -71,6 +71,7 @@
       - node
       - openssl
       - openssh
+      - pandoc
       - patch
       - python-virtualenv
       - qemu-kvm
