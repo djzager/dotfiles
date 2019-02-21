@@ -65,7 +65,6 @@
     status_command i3status
     #i3bar_command i3bar -t
     colors {
-      statusline $white
       background $transparent
       statusline $darkblack
       separator $darkblack
