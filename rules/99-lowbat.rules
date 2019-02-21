@@ -1,0 +1,5 @@
+SUBSYSTEM=="power_supply", \
+ENV{DISPLAY}=":0", \
+ENV{XAUTHORITY}="/run/user/1000/gdm/Xauthority", \
+ENV{DBUS_SESSION_BUS_ADDRESS}="unix:path=/run/user/1000/bus", \
+RUN+="/usr/bin/su dzager -c /home/dzager/bin/battery_notification"

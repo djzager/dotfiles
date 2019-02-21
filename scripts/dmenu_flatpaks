@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# A dmenu prompt to select (and run) installed Flatpak applications
+
+chosen_flat=$(flatpak list --app | awk -F'/' '{print $1}' | dmenu -i -p "Flatpaks:")
+flatpak run $chosen_flat &

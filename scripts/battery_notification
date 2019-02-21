@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+STATUS=$(</sys/class/power_supply/BAT0/status)
+CAPACITY=$(</sys/class/power_supply/BAT0/capacity)
+
+if [[ "$STATUS" == "Discharging" ]] && [[ "$CAPACITY" -lt 10 ]]; then
+  /usr/bin/notify-send -a "POWER" -u Critical "Battery Level Low" "Capacity: $CAPACITY"
+fi
