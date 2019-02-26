@@ -167,9 +167,8 @@
 
   # Special windows
   for_window [class="Slack"] move workspace $ws3; workspace $ws3
-  for_window [class="Telegram"] move workspace $ws3; workspace $ws3
-  for_window [class="Bluejeans"] move workspace $ws9; workspace $ws9; \
-    floating enable; sticky enable; border pixel 0; resize set 640 480
+  for_window [class="Telegram"] move workspace $ws3; workspace $ws3; layout tabbed
+  for_window [class="Bluejeans"] move workspace $ws9; workspace $ws9
   for_window [class="Spotify"] move workspace $ws10; workspace $ws10
 
   # Bindings to make the webcam float and stick.
