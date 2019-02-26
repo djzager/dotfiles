@@ -28,7 +28,7 @@
 # Startup
   exec --no-startup-id compton
   # Wallpaper
-  exec --no-startup-id feh --bg-fill ~/wallpaper
+  exec --no-startup-id feh --bg-fill $XDG_CONFIG_HOME/wallpaper
   # Turn off touchpad
   exec --no-startup-id synclient TouchpadOff=1
   # Notifications

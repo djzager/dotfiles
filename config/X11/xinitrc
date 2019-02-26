@@ -1,0 +1,4 @@
+#!/bin/sh
+exec dbus-launch i3
+#dbus-launch --exit-with-session gnome-session
+#dbus-update-activation-environment --systemd --all

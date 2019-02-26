@@ -53,6 +53,7 @@ volume master {
 
 battery all {
   format = "<span foreground='#a3be8c'> %status %percentage </span>"
+  format_down = ""
   integer_battery_capacity = true
   hide_seconds = true
   status_chr = ""

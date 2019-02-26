@@ -35,7 +35,6 @@ source $MY_ZSH/history.zsh
 # Integrations
 BASE16_SHELL=$MY_ZSH/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
-eval "$(direnv hook zsh)"
 
 # Fuzzy Finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh && bindkey '^F' fzf-cd-widget

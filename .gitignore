@@ -6,3 +6,5 @@ zsh/work.zsh
 *.retry
 gnupg/*
 !gnupg/gpg.conf
+*.uuid
+*zcompdump*
