@@ -16,35 +16,35 @@ order += "battery all"
 order += "tztime local"
 
 ethernet redhat0 {
-  format_up= "<span background='#bf616a'>  VPN </span>"
+  format_up= "<span foreground='#bf616a'>  VPN </span>"
   format_down = ""
 }
 
 wireless _first_ {
-  format_up = "<span background='#b48ead'>  %essid </span>"
+  format_up = "<span foreground='#b48ead'>  %essid </span>"
   format_down = ""
 }
 
 ethernet _first_ {
-  format_up = "<span background='#88c0d0'>  %ip </span>"
+  format_up = "<span foreground='#88c0d0'>  %ip </span>"
   format_down = ""
 }
 
 load {
-  format = "<span background='#f59335'>  %1min </span>"
+  format = "<span foreground='#f59335'>  %1min </span>"
 }
 
 disk "/" {
-  format = "<span background='#fec7cd'>  %free Free </span>"
+  format = "<span foreground='#fec7cd'>  %free Free </span>"
 }
 
 disk "/home" {
-  format = "<span background='#a1d569'>  %free Free </span>"
+  format = "<span foreground='#a1d569'>  %free Free </span>"
 }
 
 volume master {
-  format = "<span background='#ebcb8b'>  %volume </span>"
-  format_muted = "<span background='#ebcb8b'>  Muted </span>"
+  format = "<span foreground='#ebcb8b'>  %volume </span>"
+  format_muted = "<span foreground='#ebcb8b'>  Muted </span>"
   min_width = 47
   device = "default"
   mixer = "Master"
@@ -52,7 +52,7 @@ volume master {
 }
 
 battery all {
-  format = "<span background='#a3be8c'> %status %percentage </span>"
+  format = "<span foreground='#a3be8c'> %status %percentage </span>"
   integer_battery_capacity = true
   hide_seconds = true
   status_chr = ""
@@ -62,6 +62,6 @@ battery all {
 }
 
 tztime local {
-  format = "<span background='#81a1c1'> %time </span>"
+  format = "<span foreground='#81a1c1'> %time </span>"
   format_time = " %m/%d %H:%M"
 }

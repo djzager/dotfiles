@@ -3,9 +3,12 @@
   set $term --no-startup-id gnome-terminal
   #font pango: Source Code Pro 10
   #font pango:DejaVu Sans Mono 9
-  font pango: Noto Sans 9, FontAwesome 10
+  #font pango: Noto Sans 9, FontAwesome 10
+  font pango: Hack, FontAwesome 10
   for_window [class="^.*"] border pixel 2
-  #hide_edge_borders smart
+  hide_edge_borders smart
+  gaps inner 10
+  gaps outer 10
 
   # Use Mouse+$mod to drag floating windows to their wanted position
   floating_modifier $mod
@@ -13,14 +16,14 @@
   # Workspaces
   set $ws1 "1: "
   set $ws2 "2: "
-  set $ws3 "3: "
-  set $ws4 "4"
-  set $ws5 "5"
+  set $ws3 "3: "
+  set $ws4 "4: "
+  set $ws5 "5: "
   set $ws6 "6"
   set $ws7 "7"
   set $ws8 "8"
-  set $ws9 "9: "
-  set $ws10 "10: "
+  set $ws9 "9: "
+  set $ws10 "10: "
 
 # Startup
   exec --no-startup-id compton
@@ -63,16 +66,16 @@
     #mode hide
     tray_output none
     status_command i3status
-    #i3bar_command i3bar -t
+    i3bar_command i3bar -t
     colors {
       background $transparent
       statusline $darkblack
-      separator $darkblack
+      separator $transparent
       #                  BORDER       BACKGROUND     TEXT
-      focused_workspace  $red         $red           $white
+      focused_workspace  $red80       $red80         $white
       active_workspace   $blue        $blue          $darkwhite
-      inactive_workspace $darkblack   $darkblack     $white
-      urgent_workspace   $darkblack   $darkblack     $white
+      inactive_workspace $transparent $transparent   $white
+      urgent_workspace   $transparent $transparent   $red
     }
   }
 
