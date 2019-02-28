@@ -1,9 +1,8 @@
-# My editor of choice is vim
-export EDITOR=$(/usr/bin/env which --skip-alias vim)
+export EDITOR=vim
 export SHELL=$(/usr/bin/env which --skip-alias zsh)
 
 if [ $commands[go] ]; then
-  export PATH=$PATH:$HOME/bin:$GOPATH/bin:/usr/local/go/bin
+  export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
   export GOROOT=$(go env GOROOT)
   export GOPATH=$HOME/go
 fi

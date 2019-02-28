@@ -7,7 +7,10 @@ let mapleader = " "
 " Plugins
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
-Plug 'chriskempson/base16-vim'
+" Issue https://github.com/chriskempson/base16-vim/issues/197
+" Pull Request https://github.com/chriskempson/base16-vim/pull/198
+" Plug 'chriskempson/base16-vim'
+Plug 'danielwe/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'

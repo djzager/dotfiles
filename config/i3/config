@@ -33,32 +33,24 @@
   exec --no-startup-id synclient TouchpadOff=1
   # Notifications
   exec --no-startup-id dunst
+  # Browser
+  exec --no-startup-id $term
+  exec --no-startup-id firefox
 
 # Colors
-  set_from_resource $darkblack    color0  #181818
-  set_from_resource $black        color8  #585858
-  set_from_resource $darkred      color1  #ab4642
-  set_from_resource $red          color9  #fb4934
-  set_from_resource $darkgreen    color2  #a1b56c
-  set_from_resource $green        color10 #282828
-  set_from_resource $darkyellow   color3  #f7ca88
-  set_from_resource $yellow       color11 #383838
-  set_from_resource $darkblue     color4  #7cafc2
-  set_from_resource $blue         color12 #b8b8b8
-  set_from_resource $darkmagenta  color5  #ba8baf
-  set_from_resource $magenta      color13 #e8e8e8
-  set_from_resource $darkcyan     color6  #86c1b9
-  set_from_resource $cyan         color14 #a16946
-  set_from_resource $darkwhite    color7  #d8d8d8
-  set_from_resource $white        color15 #f8f8f8
+  set $darkred      #a30000
+  set $tdarkred     #a3000080
+  set $red          #cc0000
+  set $tred         #cc000080
+  set $white        #f8f8f8
   set $transparent  #00000080
 
   #                       BORDER        BACKGROUND    TEXT      INDICATOR       CHILD_BORDER
-  client.focused          $red          $red          $white    $darkmagenta    $darkblue
-  client.unfocused        $transparent  $darkblack    $white    $darkblue       $darkblack
-  client.focused_inactive $transparent  $blue         $white    $darkblue       $darkblack
-  client.urgent           $darkred      $darkred      $black    $darkred        $darkred
-  client.background       $black
+  client.focused          $tred         $tred         $white    $white          $tdarkred
+  client.unfocused        $transparent  $transparent  $white    $white          $transparent
+  client.focused_inactive $transparent  $transparent  $white    $white          $transparent
+  client.urgent           $tdarkred     $tdarkred     $white    $white          $red 
+  client.background       $transparent
 
 # Bar
   bar {
@@ -69,11 +61,11 @@
     i3bar_command i3bar -t
     colors {
       background $transparent
-      statusline $darkblack
+      statusline $red
       separator $transparent
       #                  BORDER       BACKGROUND     TEXT
-      focused_workspace  $red80       $red80         $white
-      active_workspace   $blue        $blue          $darkwhite
+      focused_workspace  $tred        $tred          $white
+      active_workspace   $transparent $transparent   $white
       inactive_workspace $transparent $transparent   $white
       urgent_workspace   $transparent $transparent   $red
     }
@@ -166,6 +158,8 @@
   for_window [instance="dropdown_*"] move position center
 
   # Special windows
+  for_window [class="Firefox"] move workspace $ws1; workspace $ws1
+  for_window [class="Gnome-terminal"] move workspace $ws2; workspace $ws2
   for_window [class="Slack"] move workspace $ws3; workspace $ws3
   for_window [class="Telegram"] move workspace $ws3; workspace $ws3; layout tabbed
   for_window [class="Bluejeans"] move workspace $ws9; workspace $ws9
