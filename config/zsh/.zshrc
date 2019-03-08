@@ -1,6 +1,9 @@
 # Path to your oh-my-zsh installation.
 export MY_ZSH=$HOME/.config/zsh
 export ZSH=$MY_ZSH/oh-my-zsh
+export WORKSPACE=$HOME/Workspace
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -19,8 +22,6 @@ source $MY_ZSH/aliases.zsh
 source $MY_ZSH/funcs.zsh
 source $MY_ZSH/history.zsh
 
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
 
 # Integrations
 BASE16_SHELL=$MY_ZSH/base16-shell/

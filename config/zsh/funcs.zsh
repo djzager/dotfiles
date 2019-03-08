@@ -81,19 +81,20 @@ function gcb() {
 
 function dps() {
   local project=$(ls $WORKSPACE | fzf-down)
+  local session=${project//./-}
   if [[ -z "$project" ]]; then
     return
   fi
   local dir=$(realpath $WORKSPACE/$project)
 
-  if ! tmux has-session -t $project &> /dev/null; then
-    tmux new-session -A -s $project -c $dir -d
+  if ! tmux has-session -t $session &> /dev/null; then
+    tmux new-session -A -s $session -c $dir -d
   fi
 
   if [[ -n "$TMUX" ]]; then
-    tmux switch-client -t $project
+    tmux switch-client -t $session
   else
-    tmux attach-session -t $project
+    tmux attach-session -t $session
   fi
 }
 

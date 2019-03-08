@@ -7,8 +7,10 @@
   font pango: Hack, FontAwesome 10
   for_window [class="^.*"] border pixel 2
   hide_edge_borders smart
-  gaps inner 10
-  gaps outer 10
+  set $gaps_inner 10
+  set $gaps_outer 10
+  gaps inner $gaps_inner
+  gaps outer $gaps_outer
 
   # Use Mouse+$mod to drag floating windows to their wanted position
   floating_modifier $mod
@@ -33,8 +35,6 @@
   exec --no-startup-id synclient TouchpadOff=1
   # Notifications
   exec --no-startup-id dunst
-  # Browser
-  exec --no-startup-id $term
   exec --no-startup-id firefox
 
 # Colors
@@ -49,7 +49,7 @@
   client.focused          $tred         $tred         $white    $white          $tdarkred
   client.unfocused        $transparent  $transparent  $white    $white          $transparent
   client.focused_inactive $transparent  $transparent  $white    $white          $transparent
-  client.urgent           $tdarkred     $tdarkred     $white    $white          $red 
+  client.urgent           $tdarkred     $tdarkred     $white    $white          $red
   client.background       $transparent
 
 # Bar
@@ -159,7 +159,6 @@
 
   # Special windows
   for_window [class="Firefox"] move workspace $ws1; workspace $ws1
-  for_window [class="Gnome-terminal"] move workspace $ws2; workspace $ws2
   for_window [class="Slack"] move workspace $ws3; workspace $ws3
   for_window [class="Telegram"] move workspace $ws3; workspace $ws3; layout tabbed
   for_window [class="Bluejeans"] move workspace $ws9; workspace $ws9
@@ -174,7 +173,7 @@
 # i3 Modes
   # Resize Windows
   set $mode_resize Resize control: (h) shrink width, (k) grow height, (j) shrink height, (l) grow width
-  bindsym $mod+r mode "$mode_resize"
+  bindsym $mod+Shift+r mode "$mode_resize"
   mode "$mode_resize" {
     bindsym h resize shrink width 10 px or 10 ppt
     bindsym j resize shrink height 10 px or 10 ppt
@@ -183,6 +182,7 @@
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
+    bindsym space mode "default"
   }
 
   # Brightness
@@ -196,6 +196,7 @@
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
+    bindsym space mode "default"
   }
 
   # Volume Config
@@ -208,6 +209,7 @@
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
+    bindsym space mode "default"
   }
 
   # i3 Config
@@ -219,6 +221,7 @@
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
+    bindsym space mode "default"
   }
 
   # Set shut down, restart and locking features
@@ -230,8 +233,8 @@
     bindsym r exec --no-startup-id reboot, mode "default"
     bindsym Shift+s exec --no-startup-id shutdown, mode "default"
 
-    # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
     bindsym Escape mode "default"
+    bindsym space mode "default"
   }
 
