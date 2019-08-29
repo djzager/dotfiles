@@ -1,8 +1,9 @@
 setlocal noexpandtab
+let g:go_fmt_experimental=1
 
-" nmap <Leader>dd <Plug>(go-def-vertical)
-" nmap <Leader>dv <Plug>(go-doc-vertical)
-" nmap <Leader>db <Plug>(go-doc-browser)
+nmap <Leader>dd <Plug>(go-def-vertical)
+nmap <Leader>dv <Plug>(go-doc-vertical)
+nmap <Leader>db <Plug>(go-doc-browser)
 "
 " nmap <leader>r  <Plug>(go-run)
 " nmap <leader>t  <Plug>(go-test)

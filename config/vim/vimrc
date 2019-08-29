@@ -4,26 +4,34 @@
 " https://github.com/jessfraz/dotfiles
 let mapleader = " "
 
+" Environment
+	set directory=$XDG_CACHE_HOME/vim,~/,/tmp
+	set backupdir=$XDG_CACHE_HOME/vim,~/,/tmp
+	set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+	set runtimepath=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME
+	let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
+
 " Plugins
-call plug#begin('~/.vim/plugged')
-Plug 'airblade/vim-gitgutter'
-" Issue https://github.com/chriskempson/base16-vim/issues/197
-" Pull Request https://github.com/chriskempson/base16-vim/pull/198
-" Plug 'chriskempson/base16-vim'
-Plug 'danielwe/base16-vim'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'kopischke/vim-fetch'
-Plug 'Raimondi/delimitMate'
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
-Plug 'w0rp/ale'
-call plug#end()
+	call plug#begin("$XDG_CONFIG_HOME/vim/plugged")
+	Plug 'airblade/vim-gitgutter'
+	" Issue https://github.com/chriskempson/base16-vim/issues/197
+	" Pull Request https://github.com/chriskempson/base16-vim/pull/198
+	" Plug 'chriskempson/base16-vim'
+	Plug 'danielwe/base16-vim'
+	Plug 'christoomey/vim-tmux-navigator'
+	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+	Plug 'junegunn/fzf'
+	Plug 'junegunn/fzf.vim'
+	Plug 'kopischke/vim-fetch'
+	Plug 'Raimondi/delimitMate'
+	Plug 'sheerun/vim-polyglot'
+	Plug 'tpope/vim-commentary'
+	Plug 'tpope/vim-sensible'
+	Plug 'tpope/vim-fugitive'
+	Plug 'tpope/vim-surround'
+	Plug 'vim-airline/vim-airline'
+	Plug 'w0rp/ale'
+	call plug#end()
 
 " Basic
 	set nocompatible                " Use Vim settings, rather than Vi settings (much better!).
@@ -92,3 +100,18 @@ nnoremap <C-p> :Files<cr>
 
 " Spell-check set to <leader>o, 'o' for 'orthography':
 	map <leader>o :setlocal spell! spelllang=en_us<cr>
+	map <leader>b :Buffers<cr>
+	map <leader>f :Files<cr>
+
+" Color
+	if filereadable(expand("~/.vimrc_background"))
+		let base16colorspace=256
+		source ~/.vimrc_background
+		highlight Normal ctermbg=none
+		highlight NonText ctermbg=none
+		highlight LineNr ctermbg=none
+		highlight GitGutterAdd ctermbg=none
+		highlight GitGutterChange ctermbg=none
+		highlight GitGutterDelete ctermbg=none
+		highlight GitGutterChangeDelete ctermbg=none
+	endif

@@ -1,5 +1,5 @@
 *.netrwhist
-vim/plugged/*
+config/vim/plugged/*
 *.swp
 .vagrant
 zsh/work.zsh

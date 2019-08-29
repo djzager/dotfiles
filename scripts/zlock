@@ -1,22 +1,23 @@
 #!/bin/bash
 
-WALLPAPER="$HOME/wallpaper"
-LOCKSCREEN="$HOME/lockscreen.png"
-XRANDR_OUTPUT=$(xrandr | sed -e 's/,//g' | grep -w current)
-X_SIZE=$(echo $XRANDR_OUTPUT | awk '{ print $8 }')
-Y_SIZE=$(echo $XRANDR_OUTPUT | awk '{ print $10 }')
+i3lock -i $XDG_CONFIG_HOME/lockscreen
+# WALLPAPER="$HOME/wallpaper"
+# LOCKSCREEN="$HOME/lockscreen.png"
+# XRANDR_OUTPUT=$(xrandr | sed -e 's/,//g' | grep -w current)
+# X_SIZE=$(echo $XRANDR_OUTPUT | awk '{ print $8 }')
+# Y_SIZE=$(echo $XRANDR_OUTPUT | awk '{ print $10 }')
 
-if [ -f $LOCKSCREEN ]; then
-  FILE_OUTPUT=$(file $LOCKSCREEN | sed -e 's/,//g')
-  FILE_X=$(echo $FILE_OUTPUT | awk '{ print $5 }')
-  FILE_Y=$(echo $FILE_OUTPUT | awk '{ print $7 }')
+# if [ -f $LOCKSCREEN ]; then
+#   FILE_OUTPUT=$(file $LOCKSCREEN | sed -e 's/,//g')
+#   FILE_X=$(echo $FILE_OUTPUT | awk '{ print $5 }')
+#   FILE_Y=$(echo $FILE_OUTPUT | awk '{ print $7 }')
 
-  if [ "${X_SIZE}x${Y_SIZE}" = "${FILE_X}x${FILE_Y}" ]; then
-    i3lock -i $LOCKSCREEN
-    exit 0
-  fi
-  echo "${X_SIZE}x${Y_SIZE} != ${FILE_X}x${FILE_Y}"
-fi
+#   if [ "${X_SIZE}x${Y_SIZE}" = "${FILE_X}x${FILE_Y}" ]; then
+#     i3lock -i $LOCKSCREEN
+#     exit 0
+#   fi
+#   echo "${X_SIZE}x${Y_SIZE} != ${FILE_X}x${FILE_Y}"
+# fi
 
-convert $WALLPAPER -resize "${X_SIZE}x${Y_SIZE}^" -gravity center -crop "${X_SIZE}x${Y_SIZE}+0+0" +repage $LOCKSCREEN
-i3lock -i $LOCKSCREEN
+# convert $WALLPAPER -resize "${X_SIZE}x${Y_SIZE}^" -gravity center -crop "${X_SIZE}x${Y_SIZE}+0+0" +repage $LOCKSCREEN
+# i3lock -i $LOCKSCREEN

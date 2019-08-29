@@ -1,12 +1,13 @@
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
-export PATH="$PATH:$XDG_DATA_HOME/bin:$XDG_DATA_HOME/flatpak/exports/bin:$XDG_DATA_HOME/bin/container-scripts"
+export PATH="$PATH:$XDG_DATA_HOME/bin:$XDG_DATA_HOME/flatpak/exports/bin:$XDG_DATA_HOME/bin/container-scripts:$XDG_DATA_HOME/go/bin"
 # https://wiki.archlinux.org/index.php/Qt#Configuration_of_Qt5_apps_under_environments_other_than_KDE_Plasma
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
 export LANG="en_US.UTF-8"
 export EDITOR=vim
+export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 export SHELL=/usr/bin/zsh
 export KEYTIMEOUT=1
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
