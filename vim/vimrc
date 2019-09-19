@@ -89,3 +89,10 @@ nnoremap <C-p> :Files<cr>
 
 " Spell-check set to <leader>o, 'o' for 'orthography':
 	map <leader>o :setlocal spell! spelllang=en_us<cr>
+
+" if filereadable(expand("~/.vimrc_background"))
+"   let base16colorspace=256
+"   source ~/.vimrc_background
+"   hi Normal ctermbg=none
+"   hi NonText ctermbg=none
+" endif
