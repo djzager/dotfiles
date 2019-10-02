@@ -1,0 +1,22 @@
+---
+
+- name: Get packages for building/using gllock
+  become: true
+  dnf:
+    state: latest
+    name:
+      - xorg-x11-proto-devel
+      - libX11-devel
+      - glew-devel
+
+- name: Pull gllock
+  git:
+    repo: git@github.com:kuravih/gllock
+    dest: "{{ gllock_dir }}"  
+    update: no
+
+- name: Install
+  shell: make install
+  args:
+    chdir: "{{ gllock_dir }}"
+    creates: "{{ gllock_dir }}/gllock"

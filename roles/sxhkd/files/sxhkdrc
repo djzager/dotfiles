@@ -1,0 +1,25 @@
+# Audio Keys
+XF86AudioMute
+	amixer sset Master toggle
+XF86Audio{Raise,Lower}Volume
+	amixer sset Master 5%{+,-}
+XF86AudioMicMute
+	amixer set Capture toggle
+
+# Brightness
+{_,shift +} XF86MonBrightness{Down,Up}
+	backlightctl {-,min,+,max}
+
+# Wifi key
+XF86WLAN
+	wifi_toggle
+
+# System
+super + shift + x
+	dmenu_prompt "Shutdown computer?" "sudo -A shutdown -h now"
+super + shift + BackSpace
+	dmenu_prompt "Reboot?" "sudo -A shutdown -r now"
+super + shift + e
+	dmenu_prompt 'Leave Xorg?' 'killall Xorg'
+super + shift + l
+	gllock

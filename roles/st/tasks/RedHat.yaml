@@ -1,0 +1,20 @@
+---
+
+- name: Pull dwm
+  git:
+    repo: git@github.com:djzager/st
+    dest: "{{ st_dir }}"  
+
+- name: Add upstream remote
+  command: git remote add up https://git.suckless.org/st
+  args:
+    chdir: "{{ st_dir }}"
+  register: command_result
+  failed_when: "command_result.rc != 0 and 'remote up already exists' not in command_result.stderr"
+  changed_when: command_result.rc == 0
+
+- name: Build st
+  become: true
+  make:
+    chdir: "{{ st_dir }}"
+    target: install

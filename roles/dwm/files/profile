@@ -1,0 +1,30 @@
+#!/bin/sh
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export PATH="$PATH:$XDG_DATA_HOME/bin:$XDG_DATA_HOME/flatpak/exports/bin"
+
+export EDITOR="vimx"
+export VIMINIT=":source $XDG_CONFIG_HOME/vim/vimrc"
+export TERMINAL="st"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+# export BROWSER
+# export READER
+# export FILE
+
+# Use dmenu when asking for sudo password
+export SUDO_ASKPASS="$XDG_DATA_HOME/bin/dmenu_pass"
+
+# https://wiki.archlinux.org/index.php/Color_output_in_console#less
+export LESS=-R
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\E[01;44;33m' # begin reverse video
+export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+export LESSHISTFILE="-"
+
+[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx

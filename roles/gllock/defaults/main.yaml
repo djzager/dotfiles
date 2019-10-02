@@ -1,0 +1,3 @@
+---
+
+gllock_dir: "{{ workspace_dir }}/gllock"

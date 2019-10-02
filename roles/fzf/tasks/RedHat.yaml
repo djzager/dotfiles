@@ -1,0 +1,32 @@
+---
+
+- name: Pull zsh
+  git:
+    repo: git@github.com:junegunn/fzf
+    dest: "{{ fzf_dir }}"
+    update: yes
+
+- name: Install fzf
+  shell: ./install --bin --64
+  args:
+    chdir: "{{ fzf_dir }}"
+
+- name: Link fzf to xdg_data_home bin
+  file:
+    src: "{{ fzf_dir }}/bin/{{ item }}"
+    dest: "{{ xdg_data_home }}/bin/{{ item }}"
+    force: yes
+    state: link
+  with_items:
+    - fzf
+    - fzf-tmux
+
+- name: Link fzf completion & keybindings to zdotdir
+  file:
+    src: "{{ fzf_dir }}/shell/{{ item }}"
+    dest: "{{ lookup('env', 'ZDOTDIR') | default(ansible_user_dir ~ '.zsh', true) }}/fzf-{{ item }}"
+    force: yes
+    state: link
+  with_items:
+    - completion.zsh
+    - key-bindings.zsh

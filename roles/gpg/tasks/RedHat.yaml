@@ -1,0 +1,24 @@
+---
+
+- name: Install gpg2
+  become: true
+  dnf:
+    name:
+      - gnupg2
+      - pcsc-lite
+    state: latest
+
+- name: Ensure config directory exists
+  file:
+    dest: "{{ gpg_config_dir }}"
+    state: directory
+    mode: '700'
+
+- name: Link configuration files into place
+  file:
+    src: "{{ item }}"
+    dest: "{{ gpg_config_dir }}/{{ item | basename }}"
+    force: yes
+    state: link
+  with_fileglob:
+    - "{{ role_path }}/files/*"

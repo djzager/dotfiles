@@ -1,0 +1,44 @@
+---
+
+- name: Install zsh
+  become: true
+  dnf:
+    name:
+      - zsh
+      - zsh-syntax-highlighting
+    state: latest
+
+- name: Set default shell to zsh
+  become: true
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh
+
+- name: Ensure config directory exists
+  file:
+    dest: "{{ zsh_config_dir }}"
+    state: directory
+
+# Need to leave zprofile in home directory
+#- name: Link zsh profile to .profile
+#  file:
+#    src: "{{ ansible_user_dir }}/.profile"
+#    dest: "{{ zsh_config_dir }}/.zprofile"
+#    force: yes
+#    state: link
+
+- name: Link zshrc into place
+  file:
+    src: "{{ role_path }}/files/zshrc"
+    dest: "{{ zsh_config_dir }}/.zshrc"
+    force: yes
+    state: link
+
+- name: Link configurations into config dir
+  file:
+    src: "{{ item }}"
+    dest: "{{ zsh_config_dir }}/{{ item | basename }}"
+    force: yes
+    state: link
+  with_fileglob:
+    - "{{ role_path }}/files/*.zsh"

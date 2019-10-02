@@ -1,0 +1,52 @@
+---
+
+- name: Install common RedHat packages
+  become: true
+  dnf:
+    state: latest
+    name:
+      - "@development-tools"
+      # Apps
+      - bat
+      - chromium
+      - xbacklight
+      - NetworkManager-openvpn
+      # Fonts
+      - adobe-source-code-pro-fonts
+      - dejavu-sans-mono-fonts
+      - google-droid-sans-mono-fonts
+      - google-noto-emoji-fonts
+      - levien-inconsolata-fonts
+      - mozilla-fira-mono-fonts
+
+- name: Manage flatpak repository remotes
+  flatpak_remote:
+    state: present
+    method: user
+    name: flathub
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
+- name: Install flatpaks
+  flatpak:
+    state: present
+    method: user
+    remote: flathub
+    name: "{{ item }}"
+  with_items:
+    - org.telegram.desktop
+    - com.bluejeans.Bluejeans
+    - com.slack.Slack
+    - us.zoom.Zoom
+
+- name: Link config files into place
+  file:
+    src: "{{ item }}"
+    dest: "{{ xdg_config_home }}/{{ item | basename }}"
+    force: yes
+    state: link
+  with_fileglob:
+    - "{{ role_path }}/files/*"
+
+- name: Change hostname
+  hostname:
+    name: "{{ hostname }}"

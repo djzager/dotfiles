@@ -1,0 +1,20 @@
+---
+
+- name: Install Simple X Hotkey Daemon
+  become: true
+  dnf:
+    state: latest
+    name:
+      - sxhkd
+
+- name: Ensure config directory exists
+  file:
+    dest: "{{ sxhkd_config_dir }}"
+    state: directory
+
+- name: Link sxhkdrc into place
+  file:
+    src: "{{ role_path }}/files/sxhkdrc"
+    dest: "{{ sxhkd_config_dir }}/sxhkdrc"
+    force: yes
+    state: link

@@ -1,0 +1,53 @@
+---
+
+- name: Get packages for building/using dwm
+  become: true
+  dnf:
+    state: latest
+    name:
+      - dmenu
+      - dbus-x11
+      - libX11-devel
+      - libXft-devel
+      - libXinerama-devel
+      - xorg-x11-xinit-session
+
+- name: Pull dwm
+  git:
+    repo: git@github.com:djzager/dwm
+    dest: "{{ dwm_dir }}"  
+    update: no
+
+- name: Add upstream remote
+  command: git remote add up https://git.suckless.org/dwm
+  args:
+    chdir: "{{ dwm_dir }}"
+  register: command_result
+  failed_when: "command_result.rc != 0 and 'remote up already exists' not in command_result.stderr"
+  changed_when: command_result.rc == 0
+
+- name: Build dwm
+  become: true
+  make:
+    chdir: "{{ dwm_dir }}"
+    target: install
+
+- name: Link xinitrc into place
+  file:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "{{ ansible_user_dir }}/.{{ item }}"
+    state: link
+  with_items:
+    - profile
+    - xprofile
+    - xinitrc
+
+- name: Link bash profile to .profile
+  file:
+    src: "{{ ansible_user_dir }}/.profile"
+    dest: "{{ ansible_user_dir }}/.{{ item }}"
+    force: yes
+    state: link
+  with_items:
+   - bash_profile
+   - zprofile

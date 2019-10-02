@@ -1,0 +1,22 @@
+---
+
+# Seems redundant since we need it to get here
+- name: Install git
+  become: true
+  dnf:
+    name: git
+    state: latest
+
+- name: Ensure config directory exists
+  file:
+    dest: "{{ git_config_dir }}"
+    state: directory
+
+- name: Link configuration files into place
+  file:
+    src: "{{ item }}"
+    dest: "{{ git_config_dir }}/{{ item | basename }}"
+    force: yes
+    state: link
+  with_fileglob:
+    - "{{ role_path }}/files/*"

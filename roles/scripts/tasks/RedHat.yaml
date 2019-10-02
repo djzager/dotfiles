@@ -1,0 +1,10 @@
+---
+
+- name: Link scripts into place
+  file:
+    src: "{{ item }}"
+    dest: "{{ scripts_dir }}/{{ item | basename }}"
+    force: yes
+    state: link
+  with_fileglob:
+    - "{{ role_path }}/files/*"

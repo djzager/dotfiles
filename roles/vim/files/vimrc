@@ -1,0 +1,99 @@
+" Most helpful other configs I have taken from:
+" https://github.com/LukeSmithxyz/voidrice
+" https://github.com/wincent/wincent
+" https://github.com/jessfraz/dotfiles
+let mapleader = " "
+
+" Environment
+	set undodir=$XDG_CACHE_HOME/vim/undo
+	set directory=$XDG_CACHE_HOME/vim/swap
+	set backupdir=$XDG_CACHE_HOME/vim/backup
+	set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+	set runtimepath=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME
+	let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
+
+" Plugins
+	if empty(glob("$XDG_CONFIG_HOME/vim/autoload/plug.vim"))
+		silent !mkdir -p "$XDG_CONFIG_HOME/vim/autoload"
+		silent !curl https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > "$XDG_CONFIG_HOME/vim/autoload/plug.vim"
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	endif
+
+	call plug#begin("$XDG_CONFIG_HOME/vim/plugged")
+Plug 'christoomey/vim-tmux-navigator'
+		Plug 'junegunn/fzf'
+		Plug 'junegunn/fzf.vim'
+		Plug 'kopischke/vim-fetch'
+		Plug 'tpope/vim-commentary'
+	call plug#end()
+
+" Basic
+	set nocompatible                " Use Vim settings, rather than Vi settings (much better!).
+	set ttyfast                     " Draw faster
+	set number relativenumber       " Relative line numbers
+	set wildmode=longest,list,full  " Command autocompletion
+	syntax on                       " Syntax highlighting
+	set showmatch                   " Highlight curlybraces!
+	set backspace=indent,eol,start  " Allow backspacing over everything in insert mode.
+	set encoding=utf-8              " Use utf-8 when displaying
+	set winwidth=120                " Minimum number of columns for current window
+	set list listchars=tab:¬\       " Show hidden characters
+	set tabstop=2 shiftwidth=2      " Handle <Tab> and indent
+	set expandtab
+	set splitright splitbelow       " New splits → New splits ↓
+	set scrolloff=10                " Show a few lines of context around the cursor.
+	set ignorecase                  " ignore case when searching
+	set incsearch                   " search as we enter text
+	set hlsearch                    " highlight matches
+
+" Cursor
+	let &t_SI = "\<Esc>[6 q"
+	let &t_SR = "\<Esc>[4 q"
+	let &t_EI = "\<Esc>[2 q"
+
+" Folding
+	set foldmethod=indent           " fold on indent level
+	set foldignore=                 " don't ignore #
+	set foldnestmax=10              " max depth 10
+	set foldlevelstart=1            " starting fold level
+
+" Copy/Paste
+	set clipboard=unnamedplus
+	" Copy whole file
+	map <leader>a :%y+<CR>
+	" Paste from system clipboard
+	map <C-p> "+P
+
+" Autocommand
+	if has("autocmd")
+		" Enable file type detection.
+		filetype plugin on
+
+		" When editing a file, always jump to the last known cursor position.
+		autocmd BufReadPost *
+		\ if line("'\"") >= 1 && line("'\"") <= line("$") |
+		\   exe "normal! g`\"" |
+		\ endif
+
+		autocmd BufRead,BufNewFile *.py.stub set filetype=python
+		autocmd BufRead,BufNewFile *.pod,*.svc,*.app,*.yml set filetype=yaml
+		autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+		autocmd BufRead,BufNewFile *.zsh-theme set filetype=conf
+
+		" Use relative numbering
+		autocmd FocusLost * :set norelativenumber
+		autocmd FocusGained * :set relativenumber
+		autocmd InsertEnter * :set norelativenumber
+		autocmd InsertLeave * :set relativenumber
+
+		" Automatically delete all trailing whitespace on save.
+		autocmd BufWritePre * %s/\s\+$//e
+
+		" Disables automatic commenting on newline:
+		autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+	endif
+
+" Custom commands
+	command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+	nnoremap <C-o> :Files<cr>
+  nnoremap <C-f> :Rg<cr>

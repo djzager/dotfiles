@@ -1,0 +1,3 @@
+---
+
+scripts_dir: "{{ xdg_data_home }}/bin"
