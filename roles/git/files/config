@@ -9,6 +9,6 @@
 [core]
 	excludesfile = ~/.gitignore
 [commit]
-	gpgsign = false
+	gpgsign = true
 [gpg]
 	program = gpg2
