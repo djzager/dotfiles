@@ -1,0 +1,5 @@
+alias gc='git commit -v'
+alias gcm='git checkout master'
+alias gco='git checkout'
+alias gd='git diff'
+alias gst='git status'

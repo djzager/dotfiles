@@ -11,6 +11,7 @@
       - chromium
       - xbacklight
       - NetworkManager-openvpn
+      - xorg-x11-drv-synaptics-legacy
       # Fonts
       - adobe-source-code-pro-fonts
       - dejavu-sans-mono-fonts

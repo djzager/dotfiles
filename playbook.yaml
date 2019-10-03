@@ -19,6 +19,7 @@
   roles:
     - { role: common, tags: [ 'common' ] }
     - { role: git, tags: [ 'git' ] }
+    - { role: golang, tags: [ 'golang' ] }
     - { role: scripts, tags: [ 'scripts' ] }
     - { role: dwm, tags: [ 'dwm' ] } # depends on st, sxhkd, dunst
     - { role: zsh, tags: [ 'zsh' ] }

@@ -1,0 +1,26 @@
+---
+
+- name: Download go tarball
+  become: true
+  unarchive:
+    src: "https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz"
+    dest: "{{ xdg_data_home }}"
+    copy: no
+
+- name: Ensure go directories exist
+  file:
+    dest: "{{ ansible_user_dir }}/go/{{ item }}"
+    state: directory
+  with_items:
+    - bin
+    - pkg
+    - src
+
+- name: Link configuration files into zdotdir
+  file:
+    src: "{{ item }}"
+    dest: "{{ lookup('env', 'ZDOTDIR') | default(ansible_user_dir ~ '.zsh', true) }}/{{ item | basename }}"
+    force: yes
+    state: link
+  with_fileglob:
+    - "{{ role_path }}/files/*.zsh"
