@@ -27,3 +27,5 @@
     - { role: tmux, tags: [ 'tmux' ] }
     - { role: ripgrep, tags: [ 'ripgrep' ] }
     - { role: gpg, tags: [ 'gpg' ] }
+    - { role: wallpapers, tags: [ 'wallpapers' ] }
+    - { role: sxiv, tags: [ 'sxiv' ] }

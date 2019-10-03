@@ -7,6 +7,7 @@
     name:
       - dmenu
       - dbus-x11
+      - feh
       - libX11-devel
       - libXft-devel
       - libXinerama-devel
@@ -15,7 +16,7 @@
 - name: Pull dwm
   git:
     repo: git@github.com:djzager/dwm
-    dest: "{{ dwm_dir }}"  
+    dest: "{{ dwm_dir }}"
     update: no
 
 - name: Add upstream remote

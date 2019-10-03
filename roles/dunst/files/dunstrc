@@ -2,7 +2,7 @@
 [global]
     # font = Tewi 8
     # font = "FontAwesome, Noto Sans 10"
-    font = Monospace 12
+    font = Monospace 10
 
     # allow a small subset of html markup:
     # <b>bold</b>

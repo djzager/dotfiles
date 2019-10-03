@@ -14,6 +14,10 @@ XF86AudioMicMute
 XF86WLAN
 	wifi_toggle
 
+# Status
+super + shift + t
+	timehack
+
 # System
 super + shift + x
 	dmenu_prompt "Shutdown computer?" "sudo -A shutdown -h now"

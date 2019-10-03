@@ -1,0 +1,7 @@
+---
+
+- name: Pull wallpapers
+  git:
+    repo: git@github.com:LukeSmithxyz/wallpapers.git
+    dest: "{{ wallpaper_dir }}"
+    update: yes

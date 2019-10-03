@@ -1,9 +1,9 @@
 ---
 
-- name: Pull dwm
+- name: Pull st
   git:
     repo: git@github.com:djzager/st
-    dest: "{{ st_dir }}"  
+    dest: "{{ st_dir }}"
 
 - name: Add upstream remote
   command: git remote add up https://git.suckless.org/st

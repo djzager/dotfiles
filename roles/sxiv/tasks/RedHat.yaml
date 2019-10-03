@@ -1,0 +1,20 @@
+---
+
+- name: Install Simple X Image Viewer
+  become: true
+  dnf:
+    state: latest
+    name:
+      - sxiv
+
+- name: Ensure config directory exists
+  file:
+    dest: "{{ sxiv_config_dir }}/exec"
+    state: directory
+
+- name: Link sxiv key-handler into place
+  file:
+    src: "{{ role_path }}/files/key-handler"
+    dest: "{{ sxiv_config_dir }}/exec/key-handler"
+    force: yes
+    state: link
