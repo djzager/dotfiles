@@ -1,0 +1,4 @@
+---
+
+container_scripts_dir: "{{ workspace_dir }}/container-scripts"
+scripts_dir: "{{ xdg_data_home }}/bin"

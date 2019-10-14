@@ -1,0 +1,52 @@
+---
+
+- name: Get packages for containers
+  become: true
+  dnf:
+    state: latest
+    name:
+      - buildah
+      - moby-engine
+      - podman
+
+- name: Enable (and start) docker service
+  become: true
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Ensure group "docker" exists
+  become: true
+  group:
+    name: docker
+    state: present
+
+- name: Add user to "docker" group
+  become: true
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes
+
+- name: Pull container-scripts
+  git:
+    repo: git@github.com:djzager/container-scripts
+    dest: "{{ container_scripts_dir }}"
+    update: no
+
+- name: Link scripts into place
+  file:
+    src: "{{ container_scripts_dir }}"
+    dest: "{{ xdg_data_home }}/container-scripts"
+    force: yes
+    state: link
+
+- name: Link configuration files into zdotdir
+  file:
+    src: "{{ item }}"
+    dest: "{{ lookup('env', 'ZDOTDIR') | default(ansible_user_dir ~ '.zsh', true) }}/{{ item | basename }}"
+    force: yes
+    state: link
+  with_fileglob:
+    - "{{ role_path }}/files/*.zsh"

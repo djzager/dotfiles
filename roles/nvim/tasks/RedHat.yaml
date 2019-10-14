@@ -1,0 +1,50 @@
+---
+
+- name: Download nvim tarball
+  unarchive:
+    src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim-linux64.tar.gz"
+    dest: "{{ xdg_data_home }}"
+    copy: no
+    creates: "{{ xdg_data_home }}/nvim-linux64"
+
+- name: Ensure important directories exist
+  file:
+    dest: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ nvim_config_dir }}"
+    - "{{ nvim_config_dir }}/autoload"
+
+- name: Link init.vim into place
+  file:
+    src: "{{ role_path }}/files/init.vim"
+    dest: "{{ nvim_config_dir }}/init.vim"
+    force: yes
+    state: link
+
+- name: Link personal autoload scripts in
+  file:
+    src: "{{ role_path }}/files/autoload/dzager"
+    dest: "{{ nvim_config_dir }}/autoload/dzager"
+    force: yes
+    state: link
+
+- name: Link personal config directories in
+  file:
+    src: "{{ role_path }}/files/{{ item }}"
+    dest: "{{ nvim_config_dir }}/{{ item }}"
+    force: yes
+    state: link
+  with_items:
+    - ftdetect
+    - after
+    - plugin
+
+- name: Link configuration files into zdotdir
+  file:
+    src: "{{ item }}"
+    dest: "{{ lookup('env', 'ZDOTDIR') | default(ansible_user_dir ~ '.zsh', true) }}/{{ item | basename }}"
+    force: yes
+    state: link
+  with_fileglob:
+    - "{{ role_path }}/files/*.zsh"

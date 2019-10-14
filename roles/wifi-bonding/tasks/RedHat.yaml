@@ -1,0 +1,16 @@
+---
+
+- name: Enable bonding module
+  become: true
+  modprobe:
+    name: bonding
+    state: present
+
+# sudo nmcli connection add type bond ifname bond0 con-name bond0
+- name: Create bond
+  become: true
+  command: nmcli connection add type bond ifname bond0 con-name bond0
+  # nmcli:
+  #   type: bond
+  #   conn_name: bond0
+  #   state: present

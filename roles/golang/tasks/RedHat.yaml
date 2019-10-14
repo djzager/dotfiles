@@ -1,7 +1,6 @@
 ---
 
 - name: Download go tarball
-  become: true
   unarchive:
     src: "https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz"
     dest: "{{ xdg_data_home }}"

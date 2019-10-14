@@ -3,6 +3,7 @@
 " https://github.com/wincent/wincent
 " https://github.com/jessfraz/dotfiles
 let mapleader = " "
+let maplocalleader = "\\"
 
 " Environment
 	set undodir=$XDG_CACHE_HOME/vim/undo
@@ -20,7 +21,12 @@ let mapleader = " "
 	endif
 
 	call plug#begin("$XDG_CONFIG_HOME/vim/plugged")
-Plug 'christoomey/vim-tmux-navigator'
+		Plug 'autozimu/LanguageClient-neovim', {
+				\ 'branch': 'next',
+				\ 'do': 'bash install.sh',
+		\ }
+		Plug 'christoomey/vim-tmux-navigator'
+		" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 		Plug 'junegunn/fzf'
 		Plug 'junegunn/fzf.vim'
 		Plug 'kopischke/vim-fetch'
@@ -62,7 +68,15 @@ Plug 'christoomey/vim-tmux-navigator'
 	" Copy whole file
 	map <leader>a :%y+<CR>
 	" Paste from system clipboard
-	map <C-p> "+P
+	map <leader>p "+p
+	map <leader>P "+P
+
+	map <leader><leader> <c-^>
+
+" Custom commands
+	command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+	nnoremap <C-o> :Files<cr>
+	nnoremap <C-f> :Rg<cr>
 
 " Autocommand
 	if has("autocmd")
@@ -91,9 +105,54 @@ Plug 'christoomey/vim-tmux-navigator'
 
 		" Disables automatic commenting on newline:
 		autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+		" VIM
+		autocmd FileType vim setlocal noexpandtab
+
+		" Go
+		autocmd FileType go setlocal noexpandtab
 	endif
 
-" Custom commands
-	command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-	nnoremap <C-o> :Files<cr>
-  nnoremap <C-f> :Rg<cr>
+" LanguageServer
+	let g:LanguageClient_useFloatingHover=1
+	let g:LanguageClient_hoverPreview='Always'
+	let g:LanguageClient_serverCommands = {
+		\ 'go': ['~/go/bin/gopls'],
+		\ }
+
+function! s:Config()
+  if has_key(g:LanguageClient_serverCommands, &filetype)
+    if &filetype == 'reason'
+      " Format selection with gq.
+      setlocal formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+
+      " <Leader>f -- Format buffer.
+      nnoremap <buffer> <silent> <Leader>f :call LanguageClient_textDocument_formatting()<CR>
+    endif
+
+    " gd -- go to definition
+    nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
+
+    " K -- lookup keyword
+    nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<CR>
+
+    if exists('+signcolumn')
+      setlocal signcolumn=yes
+    endif
+  endif
+endfunction
+
+function! s:Bind()
+  nnoremap <buffer> <silent> K :call LanguageClient#closeFloatingHover()<CR>
+  nnoremap <buffer> <silent> <Esc> :call LanguageClient#closeFloatingHover()<CR>
+endfunction
+
+augroup WincentLanguageClientAutocmds
+  autocmd!
+  autocmd FileType * call s:Config()
+
+  if has('nvim') && exists('*nvim_open_win')
+    " Can use floating window.
+    autocmd BufEnter __LanguageClient__ call s:Bind()
+  endif
+augroup END

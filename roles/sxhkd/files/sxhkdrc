@@ -17,6 +17,8 @@ XF86WLAN
 # Status
 super + shift + t
 	timehack
+super + shift + v
+	volumehack
 
 # System
 super + shift + x

@@ -1,0 +1,7 @@
+---
+
+- name: Pull base16-shell
+  git:
+    repo: git@github.com:chriskempson/base16-shell.git
+    dest: "{{ base16_shell_config_dir }}"
+    update: yes

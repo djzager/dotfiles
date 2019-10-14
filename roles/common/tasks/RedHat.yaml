@@ -7,18 +7,13 @@
     name:
       - "@development-tools"
       # Apps
-      - bat
+      - bat # Cat clone with pretty highlighting
       - chromium
-      - xbacklight
       - NetworkManager-openvpn
+      - scrot
+      - xbacklight
+      - xclip
       - xorg-x11-drv-synaptics-legacy
-      # Fonts
-      - adobe-source-code-pro-fonts
-      - dejavu-sans-mono-fonts
-      - google-droid-sans-mono-fonts
-      - google-noto-emoji-fonts
-      - levien-inconsolata-fonts
-      - mozilla-fira-mono-fonts
 
 - name: Manage flatpak repository remotes
   flatpak_remote:

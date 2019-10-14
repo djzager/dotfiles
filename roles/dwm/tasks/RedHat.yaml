@@ -11,6 +11,8 @@
       - libX11-devel
       - libXft-devel
       - libXinerama-devel
+      - xcompmgr
+      - xorg-x11-apps
       - xorg-x11-xinit-session
 
 - name: Pull dwm
@@ -27,11 +29,11 @@
   failed_when: "command_result.rc != 0 and 'remote up already exists' not in command_result.stderr"
   changed_when: command_result.rc == 0
 
-- name: Build dwm
-  become: true
-  make:
-    chdir: "{{ dwm_dir }}"
-    target: install
+# - name: Build dwm
+#   become: true
+#   make:
+#     chdir: "{{ dwm_dir }}"
+#     target: install
 
 - name: Link xinitrc into place
   file:

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+notify-send -a 🔊 "$(amixer sget Master)"
