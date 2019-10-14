@@ -9,8 +9,8 @@ zstyle ':vcs_info:*' stagedstr "%F{green}●%f" # default 'S'
 zstyle ':vcs_info:*' unstagedstr "%F{red}●%f" # default 'U'
 zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:git+set-message:*' hooks git-untracked
-zstyle ':vcs_info:git*:*' formats ' %b %m%c%u' # default ' (%s)-[%b]%c%u-'
-zstyle ':vcs_info:git*:*' actionformats ' %b|%a %m%c%u' # default ' (%s)-[%b|%a]%c%u-'
+zstyle ':vcs_info:git*:*' formats ' %b(%m%c%u)' # default ' (%s)-[%b]%c%u-'
+zstyle ':vcs_info:git*:*' actionformats ' %b|%a(%m%c%u)' # default ' (%s)-[%b|%a]%c%u-'
 
 function +vi-git-untracked() {
   emulate -L zsh
@@ -33,9 +33,9 @@ function () {
   # local SUFFIX=$(printf '\u276f%.0s' {3..$LVL})
   local SUFFIX=$(printf '%.0s' {3..$LVL})
   # local SUFFIX=$(printf '%.0s' {3..$LVL})
-  # export PS1="%F{blue}%B%1~%b%F{yellow}%B%(1j.*.)%b%f %B%(?.%{$fg[green]%}.%{$fg[red]%})%(!.#.${SUFFIX})%{$reset_color%} "
-  export PS1="%F{blue}%B%1~%b%{$reset_color%} (\${vcs_info_msg_0_})%F{yellow}%B%(1j.*.)%b%f %B%(?.%{$fg[green]%}.%{$fg[red]%})%(!.#.${SUFFIX})%{$reset_color%} "
+  export PS1="%F{blue}%B%1~%b%F{yellow}%B%(1j.*.)%b%f %B%(?.%{$fg[green]%}.%{$fg[red]%})%(!.#.${SUFFIX})%{$reset_color%} "
+  # export PS1="%F{blue}%B%1~%b%{$reset_color%} (\${vcs_info_msg_0_})%F{yellow}%B%(1j.*.)%b%f %B%(?.%{$fg[green]%}.%{$fg[red]%})%(!.#.${SUFFIX})%{$reset_color%} "
 }
-# export RPROMPT="\${vcs_info_msg_0_}%F{blue}%~%f"
-export RPROMPT="%F{blue}%~%f"
+export RPROMPT="\${vcs_info_msg_0_} %F{blue}%~%f"
+# export RPROMPT="%F{blue}%~%f"
 
