@@ -14,7 +14,7 @@ export GPG_TTY=$(tty)
 # export FILE
 
 # Use dmenu when asking for sudo password
-export SUDO_ASKPASS="$XDG_DATA_HOME/bin/dmenu_pass"
+export SUDO_ASKPASS="$XDG_DATA_HOME/bin/dmenupass"
 
 # https://wiki.archlinux.org/index.php/Color_output_in_console#less
 export LESS=-R

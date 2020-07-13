@@ -2,13 +2,13 @@
 
 - name: Download oc
   unarchive:
-    src: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.1.18/openshift-client-linux-4.1.18.tar.gz"
+    src: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-{{ oc_version }}/openshift-client-linux.tar.gz"
     dest: "{{ xdg_data_home }}/bin"
     copy: no
 
 - name: Download openshift-installer
   unarchive:
-    src: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.1.18/openshift-install-linux-4.1.18.tar.gz"
+    src: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-{{ oc_version }}/openshift-install-linux.tar.gz"
     dest: "{{ xdg_data_home }}/bin"
     copy: no
 

@@ -4,6 +4,6 @@ vpn=$(nmcli con show | grep 'vpn' | awk -F "[[:space:]][[:space:]]+" '{print $1}
 	dmenu -i -l 5 -p "Which VPN?" | \
 	xargs \
 )
-vpn_pass=$(dmenu_pass)
+vpn_pass=$(dmenupass)
 
 notify-send -u low VPN: $(nmcli con up "${vpn}" password "${vpn_pass}")

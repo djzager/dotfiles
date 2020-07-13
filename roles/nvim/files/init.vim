@@ -14,17 +14,20 @@ let maplocalleader = "\\"
 	endif
 
 	call plug#begin("$XDG_CONFIG_HOME/nvim/plugged")
+		Plug 'airblade/vim-gitgutter'
 		Plug 'autozimu/LanguageClient-neovim', {
 				\ 'branch': 'next',
 				\ 'do': 'bash install.sh',
 		\ }
+		Plug 'chriskempson/base16-vim'
 		Plug 'christoomey/vim-tmux-navigator'
 		" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 		Plug 'junegunn/fzf'
 		Plug 'junegunn/fzf.vim'
 		Plug 'kopischke/vim-fetch'
+		Plug 'sheerun/vim-polyglot'
 		Plug 'tpope/vim-commentary'
-		Plug 'chriskempson/base16-vim'
+		Plug 'tpope/vim-fugitive'
 		Plug 'wincent/loupe'
 	call plug#end()
 
@@ -34,3 +37,6 @@ let maplocalleader = "\\"
 	let g:LanguageClient_serverCommands = {
 		\ 'go': ['~/go/bin/gopls'],
 		\ }
+
+" Polyglot
+	let g:vim_markdown_conceal_code_blocks = 0

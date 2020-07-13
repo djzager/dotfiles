@@ -7,29 +7,38 @@ OCP_CONFIG_DIR=${OCP_CONFIG_DIR:-"$XDG_CONFIG_HOME/ocp"}
 OCP_INSTALL_CONFIG=${OCP_INSTALL_CONFIG:-"$OCP_CONFIG_DIR/install-aws-config.yaml"}
 CLUSTER_NAME=${CLUSTER_NAME:="my-cluster"}
 CLUSTER_DIR="${OCP_CONFIG_DIR}/${CLUSTER_NAME}"
+LOG_LEVEL=${LOG_LEVEL:="info"}
 
 export AWS_PROFILE="openshift-dev"
 export AWS_SDK_LOAD_CONFIG="${XDG_CONFIG_HOME}/aws"
 
 create_cluster() {
+  local web_console_text="INFO Access the OpenShift web-console here: "
   mkdir -p "${CLUSTER_DIR}"
   cp "${OCP_INSTALL_CONFIG}" "${CLUSTER_DIR}/install-config.yaml"
-  openshift-install --dir "${CLUSTER_DIR}" create cluster
+  local web_link=$(openshift-install --dir "${CLUSTER_DIR}" --log-level "${LOG_LEVEL}" create cluster | \
+    tee /dev/tty | \
+    grep "${web_console_text}" | \
+    awk -F "${web_console_text}" '{print $2}'
+  )
   if [ $? -eq 0 ]; then
     export KUBECONFIG="${CLUSTER_DIR}/auth/kubeconfig"
     oc login -u kubeadmin -p $(</"${CLUSTER_DIR}/auth/kubeadmin-password")
     if [ $? -eq 0 ]; then
-      xclip -selection clipboard "${CLUSTER_DIR}/auth/kubeadmin-password"
-      notify-send "cluster up, password copied to clipboard"
-      xclip -selection primary "Foo"
-      notify-send "cluster up, foo copied to primary"
+      xclip -selection primary "${CLUSTER_DIR}/auth/kubeadmin-password"
+      notify-send "cluster up, password copied to primary"
+      echo "${web_link}" | xclip -selection clipboard
+      notify-send "cluster up, ${web_link} copied to clipboard"
     fi
   fi
 }
 
 destroy_cluster() {
-  openshift-install --dir "${CLUSTER_DIR}" destroy cluster
-  rm -rf my-cluster
+  openshift-install --dir "${CLUSTER_DIR}" --log-level "${LOG_LEVEL}" destroy cluster
+  if [ $? -eq 0 ]; then
+    rm -rf "${CLUSTER_DIR}"
+    notify-send "cluster destroyed"
+  fi
 }
 
 case $1 in

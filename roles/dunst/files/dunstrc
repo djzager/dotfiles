@@ -119,7 +119,9 @@
     separator_color = frame
 
     frame_width = 2
-    frame_color = "#00c3ff"
+    # frame_color = "#00c3ff"
+    frame_color = "#d8d8d8"
+    separator_color = "#d8d8d8"
 
     # print a notification on startup
     # This is mainly for error detection, since dbus (re-)starts dunst
@@ -154,18 +156,24 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the '#' and following  would be interpreted as a comment.
-    background = "#1D596B"
-    foreground = "#7BA8B5"
-    timeout = 1
+    # background = "#1D596B"
+    # foreground = "#7BA8B5"
+    background = "#282828"
+    foreground = "#b8b8b8"
+    timeout = 5
 
 [urgency_normal]
-    background = "#E3AD0B"
-    foreground = "#524218"
+    # background = "#E3AD0B"
+    # foreground = "#524218"
+    background = "#383838"
+    foreground = "#d8d8d8"
     timeout = 5
 
 [urgency_critical]
-    background = "#BA3220"
-    foreground = "#F0D1C5"
+    # background = "#BA3220"
+    # foreground = "#F0D1C5"
+    background = "#ab4642"
+    foreground = "#e8e8e8"
     timeout = 0
 
 # to override settings for certain messages.

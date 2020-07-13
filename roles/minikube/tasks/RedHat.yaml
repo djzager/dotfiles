@@ -1,0 +1,10 @@
+---
+
+- name: Install minikube
+  get_url:
+    url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    dest: "{{ xdg_data_home }}/bin/minikube"
+    mode: +x
+
+- name: Configure minikube to use kvm2 vm-driver
+  command: minikube config set vm-driver kvm2

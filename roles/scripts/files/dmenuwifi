@@ -5,6 +5,6 @@ wifi=$(nmcli --fields ssid dev wifi list | \
 	dmenu -i -p "Which network?" | \
 	xargs \
 )
-wifi_pass=$(dmenu_pass)
+wifi_pass=$(dmenupass)
 
 notify-send -u low WIFI: $(nmcli device wifi connect "$wifi" password "$wifi_pass")

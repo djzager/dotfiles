@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-notify-send -a 🕘 "$(date +"%F %R")"
+function _timehack {
+	echo ""
+	echo "Time         : $(date +"%F %R")"
+	echo "Memory       : $(free -h | awk '/^Mem:/ {print $3 "/" $2}')"
+	echo "CPU          : $(cat /sys/class/thermal/thermal_zone2/temp | sed 's/\(.\)..$/.\1°C/')"
+}
+notify-send -a TimeHack "$(_timehack)"

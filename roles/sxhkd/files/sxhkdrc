@@ -22,10 +22,10 @@ super + shift + v
 
 # System
 super + shift + x
-	dmenu_prompt "Shutdown computer?" "sudo -A shutdown -h now"
+	dmenuprompt "Shutdown computer?" "sudo -A shutdown -h now"
 super + shift + BackSpace
-	dmenu_prompt "Reboot?" "sudo -A shutdown -r now"
+	dmenuprompt "Reboot?" "sudo -A shutdown -r now"
 super + shift + e
-	dmenu_prompt 'Leave Xorg?' 'killall Xorg'
+	dmenuprompt 'Leave Xorg?' 'killall Xorg'
 super + shift + l
 	gllock

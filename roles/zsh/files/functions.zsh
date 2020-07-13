@@ -35,13 +35,12 @@ bindkey '^P' fzf-tmux-widget
 fzf-vim-widget() {
   setopt localoptions pipefail 2> /dev/null
   local files=$(__fsel --preview '(bat --style=numbers --color=always {} ||
-                  highlight -O ansi -l {} ||
-                  coderay {} ||
-                  rougify {} ||
                   cat {}) 2> /dev/null' | xargs)
-  [[ -n "$files" ]] && ${EDITOR:-vim} ${files[@]} <$TTY
-  zle reset-prompt
-  return $?
+  if [[ -n "$files" ]]; then
+    LBUFFER="${LBUFFERS} ${EDITOR:-vim} ${files[@]}"
+    zle reset-prompt
+    zle accept-line
+  fi
 }
 zle     -N   fzf-vim-widget
 bindkey '^O' fzf-vim-widget
@@ -51,9 +50,11 @@ fzf-rg-widget() {
   # local cmd="rg --column --line-number --no-heading --color=always --smart-case ''"
   local cmd="rg --column --line-number --no-heading --fixed-strings --hidden --color always ''"
   local files="$(eval "$cmd" | fzf --ansi --multi --reverse | awk -F ':' '{print $1":"$2":"$3}')"
-  [[ -n "$files" ]] && ${EDITOR:-vim} $files <$TTY
-  zle reset-prompt
-  return $?
+  if [[ -n "$files" ]]; then
+    LBUFFER="${LBUFFERS} ${EDITOR:-vim} ${files[@]}"
+    zle reset-prompt
+    zle accept-line
+  fi
 }
 zle     -N   fzf-rg-widget
 bindkey '^F' fzf-rg-widget

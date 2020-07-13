@@ -17,12 +17,16 @@
         dest: "{{ workspace_dir }}"
         state: directory
   roles:
+    - { role: ansible, tags: [ 'ansible' ] }
     - { role: base16-shell, tags: [ 'base16-shell' ] }
     - { role: common, tags: [ 'common' ] }
     - { role: container-tools, tags: [ 'container-tools' ] }
+    - { role: crc, tags: [ 'crc' ] }
     - { role: fonts, tags: [ 'fonts' ] }
     - { role: git, tags: [ 'git' ] }
     - { role: golang, tags: [ 'golang' ] }
+    - { role: kubedev, tags: [ 'kubedev' ] }
+    - { role: minikube, tags: [ 'minikube' ] }
     - { role: scripts, tags: [ 'scripts' ] }
     - { role: dwm, tags: [ 'dwm' ] } # depends on st, sxhkd, dunst
     - { role: zsh, tags: [ 'zsh' ] }

@@ -4,4 +4,4 @@ if [[ $(nmcli radio wifi) == "disabled" ]]; then
     nmcli radio wifi on
 else
     nmcli radio wifi off
-fi && notify-send -u low "WLAN $(nmcli radio wifi)"
+fi && notify-send -u critical "WLAN $(nmcli radio wifi)"

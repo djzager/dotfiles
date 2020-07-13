@@ -1,0 +1,5 @@
+---
+
+golangci_version: "1.21.0"
+kubectl_version: "v1.18.0"
+kubebuilder_version: "2.3.0"

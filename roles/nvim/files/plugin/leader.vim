@@ -10,7 +10,7 @@ map <leader>p "+p
 map <leader>P "+P
 
 " Delete all trailing whitespace
-map <leader>zz %s/\s\+$//e
+map <leader>zz :call dzager#functions#trimWhitespace()<CR>
 
 nmap <leader>w :write<CR>
 nmap <leader>x :xit<CR>

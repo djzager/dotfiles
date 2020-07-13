@@ -1,0 +1,8 @@
+---
+
+- name: Install needed python packages
+  become: true
+  pip:
+    state: latest
+    name:
+      - openshift

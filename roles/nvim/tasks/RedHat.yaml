@@ -1,11 +1,14 @@
 ---
 
+# - name: Remove nvim directory
+#     path: "{{ xdg_data_home }}/nvim-linux64"
+#     state: absent
+
 - name: Download nvim tarball
   unarchive:
     src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim-linux64.tar.gz"
     dest: "{{ xdg_data_home }}"
     copy: no
-    creates: "{{ xdg_data_home }}/nvim-linux64"
 
 - name: Ensure important directories exist
   file:

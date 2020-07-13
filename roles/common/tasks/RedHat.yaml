@@ -1,5 +1,24 @@
 ---
 
+- name: Copy repos into place
+  become: true
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/yum.repos.d/{{ item | basename }}"
+    owner: root
+    group: root
+    mode: '0644'
+  with_fileglob:
+    - "{{ role_path }}/files/repos/*"
+
+- name: Install repo packages
+  become: true
+  dnf:
+    state: present
+    name:
+      - http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+      - http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+
 - name: Install common RedHat packages
   become: true
   dnf:
@@ -8,12 +27,18 @@
       - "@development-tools"
       # Apps
       - bat # Cat clone with pretty highlighting
-      - chromium
+      - ffmpeg
+      - chromium-browser-privacy # https://github.com/Eloston/ungoogled-chromium
+      - htop
+      - ImageMagick
       - NetworkManager-openvpn
+      - python3
+      - python-pip
       - scrot
       - xbacklight
       - xclip
       - xorg-x11-drv-synaptics-legacy
+      - "https://github.com/cli/cli/releases/download/v0.6.4/gh_0.6.4_linux_amd64.rpm" # github cli
 
 - name: Manage flatpak repository remotes
   flatpak_remote:
@@ -30,8 +55,10 @@
     name: "{{ item }}"
   with_items:
     - org.telegram.desktop
+    - org.videolan.VLC
     - com.bluejeans.Bluejeans
     - com.slack.Slack
+    - com.spotify.Client
     - us.zoom.Zoom
 
 - name: Link config files into place
@@ -41,7 +68,7 @@
     force: yes
     state: link
   with_fileglob:
-    - "{{ role_path }}/files/*"
+    - "{{ role_path }}/files/config/*"
 
 - name: Change hostname
   hostname:
