@@ -30,6 +30,24 @@ fzf-tmux-widget() {
 zle     -N   fzf-tmux-widget
 bindkey '^P' fzf-tmux-widget
 
+# Pick tmux session
+# relies on fzf's key-bindings for zsh
+# fzf-tmux-session-widget() {
+#   setopt localoptions pipefail 2> /dev/null
+#   local cmd="{ tmux list-sessions -F '#{session_name}' 2>/dev/null; }"
+#   local session="$(eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_ALT_C_OPTS" $(__fzfcmd) +m)"
+#   if [[ -z "$session" ]]; then
+#     zle redisplay
+#     return 0
+#   fi
+
+#   LBUFFER="${LBUFFERS} tmux attach-session -t $session"
+#   zle reset-prompt
+#   zle accept-line
+# }
+# zle     -N   fzf-tmux-session-widget
+# bindkey '^S' fzf-tmux-session-widget
+
 # Open files in vim
 # relies on fzf's key-bindings for zsh
 fzf-vim-widget() {

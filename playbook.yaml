@@ -40,3 +40,4 @@
     - { role: wallpapers, tags: [ 'wallpapers' ] }
     # - { role: wifi-bonding, tags: [ 'wifi-bonding' ] }
     - { role: sxiv, tags: [ 'sxiv' ] }
+    - { role: redhat, tags: [ 'redhat' ] }
