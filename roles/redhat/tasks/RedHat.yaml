@@ -1,5 +1,22 @@
 ---
 
+- name: Install common RedHat packages
+  become: true
+  dnf:
+    state: latest
+    name:
+      - NetworkManager-openvpn
+      - NetworkManager-openvpn-gnome
+
+- name: Check if RedHat packages are installed
+  package_facts:
+    manager: "auto"
+
+- name: Pause to setup VPN
+  pause:
+    prompt: "https://redhat.service-now.com/help?id=kb_article&sysparm_article=KB0005424"
+  when: "'redhat-internal-NetworkManager-openvpn-profiles' not in ansible_facts.packages"
+
 - name: Copy repos into place
   become: true
   copy:
@@ -10,7 +27,6 @@
     mode: '0644'
   with_fileglob:
     - "{{ role_path }}/files/repos/*"
-
 
 - name: Install redhat related tools
   become: true

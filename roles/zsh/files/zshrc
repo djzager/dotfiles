@@ -2,6 +2,10 @@ autoload -U colors && colors
 
 # Exports
 export WORKSPACE="$HOME/Workspace"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export PATH="$PATH:/var/lib/flatpak/exports/bin:$XDG_DATA_HOME/bin:$XDG_DATA_HOME/flatpak/exports/bin"
 
 # Use ripgrep if available with fzf
 if command -v rg >/dev/null 2>&1; then

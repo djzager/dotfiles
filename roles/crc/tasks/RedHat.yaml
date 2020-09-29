@@ -1,30 +1,24 @@
 ---
 
-- name: Install Code Ready Containers
-  block:
-    - name: Create temp directory for crc archive
-      tempfile:
-        state: directory
-      register: crc
+- name: Create temp directory for crc archive
+  file:
+    path: "{{ crc_dir }}"
+    state: directory
 
-    - name: Get crc archive
-      get_url:
-        url: "https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
-        dest: "{{ crc.path }}"
-      register: crc_tar 
+- name: Get crc archive
+  get_url:
+    url: "https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
+    dest: "{{ crc_dir }}/crc-linux-amd64.tar.xz"
+  register: crc_tar
 
-    - name: Unarchive crc
-      unarchive:
-        src: "{{ crc_tar.dest }}"
-        dest: "{{ crc.path }}"
+- name: Unarchive crc
+  unarchive:
+    src: "{{ crc_tar.dest }}"
+    dest: "{{ crc_dir }}"
+    extra_opts: [--strip-components=1]
 
-    # - name:
-    #   command: "mv {{ item }} {{ xdg_data_home }}/bin/crc"
-    #   with_fileglob:
-    #     - "{{ crc.path }}/*/crc"
-
-    # - name: Remove temp directory
-    #   file:
-    #     path: "{{ crc.path }}"
-    #     state: absent
-
+- name: Link crc
+  file:
+    src: "{{ crc_dir }}/crc"
+    path: "{{ xdg_data_home }}/bin/crc"
+    state: link

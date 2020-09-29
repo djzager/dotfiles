@@ -24,7 +24,7 @@
 - name: Link fzf completion & keybindings to zdotdir
   file:
     src: "{{ fzf_dir }}/shell/{{ item }}"
-    dest: "{{ lookup('env', 'ZDOTDIR') | default(ansible_user_dir ~ '.zsh', true) }}/fzf-{{ item }}"
+    dest: "{{ zdotdir }}/fzf-{{ item }}"
     force: yes
     state: link
   with_items:

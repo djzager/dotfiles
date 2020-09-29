@@ -14,18 +14,20 @@
     name: "{{ ansible_user_id }}"
     shell: /bin/zsh
 
-- name: Ensure config directory exists
+- name: Ensure zsh config and cache directories exists
   file:
-    dest: "{{ zsh_config_dir }}"
+    dest: "{{ item }}"
     state: directory
+  with_items:
+    - "{{ zsh_config_dir }}"
+    - "{{ zsh_cache_dir }}"
 
-# Need to leave zprofile in home directory
-#- name: Link zsh profile to .profile
-#  file:
-#    src: "{{ ansible_user_dir }}/.profile"
-#    dest: "{{ zsh_config_dir }}/.zprofile"
-#    force: yes
-#    state: link
+- name: Link profile into place
+  file:
+    src: "{{ role_path }}/files/profile"
+    dest: "{{ ansible_user_dir }}/.profile"
+    force: yes
+    state: link
 
 - name: Link zshrc into place
   file:

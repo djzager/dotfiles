@@ -41,7 +41,6 @@
     dest: "{{ ansible_user_dir }}/.{{ item }}"
     state: link
   with_items:
-    - profile
     - xprofile
     - xinitrc
 

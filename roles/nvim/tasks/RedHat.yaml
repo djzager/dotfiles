@@ -1,14 +1,12 @@
 ---
 
-# - name: Remove nvim directory
-#     path: "{{ xdg_data_home }}/nvim-linux64"
-#     state: absent
-
-- name: Download nvim tarball
-  unarchive:
-    src: "https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim-linux64.tar.gz"
-    dest: "{{ xdg_data_home }}"
-    copy: no
+- name: Install flatpaks
+  flatpak:
+    state: present
+    remote: flathub
+    name: "{{ item }}"
+  with_items:
+    - io.neovim.nvim
 
 - name: Ensure important directories exist
   file:
@@ -43,11 +41,11 @@
     - after
     - plugin
 
-- name: Link configuration files into zdotdir
-  file:
-    src: "{{ item }}"
-    dest: "{{ lookup('env', 'ZDOTDIR') | default(ansible_user_dir ~ '.zsh', true) }}/{{ item | basename }}"
-    force: yes
-    state: link
-  with_fileglob:
-    - "{{ role_path }}/files/*.zsh"
+#- name: Link configuration files into zdotdir
+#  file:
+#    src: "{{ item }}"
+#    dest: "{{ zdotdir }}/{{ item | basename }}"
+#    force: yes
+#    state: link
+#  with_fileglob:
+#    - "{{ role_path }}/files/*.zsh"

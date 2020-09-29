@@ -18,7 +18,7 @@
 - name: Link configuration files into zdotdir
   file:
     src: "{{ item }}"
-    dest: "{{ lookup('env', 'ZDOTDIR') | default(ansible_user_dir ~ '.zsh', true) }}/{{ item | basename }}"
+    dest: "{{ zdotdir }}/{{ item | basename }}"
     force: yes
     state: link
   with_fileglob:
