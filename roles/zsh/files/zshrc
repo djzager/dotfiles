@@ -13,6 +13,7 @@ if command -v gpg2 >/dev/null 2>&1; then
   export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
   export KEYID="0x60ABECF34C7B6338"
 fi
+export GPG_TTY=$(tty)
 
 # History in cache directory:
 HISTSIZE=10000
