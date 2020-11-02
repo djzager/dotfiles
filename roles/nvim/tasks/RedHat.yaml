@@ -1,12 +1,27 @@
 ---
 
-- name: Install flatpaks
-  flatpak:
-    state: present
-    remote: flathub
-    name: "{{ item }}"
-  with_items:
-    - io.neovim.nvim
+- name: Create directory for nvim archive
+  file:
+    path: "{{ nvim_data_dir }}"
+    state: directory
+
+- name: Get nvim release
+  get_url:
+    url: "https://github.com/neovim/neovim/releases/download/v{{ nvim_version }}/nvim-linux64.tar.gz"
+    dest: "{{ nvim_data_dir }}/nvim-{{ nvim_version }}-linux64.tar.gz"
+  register: nvim_tar
+
+- name: Unarchive nvim
+  unarchive:
+    src: "{{ nvim_tar.dest }}"
+    dest: "{{ nvim_data_dir }}"
+    extra_opts: [--strip-components=1]
+
+- name: Link nvim
+  file:
+    src: "{{ nvim_data_dir }}/bin/nvim"
+    path: "{{ xdg_data_home }}/bin/nvim"
+    state: link
 
 - name: Ensure important directories exist
   file:
@@ -40,12 +55,3 @@
     - ftdetect
     - after
     - plugin
-
-#- name: Link configuration files into zdotdir
-#  file:
-#    src: "{{ item }}"
-#    dest: "{{ zdotdir }}/{{ item | basename }}"
-#    force: yes
-#    state: link
-#  with_fileglob:
-#    - "{{ role_path }}/files/*.zsh"

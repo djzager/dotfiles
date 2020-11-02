@@ -26,6 +26,18 @@
   args:
     creates: /etc/yum.repos.d/gh-cli.repo
 
+- name: Enable Brave Repo
+  become: true
+  command: dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+  args:
+    creates: /etc/yum.repos.d/brave-browser.repo
+
+- name: Import GPG Key for Brave
+  become: true
+  rpm_key:
+    state: present
+    key: https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+
 - name: Install common RedHat packages
   become: true
   dnf:
@@ -35,7 +47,9 @@
       # Apps
       - bat # Cat clone with pretty highlighting
       - ffmpeg
-      # - chromium-browser-privacy # https://github.com/Eloston/ungoogled-chromium
+      - google-chrome-stable
+      - chromium-browser-privacy # https://github.com/Eloston/ungoogled-chromium
+      - brave-browser
       - gh
       - htop
       - ImageMagick

@@ -1,16 +1,15 @@
 #!/bin/sh
 
+export WORKSPACE="$HOME/Workspace"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export PATH="$PATH:/var/lib/flatpak/exports/bin:$XDG_DATA_HOME/bin:$XDG_DATA_HOME/flatpak/exports/bin"
 
-# export EDITOR="nvim"
-export EDITOR="io.neovim.nvim"
-# export TERMINAL="st"
-export TERMINAL="gnome-terminal"
+export EDITOR="nvim"
+export TERMINAL="st"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-# export GPG_TTY=$(tty)
+export GPG_TTY=$(tty)
 # export BROWSER
 # export READER
 # export FILE

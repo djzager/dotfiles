@@ -11,6 +11,7 @@
       - libX11-devel
       - libXft-devel
       - libXinerama-devel
+      - picom
       - xcompmgr
       - xorg-x11-apps
       - xorg-x11-xinit-session

@@ -23,3 +23,11 @@
     state: link
   with_fileglob:
     - "{{ role_path }}/files/*.zsh"
+
+- name: Install important go mods
+  shell: "GO111MODULE=on go get {{ item }}"
+  with_items:
+    - "golang.org/x/tools/gopls@latest"
+    - "gotest.tools/gotestsum"
+    - "github.com/axw/gocov/..."
+    - "github.com/AlekSi/gocov-xml"

@@ -3,22 +3,24 @@ scriptencoding utf-8
 function s:CheckColorScheme()
 	if !has("termguicolors")
 		let g:base16colorspace=256
+		set termguicolors
 	endif
 
 	if filereadable(expand("~/.vimrc_background"))
 		source ~/.vimrc_background
 		execute 'highlight link EndOfBuffer ColorColumn'
 		" Only need this stuff if I want transparent terminal
-		" highlight Normal guibg=None ctermbg=none
-		" highlight NonText guibg=None ctermbg=none
-		" highlight LineNr guibg=None ctermbg=none
-		" highlight SignColumn guibg=None ctermbg=none
-		" highlight Folded guibg=None ctermbg=none
-		" highlight FoldColumn guibg=None ctermbg=none
-		" highlight GitGutterAdd guibg=None ctermbg=none
-		" highlight GitGutterChange guibg=None ctermbg=none
-		" highlight GitGutterDelete guibg=None ctermbg=none
-		" highlight GitGutterChangeDelete guibg=None ctermbg=none
+		highlight Normal guibg=None ctermbg=none
+		highlight NonText guibg=None ctermbg=none
+		highlight LineNr guibg=None ctermbg=none
+		highlight SignColumn guibg=None ctermbg=none
+		highlight Folded guibg=None ctermbg=none
+		highlight FoldColumn guibg=None ctermbg=none
+		highlight GitGutterAdd guibg=None ctermbg=none
+		highlight GitGutterChange guibg=None ctermbg=none
+		highlight GitGutterDelete guibg=None ctermbg=none
+		highlight GitGutterChangeDelete guibg=None ctermbg=none
+		highlight EndOfBuffer guibg=None ctermbg=none
 	else " default
 		set background=dark
 		colorscheme base16-default-dark

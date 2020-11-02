@@ -50,3 +50,22 @@
     state: link
   with_fileglob:
     - "{{ role_path }}/files/*.zsh"
+
+- name: Updates for Fedora 32
+  block:
+    - command: grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
+      become: true
+
+    - firewalld:
+        zone: trusted
+        permanent: true
+        interface: docker0
+        state: enabled
+      become: true
+
+    - firewalld:
+        zone: FedoraWorkstation
+        permanent: true
+        masquerade: true
+        state: enabled
+      become: true

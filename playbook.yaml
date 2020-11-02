@@ -35,13 +35,12 @@
     - { role: crc, tags: [ 'crc' ] }
     - { role: golang, tags: [ 'golang' ] }
     - { role: kubedev, tags: [ 'kubedev' ] }
-    # - { role: ocp, tags: [ 'ocp' ] }
-    # - { role: minikube, tags: [ 'minikube' ] }
+    - { role: ocp, tags: [ 'ocp' ] }
+    - { role: minikube, tags: [ 'minikube' ] }
     # Work stuff
     - { role: ansible, tags: [ 'ansible' ] }
     - { role: redhat, tags: [ 'redhat' ] }
     - { role: nvim, tags: [ 'nvim' ] }
     # Misc
-    # - { role: dwm, tags: [ 'dwm' ] } # depends on st, sxhkd, dunst
-    # - { role: wallpapers, tags: [ 'wallpapers' ] }
-    # - { role: sxiv, tags: [ 'sxiv' ] }
+    - { role: dwm, tags: [ 'dwm' ] } # depends on st, sxhkd, dunst
+    - { role: sxiv, tags: [ 'sxiv' ] }

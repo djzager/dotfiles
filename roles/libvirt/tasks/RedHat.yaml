@@ -6,3 +6,17 @@
     state: latest
     name:
       - "@virtualization"
+
+- name: Enable libvirt
+  become: true
+  systemd:
+    name: libvirtd
+    state: started
+    enabled: True
+
+- name: Add user to libvirt group
+  become: true
+  user:
+    name: "{{ ansible_user }}"
+    groups: libvirt
+    append: yes
