@@ -6,6 +6,7 @@
     name:
       - zsh
       - zsh-syntax-highlighting
+      - zsh-autosuggestions
     state: latest
 
 - name: Set default shell to zsh
@@ -25,9 +26,12 @@
 - name: Link profile into place
   file:
     src: "{{ role_path }}/files/profile"
-    dest: "{{ ansible_user_dir }}/.profile"
+    dest: "{{ ansible_user_dir }}/.{{ item }}"
     force: yes
     state: link
+  with_items:
+    - "profile"
+    - "zprofile"
 
 - name: Link zshrc into place
   file:

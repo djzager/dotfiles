@@ -1,17 +1,19 @@
 #!/bin/sh
 
-export WORKSPACE="$HOME/Workspace"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export PATH="$PATH:/var/lib/flatpak/exports/bin:$XDG_DATA_HOME/bin:$XDG_DATA_HOME/flatpak/exports/bin"
 
+# Default programs:
 export EDITOR="nvim"
 export TERMINAL="st"
+export BROWSER="brave-browser"
+
+# Config
+export WORKSPACE="$HOME/Workspace"
+export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-# export BROWSER
-# export READER
-# export FILE
 
 # Use dmenu when asking for sudo password
 export SUDO_ASKPASS="$XDG_DATA_HOME/bin/dmenupass"

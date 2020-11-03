@@ -30,9 +30,7 @@ function () {
     # or not in a tmux session.
     local LVL=$SHLVL
   fi
-  # local SUFFIX=$(printf '\u276f%.0s' {3..$LVL})
   local SUFFIX=$(printf '%.0s' {3..$LVL})
-  # local SUFFIX=$(printf '%.0s' {3..$LVL})
   export PS1="%F{blue}%B%1~%b%F{yellow}%B%(1j.*.)%b%f %B%(?.%{$fg[green]%}.%{$fg[red]%})%(!.#.${SUFFIX})%{$reset_color%} "
   # export PS1="%F{blue}%B%1~%b%{$reset_color%} (\${vcs_info_msg_0_})%F{yellow}%B%(1j.*.)%b%f %B%(?.%{$fg[green]%}.%{$fg[red]%})%(!.#.${SUFFIX})%{$reset_color%} "
 }

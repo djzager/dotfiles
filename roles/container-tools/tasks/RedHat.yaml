@@ -52,18 +52,22 @@
     - "{{ role_path }}/files/*.zsh"
 
 - name: Updates for Fedora 32
+  when: ansible_distribution_version == "32"
   block:
-    - command: grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
+    - name: Disable cgroupsV2
+      command: grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
       become: true
 
-    - firewalld:
+    - name: Give docker network access
+      firewalld:
         zone: trusted
         permanent: true
         interface: docker0
         state: enabled
       become: true
 
-    - firewalld:
+    - name: Give docker network access
+      firewalld:
         zone: FedoraWorkstation
         permanent: true
         masquerade: true
