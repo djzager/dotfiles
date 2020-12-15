@@ -20,6 +20,12 @@ super + shift + t
 super + shift + v
 	volumehack
 
+super + shift + d
+	displayselect
+
+super + shift + b
+	${BROWSER}
+
 # System
 super + shift + x
 	dmenuprompt "Shutdown computer?" "sudo -A shutdown -h now"
@@ -27,5 +33,3 @@ super + shift + BackSpace
 	dmenuprompt "Reboot?" "sudo -A shutdown -r now"
 super + shift + e
 	dmenuprompt 'Leave Xorg?' 'killall Xorg'
-super + shift + l
-	gllock

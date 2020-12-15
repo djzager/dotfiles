@@ -7,7 +7,7 @@
     update: yes
 
 - name: Install fzf
-  shell: ./install --bin --64
+  shell: ./install --bin
   args:
     chdir: "{{ fzf_dir }}"
 

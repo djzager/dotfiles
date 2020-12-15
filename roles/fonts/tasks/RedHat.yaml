@@ -1,17 +1,17 @@
 ---
 
-- name: Install fonts
-  become: true
-  dnf:
-    state: latest
-    name:
-      # Fonts
-      - adobe-source-code-pro-fonts
-      - dejavu-sans-mono-fonts
-      - google-droid-sans-mono-fonts
-      - google-noto-emoji-fonts
-      - levien-inconsolata-fonts
-      - mozilla-fira-mono-fonts
+# - name: Install fonts
+#   become: true
+#   dnf:
+#     state: latest
+#     name:
+#       # Fonts
+#       - adobe-source-code-pro-fonts
+#       - dejavu-sans-mono-fonts
+#       - google-droid-sans-mono-fonts
+#       - google-noto-emoji-fonts
+#       - levien-inconsolata-fonts
+#       - mozilla-fira-mono-fonts
 
 - name: Ensure font directory exists
   file:

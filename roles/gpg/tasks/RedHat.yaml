@@ -5,6 +5,7 @@
   dnf:
     name:
       - gnupg2
+      - pinentry-curses
       - pcsc-lite
     state: latest
 
@@ -21,10 +22,19 @@
     force: yes
     state: link
   with_fileglob:
-    - "{{ role_path }}/files/*"
+    - "{{ role_path }}/files/gpg/*"
+
+- name: Link configurations into config dir
+  file:
+    src: "{{ item }}"
+    dest: "{{ zdotdir }}/{{ item | basename }}"
+    force: yes
+    state: link
+  with_fileglob:
+    - "{{ role_path }}/files/zsh/*.zsh"
 
 - name: Import public key
-  command: gpg --import "{{ role_path }}/files/gpg.pub"
+  command: gpg --import "{{ role_path }}/files/gpg/gpg.pub"
 
 - name: Trust the key
   command: echo -e "5\ny\n" |  gpg --command-fd 0 --expert --edit-key "{{ key_id }}" trust

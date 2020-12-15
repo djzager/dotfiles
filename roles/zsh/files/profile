@@ -8,10 +8,10 @@ export PATH="$PATH:/var/lib/flatpak/exports/bin:$XDG_DATA_HOME/bin:$XDG_DATA_HOM
 # Default programs:
 export EDITOR="nvim"
 export TERMINAL="st"
-export BROWSER="brave-browser"
+export BROWSER="google-chrome"
 
 # Config
-export WORKSPACE="$HOME/Workspace"
+export WORKSPACE="$HOME/code"
 export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 

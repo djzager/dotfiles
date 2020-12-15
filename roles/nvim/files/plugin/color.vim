@@ -1,10 +1,6 @@
 scriptencoding utf-8
 
 function s:CheckColorScheme()
-	if !has("termguicolors")
-		let g:base16colorspace=256
-		set termguicolors
-	endif
 
 	if filereadable(expand("~/.vimrc_background"))
 		source ~/.vimrc_background

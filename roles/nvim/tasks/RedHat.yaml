@@ -1,5 +1,12 @@
 ---
 
+- name: Install needed libraries for Neovim
+  become: true
+  dnf:
+    state: latest
+    name:
+      - libnsl
+
 - name: Create directory for nvim archive
   file:
     path: "{{ nvim_data_dir }}"

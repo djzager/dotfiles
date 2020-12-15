@@ -12,9 +12,11 @@
       - libXft-devel
       - libXinerama-devel
       - picom
-      - xcompmgr
       - xorg-x11-apps
       - xorg-x11-xinit-session
+      - xorg-x11-server-Xorg
+      - xorg-x11-server-common
+      - xorg-x11-xinit
 
 - name: Pull dwm
   git:

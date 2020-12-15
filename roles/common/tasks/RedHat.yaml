@@ -20,23 +20,26 @@
       - http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
       - http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
 
+- name: Disable some repos
+  become: true
+  ini_file:
+    path: "/etc/yum.repos.d/{{ item.path }}.repo"
+    create: no
+    section: "{{ item.section }}"
+    option: enabled
+    value: 0
+  with_items:
+    - { path: 'fedora-modular', section: 'fedora-modular' }
+    - { path: 'fedora-updates-modular', section: 'updates-modular' }
+    - { path: 'fedora-updates-testing-modular', section: 'updates-testing-modular' }
+    # rpmfusion makes this obsolete
+    - { path: 'fedora-cisco-openh264' , section: 'fedora-cisco-openh264' }
+
 - name: Enable GitHub CLI Repo
   become: true
   command: dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
   args:
     creates: /etc/yum.repos.d/gh-cli.repo
-
-- name: Enable Brave Repo
-  become: true
-  command: dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
-  args:
-    creates: /etc/yum.repos.d/brave-browser.repo
-
-- name: Import GPG Key for Brave
-  become: true
-  rpm_key:
-    state: present
-    key: https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
 - name: Install common RedHat packages
   become: true
@@ -44,16 +47,21 @@
     state: latest
     name:
       - "@development-tools"
-      # Apps
+      - alsa-utils
       - bat # Cat clone with pretty highlighting
       - ffmpeg
+      - flatpak
       - google-chrome-stable
-      - chromium-browser-privacy # https://github.com/Eloston/ungoogled-chromium
-      - brave-browser
       - gh
       - htop
       - ImageMagick
       - maim
+      - mpv
+      - pulseaudio
+      - pulseaudio-utils
+      - alsa-plugins-pulseaudio
+      - pulseaudio-module-bluetooth
+      - pavucontrol
       - xclip
 
 - name: Manage flatpak repository remotes
@@ -71,7 +79,6 @@
     name: "{{ item }}"
   with_items:
     - org.telegram.desktop
-    - org.videolan.VLC
     - com.bluejeans.Bluejeans
     - com.slack.Slack
     - com.spotify.Client
@@ -89,3 +96,10 @@
 - name: Change hostname
   hostname:
     name: "{{ hostname }}"
+
+- name: Enable and start pulseaudio
+  systemd:
+    name: pulseaudio.service
+    scope: user
+    enabled: yes
+    state: started
