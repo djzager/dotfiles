@@ -15,7 +15,7 @@
 - name: Pause to setup VPN
   pause:
     prompt: "https://redhat.service-now.com/help?id=kb_article&sysparm_article=KB0005424"
-  when: "'redhat-internal-NetworkManager-openvpn-profiles' not in ansible_facts.packages"
+  when: "'redhat-internal-cert-install' not in ansible_facts.packages"
 
 - name: Copy repos into place
   become: true
@@ -32,6 +32,7 @@
   become: true
   dnf:
     state: latest
+    enablerepo: rcm-tools-fedora-rpms
     name:
       - rhpkg
       - krb5-workstation
@@ -44,6 +45,13 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Create chrome policies dir
+  become: true
+  file:
+    path: /etc/opt/chrome/policies/managed
+    state: directory
+    mode: '0755'
 
 - name: Enable kerberos auth in chrome
   become: true

@@ -42,13 +42,15 @@
     - { role: ripgrep, tags: [ 'ripgrep' ] }
     - { role: nvim, tags: [ 'nvim' ] }
     - { role: scripts, tags: [ 'scripts' ] }
+    # Languages
+    - { role: golang, tags: [ 'golang' ] }
+    - { role: rust, tags: [ 'rust' ] }
     # Display
     - { role: dwm, tags: [ 'dwm' ] } # depends on st, sxhkd, dunst
     - { role: sxiv, tags: [ 'sxiv' ] }
     # K8s Stuff
     - { role: container-tools, tags: [ 'container-tools' ] }
     - { role: crc, tags: [ 'crc' ] }
-    - { role: golang, tags: [ 'golang' ] }
     - { role: kubedev, tags: [ 'kubedev' ] }
     - { role: ocp, tags: [ 'ocp' ] }
     - { role: minikube, tags: [ 'minikube' ] }

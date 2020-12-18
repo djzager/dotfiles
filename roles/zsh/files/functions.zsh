@@ -87,3 +87,44 @@ function fg-bg() {
 }
 zle -N fg-bg
 bindkey '^Z' fg-bg
+
+# ssh with gpg and ssh agent forwarding Use only on trusted hosts.
+function gssh {
+    echo "Preparing host for forwarded GPG agent..." >&2
+
+    # prepare remote for agent forwarding, get socket
+    # Remove the socket in this pre-command as an alternative to requiring
+    # StreamLocalBindUnlink to be set on the remote SSH server.
+    # Find the path of the agent socket remotely to avoid manual configuration
+    # client side. The location of the socket varies per version of GPG,
+    # username, and host OS.
+    remote_socket=$(cat <<'EOF' | command ssh -T "$@" bash
+        set -e
+        socket=$(gpgconf --list-dirs | grep agent-socket | cut -f 2 -d :)
+        # killing agent works over socket, which might be dangling, so time it out.
+        timeout -k 2 1 gpgconf --kill gpg-agent || true
+        test -S $socket && rm $socket
+        echo $socket
+EOF
+)
+    if [ ! $? -eq 0 ]; then
+        echo "Problem with remote GPG. use ssh -A $@ for ssh with agent forwarding only." >&2
+        return
+    fi
+
+    if [ "$SSH_CONNECTION" ]; then
+        # agent on this host is forwarded, allow chaining
+        local_socket=$(gpgconf --list-dirs | grep agent-socket | cut -f 2 -d :)
+    else
+        # agent on this host is running locally, use special remote socket
+        local_socket=$(gpgconf --list-dirs | grep agent-extra-socket | cut -f 2 -d :)
+    fi
+
+    if [ ! -S $local_socket ]; then
+        echo "Could not find suitable local GPG agent socket" 2>&1
+        return
+    fi
+
+    echo "Connecting..." >&2
+    ssh -A -R $remote_socket:$local_socket "$@"
+}
