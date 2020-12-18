@@ -1,0 +1,29 @@
+---
+
+- name: Install or update rust
+  block:
+    - name: Update rust
+      command: "rustup update"
+  rescue:
+    - name: Get rustup
+      get_url:
+        url: https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
+        dest: "{{ xdg_data_home }}"
+        mode: "0744"
+
+    - name: Install rust
+      command: "{{ xdg_data_home }}/rustup-init -y --no-modify-path --profile complete"
+
+    - name: Remove rustup-init
+      file:
+        path: "{{ xdg_data_home }}/rustup-init"
+        state: "absent"
+
+- name: Link configuration files into zdotdir
+  file:
+    src: "{{ item }}"
+    dest: "{{ zdotdir }}/{{ item | basename }}"
+    force: yes
+    state: link
+  with_fileglob:
+    - "{{ role_path }}/files/*.zsh"
