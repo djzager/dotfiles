@@ -64,6 +64,8 @@
       - pulseaudio-module-bluetooth
       - pavucontrol
       - xclip
+      - xdg-user-dirs
+      - youtube-dl
 
 - name: Manage flatpak repository remotes
   flatpak_remote:

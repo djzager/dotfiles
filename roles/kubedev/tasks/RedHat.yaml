@@ -59,6 +59,40 @@
         path: "{{ kubebuilder.path }}"
         state: absent
 
+- name: Install operator-sdk
+  block:
+  - name: Get the operator-sdk
+    get_url:
+      url: "https://github.com/operator-framework/operator-sdk/releases/download/v{{ operator_sdk_version }}/operator-sdk_linux_amd64"
+      dest: "{{ xdg_data_home }}/bin/operator-sdk"
+      mode: "u+x"
+
+# - name: Install kustomize
+#   block:
+#     - name: Create temp directory for kustomize archive
+#       tempfile:
+#         state: directory
+#       register: kustomize
+
+#     - uri:
+#         url: https://api.github.com/repos/kubernetes-sigs/kustomize/releases/latest
+#         return_content: true
+#       register: json_reponse
+
+#     - get_url:
+#         url: "{{ json_reponse.json.tarball_url }}"
+#         dest: "{{ kustomize.path }}/kustomize-latest.tar.gz"
+#       register: kustomize_tar
+
+#     - name: Unarchive kustomize
+#       unarchive:
+#         src: "{{ kustomize_tar.dest }}"
+#         dest: "{{ kustomize.path }}"
+
+#     # - name: Move kustomize into place
+#     #   command: "mv -f {{ kustomize.path }}/kustomize-latest {{ kubebuilder_dir }}"
+
+
 - name: Link configuration files into zdotdir
   file:
     src: "{{ item }}"

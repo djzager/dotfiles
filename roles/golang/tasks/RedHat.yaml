@@ -31,3 +31,4 @@
     - "gotest.tools/gotestsum"
     - "github.com/axw/gocov/..."
     - "github.com/AlekSi/gocov-xml"
+    - "golang.org/x/tools/cmd/goimports"
