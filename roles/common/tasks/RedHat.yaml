@@ -46,26 +46,8 @@
   dnf:
     state: latest
     name:
-      - "@development-tools"
-      - alsa-utils
-      - bat # Cat clone with pretty highlighting
-      - ffmpeg
-      - flatpak
-      - google-chrome-stable
       - gh
-      - htop
-      - ImageMagick
-      - maim
-      - mediainfo
-      - mpv
-      - pulseaudio
-      - pulseaudio-utils
-      - alsa-plugins-pulseaudio
-      - pulseaudio-module-bluetooth
-      - pavucontrol
-      - xclip
       - xdg-user-dirs
-      - youtube-dl
 
 - name: Manage flatpak repository remotes
   flatpak_remote:

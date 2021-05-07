@@ -1,5 +1,12 @@
 ---
 
+- name: Enable ripgrep repo (CentOS)
+  become: true
+  command: dnf config-manager --add-repo https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
+  args:
+    creates: /etc/yum.repos.d/carlwgeorge-ripgrep-epel-7.repo
+  when: ansible_distribution == "CentOS"
+
 - name: Install ripgrep
   become: true
   dnf:
