@@ -40,12 +40,11 @@
 
 - name: Link xinitrc into place
   file:
-    src: "{{ role_path }}/files/{{ item }}"
-    dest: "{{ ansible_user_dir }}/.{{ item }}"
+    src: "{{ item }}"
+    dest: "{{ ansible_user_dir }}/.{{ item | basename }}"
     state: link
-  with_items:
-    - xprofile
-    - xinitrc
+  with_fileglob:
+    - "{{ role_path }}/files/*"
 
 - name: Link bash profile to .profile
   file:

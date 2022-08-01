@@ -21,43 +21,46 @@
 
 - name: Install kubectl
   get_url:
-    url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
-    dest: "{{ xdg_data_home }}/bin/kubectl"
+    url: "https://dl.k8s.io/release/{{ kubectl_version }}/bin/linux/amd64/{{ item }}"
+    dest: "{{ xdg_data_home }}/bin/{{ item }}"
     force: yes
+  with_items:
+    - "kubectl"
+    - "kubectl-convert"
 
-- name: Install kubebuilder
-  vars:
-    kubebuilder_archive_dir: "kubebuilder_{{ kubebuilder_version }}_linux_amd64"
-    kubebuilder_dir: "{{ xdg_data_home }}/kubebuilder"
-  block:
-    - name: Create temp directory for kubebuilder archive
-      tempfile:
-        state: directory
-      register: kubebuilder
+# - name: Install kubebuilder
+#   vars:
+#     kubebuilder_archive_dir: "kubebuilder_{{ kubebuilder_version }}_linux_amd64"
+#     kubebuilder_dir: "{{ xdg_data_home }}/kubebuilder"
+#   block:
+#     - name: Create temp directory for kubebuilder archive
+#       tempfile:
+#         state: directory
+#       register: kubebuilder
 
-    - name: Get kubebuilder archive
-      get_url:
-        url: "https://go.kubebuilder.io/dl/{{ kubebuilder_version }}/linux/amd64"
-        dest: "{{ kubebuilder.path }}"
-      register: kubebuilder_tar
+#     - name: Get kubebuilder archive
+#       get_url:
+#         url: "https://go.kubebuilder.io/dl/{{ kubebuilder_version }}/linux/amd64"
+#         dest: "{{ kubebuilder.path }}"
+#       register: kubebuilder_tar
 
-    - name: Unarchive kubebuilder
-      unarchive:
-        src: "{{ kubebuilder_tar.dest }}"
-        dest: "{{ kubebuilder.path }}"
+#     - name: Unarchive kubebuilder
+#       unarchive:
+#         src: "{{ kubebuilder_tar.dest }}"
+#         dest: "{{ kubebuilder.path }}"
 
-    - name: Remove existing kubebuilder bin directory
-      file:
-        path: "{{ kubebuilder_dir }}"
-        state: absent
+#     - name: Remove existing kubebuilder bin directory
+#       file:
+#         path: "{{ kubebuilder_dir }}"
+#         state: absent
 
-    - name: Move kubebuilder into place
-      command: "mv -f {{ kubebuilder.path }}/{{ kubebuilder_archive_dir }} {{ kubebuilder_dir }}"
+#     - name: Move kubebuilder into place
+#       command: "mv -f {{ kubebuilder.path }}/{{ kubebuilder_archive_dir }} {{ kubebuilder_dir }}"
 
-    - name: Remove temp directory
-      file:
-        path: "{{ kubebuilder.path }}"
-        state: absent
+#     - name: Remove temp directory
+#       file:
+#         path: "{{ kubebuilder.path }}"
+#         state: absent
 
 - name: Install operator-sdk
   block:
@@ -92,6 +95,16 @@
 #     # - name: Move kustomize into place
 #     #   command: "mv -f {{ kustomize.path }}/kustomize-latest {{ kubebuilder_dir }}"
 
+- name: Install krew
+  shell: |
+    export KREW_ROOT={{ xdg_data_home }}/krew
+    set -x; cd "$(mktemp -d)" &&
+    OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+    ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+    KREW="krew-${OS}_${ARCH}" &&
+    curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+    tar zxvf "${KREW}.tar.gz" &&
+    ./"${KREW}" install krew
 
 - name: Link configuration files into zdotdir
   file:

@@ -7,6 +7,9 @@ dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XA
 # https://wiki.archlinux.org/index.php/Qt
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
+# https://wiki.archlinux.org/title/Cursor_themes#X_resources
+[ -f ~/.Xresources ] && xrdb ~/.Xresources &
+
 setbg &                     # Set the background
 sxhkd &                     # Bind keys
 dunst &                     # Notification daemon

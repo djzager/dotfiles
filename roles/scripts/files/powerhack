@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+battery0="/sys/class/power_supply/BAT0"
+capacity="$(<${battery0}/capacity)"
+capacity_level="$(<${battery0}/capacity_level)"
+
+function _volumehack {
+	echo ""
+	echo "Status         :  $(<${battery0}/status)"
+	echo "Capacity       :  $(<${battery0}/capacity)"
+	echo "Capacity Level :  $(<${battery0}/capacity_level)"
+}
+notify-send -a PowerHack "$(_volumehack)"

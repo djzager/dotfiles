@@ -1,6 +1,6 @@
 ---
 
 golangci_version: "1.21.0"
-kubectl_version: "v1.20.0"
+kubectl_version: "v1.21.0"
 kubebuilder_version: "2.3.2"
-operator_sdk_version: "1.6.2"
+operator_sdk_version: "1.18.1"

@@ -57,6 +57,10 @@ let maplocalleader = "\\"
 		Plug 'chriskempson/base16-vim'
 		Plug 'christoomey/vim-tmux-navigator'
 		" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+		Plug 'prettier/vim-prettier', {
+			\ 'do': 'yarn install --frozen-lockfile --production',
+			\ 'for': ['javascript', 'typescript*', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'],
+		\ }
 		Plug 'junegunn/fzf'
 		Plug 'junegunn/fzf.vim'
 		Plug 'kopischke/vim-fetch'
@@ -73,6 +77,7 @@ let maplocalleader = "\\"
 	let g:LanguageClient_serverCommands = {
 		\ 'go': ['~/go/bin/gopls'],
 		\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+		\ 'typescript': ['typescript-language-server', '--stdio'],
 	\ }
 
 " Polyglot

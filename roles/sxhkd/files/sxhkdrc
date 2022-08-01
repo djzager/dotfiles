@@ -19,6 +19,8 @@ super + shift + t
 	timehack
 super + shift + v
 	volumehack
+super + shift + p
+	powerhack
 
 super + shift + d
 	displayselect

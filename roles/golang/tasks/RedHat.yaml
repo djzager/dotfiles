@@ -1,5 +1,10 @@
 ---
 
+- name: Remove go dir
+  file:
+    path: "{{ xdg_data_home }}/go"
+    state: absent
+
 - name: Download go tarball
   unarchive:
     src: "https://dl.google.com/go/go{{ go_version }}.linux-amd64.tar.gz"
@@ -25,10 +30,10 @@
     - "{{ role_path }}/files/*.zsh"
 
 - name: Install important go mods
-  shell: "GO111MODULE=on go get {{ item }}"
+  shell: "GO111MODULE=on go install {{ item }}"
   with_items:
     - "golang.org/x/tools/gopls@latest"
-    - "gotest.tools/gotestsum"
-    - "github.com/axw/gocov/..."
-    - "github.com/AlekSi/gocov-xml"
-    - "golang.org/x/tools/cmd/goimports"
+    - "gotest.tools/gotestsum@latest"
+    - "github.com/axw/gocov/...@latest"
+    - "github.com/AlekSi/gocov-xml@latest"
+    - "golang.org/x/tools/cmd/goimports@latest"
