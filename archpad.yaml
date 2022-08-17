@@ -1,0 +1,48 @@
+---
+
+- hosts: localhost
+  vars:
+    workspace_dir: "{{ lookup('env', 'WORKSPACE') | default(ansible_user_dir ~ '/Workspace', true) }}"
+    xdg_cache_home: "{{ lookup('env', 'XDG_CACHE_HOME') | default(ansible_user_dir ~ '/.cache', true) }}"
+    xdg_config_home: "{{ lookup('env', 'XDG_CONFIG_HOME') | default(ansible_user_dir ~ '/.config', true) }}"
+    xdg_data_home: "{{ lookup('env', 'XDG_DATA_HOME') | default(ansible_user_dir ~ '/.local/share', true) }}"
+    xdg_state_home: "{{ lookup('env', 'XDG_STATE_HOME') | default(ansible_user_dir ~ '/.local/state', true) }}"
+    scripts_dir: "{{ xdg_data_home ~ '/bin' }}"
+    zdotdir: "{{ lookup('env', 'ZDOTDIR') | default(xdg_config_home ~ '/zsh', true) }}"
+    hostname: "archerpad"
+  pre_tasks:
+    - name: Ensure essential directories exist
+      file:
+        dest: "{{ item }}"
+        state: directory
+      loop:
+        - "{{ workspace_dir }}"
+        - "{{ xdg_cache_home }}"
+        - "{{ xdg_config_home }}"
+        - "{{ xdg_data_home }}"
+        - "{{ xdg_state_home }}"
+        - "{{ xdg_state_home }}/zsh"
+        - "{{ scripts_dir }}"
+  roles:
+    - { role: common, tags: [ 'common' ] }
+    - { role: dots, tags: [ 'dots' ] }
+    - { role: fonts, tags: [ 'fonts' ] }
+    - { role: base16-shell, tags: [ 'base16-shell' ] }
+#    # Essentials
+#    - { role: nvim, tags: [ 'nvim' ] }
+#    - { role: scripts, tags: [ 'scripts' ] }
+#    # Languages
+#    - { role: golang, tags: [ 'golang' ] }
+#    - { role: rust, tags: [ 'rust' ] }
+#    # Display
+#    - { role: dwm, tags: [ 'dwm' ] } # depends on st, sxhkd, dunst
+#    - { role: sxiv, tags: [ 'sxiv' ] }
+#    # K8s Stuff
+#    - { role: container-tools, tags: [ 'container-tools' ] }
+#    - { role: crc, tags: [ 'crc' ] }
+#    - { role: kubedev, tags: [ 'kubedev' ] }
+#    - { role: ocp, tags: [ 'ocp' ] }
+#    - { role: minikube, tags: [ 'minikube' ] }
+#    # Work stuff
+#    - { role: ansible, tags: [ 'ansible' ] }
+#    - { role: redhat, tags: [ 'redhat' ] }

@@ -1,3 +1,71 @@
 ---
 
-- include_tasks: "{{ ansible_os_family }}.yaml"
+#- include_tasks: "{{ ansible_os_family }}.yaml"
+
+- ansible.builtin.debug:
+    msg: "This is {{ ansible_os_family }}"
+
+- name: Install common packages
+  become: true
+  ansible.builtin.package:
+    state: present
+    name:
+      - bat
+      - dunst
+      - fuse-overlayfs # for podman
+      - git
+      - github-cli  # gh cli tool for interacting with GH repos
+      - imagemagick # image manipulator
+      - lvm2
+      - maim        # Screenshot
+      - mediainfo
+      - mpv
+      - neovim
+      - networkmanager
+      - noto-fonts-emoji
+      - pipewire
+      - pipewire-pulse
+      - pulsemixer
+      - ripgrep
+      - slirp4netns
+      - sudo
+      - sxhkd
+      - telegram-desktop
+      - tmux
+      - tree
+      - vlc
+      - wget
+      - xclip
+      - xdg-user-dirs
+      - xdg-utils
+      - xorg
+      - zsh
+      # GPG stuff
+      - gnupg
+
+- name: Install yay (and packages)
+  ansible.builtin.include_role:
+    name: jahrik.yay
+  vars:
+    install: true
+    aur_packages:
+      - brave-bin
+      - fzf-git
+      - lf-git
+      - picom-git
+      - nvim-packer-git
+      - slack-desktop
+      - vim-startuptime
+      - minikube-git
+  tags:
+    - 'aur'
+
+- name: Install JS stuff
+  become: true
+  ansible.builtin.package:
+    state: present
+    name:
+      - nodejs
+      - npm
+      - typescript
+      - yarn

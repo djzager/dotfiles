@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# This file runs when a DM logs you into a graphical session.
+# If you use startx/xinit like a Chad, this file will also be sourced.
+
+xrandr --dpi 96		# Set DPI. User may want to use a larger number for larger screens.
+setbg &			# set the background with the `setbg` script
+xset dpms 300 &         # Sleep after 5 minutes
+xset r rate 200 25 &    # Speed xrate up
+
+xrdb ${XDG_CONFIG_HOME}/X11/Xresources & xrdbpid=$!
+
+#autostart="mpd xcompmgr dunst unclutter pipewire"
+autostart="dunst picom pipewire sxhkd"
+
+for program in $autostart; do
+	pidof -s "$program" || "$program" &
+done >/dev/null 2>&1
+
+# Ensure that xrdb has finished running before moving on to start the WM/DE.
+#[ -n "$xrdbpid" ] && wait "$xrdbpid"

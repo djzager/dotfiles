@@ -1,3 +1,0 @@
----
-
-fzf_dir: "{{ workspace_dir }}/fzf"

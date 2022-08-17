@@ -1,7 +1,0 @@
----
-
-- name: Install ripgrep
-  become: true
-  dnf:
-    name: ripgrep
-    state: latest

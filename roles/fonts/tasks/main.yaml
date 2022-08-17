@@ -1,3 +1,24 @@
 ---
 
-- include_tasks: "{{ ansible_os_family }}.yaml"
+- name: Set variables
+  ansible.builtin.set_fact:
+    font_dir: "{{ ansible_user_dir }}/.local/share/fonts"
+
+- name: Ensure font directory exists
+  become: true
+  ansible.builtin.file:
+    dest: "{{ font_dir }}"
+    state: directory
+
+- name: Link fonts
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ font_dir }}/{{ item | urlsplit('path') | basename | urldecode() }}"
+  with_items:
+    - "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete%20Mono.ttf"
+    - "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fira%20Code%20Regular%20Nerd%20Font%20Complete.ttf"
+    - "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Overpass/Non-Mono/Light/complete/Overpass%20Light%20Nerd%20Font%20Complete.otf"
+    - "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Overpass/Non-Mono/Regular/complete/Overpass%20Regular%20Nerd%20Font%20Complete.otf"
+    - "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Overpass/Mono/Regular/complete/Overpass%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.otf"
+    - "https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Overpass/Mono/Regular/complete/Overpass%20Mono%20Regular%20Nerd%20Font%20Complete.otf"

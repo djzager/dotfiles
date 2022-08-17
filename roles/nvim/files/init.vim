@@ -13,6 +13,7 @@ let maplocalleader = "\\"
 	set number relativenumber       " Relative line numbers
 	set wildmode=longest,list,full  " Command autocompletion
 	filetype indent plugin on       " Enable file type detection.
+
 	syntax on                       " Syntax highlighting
 	set showmatch                   " Highlight curlybraces!
 	set backspace=indent,eol,start  " Allow backspacing over everything in insert mode.
