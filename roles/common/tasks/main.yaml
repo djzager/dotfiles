@@ -56,7 +56,12 @@
       - nvim-packer-git
       - slack-desktop
       - vim-startuptime
+      # Kube stuff
+      - kubectl-bin
+      - openshift-client-bin
       - minikube-git
+      - krew-bin
+      # - operator-sdk
   tags:
     - 'aur'
 

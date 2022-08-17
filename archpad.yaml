@@ -40,9 +40,6 @@
 #    # K8s Stuff
 #    - { role: container-tools, tags: [ 'container-tools' ] }
 #    - { role: crc, tags: [ 'crc' ] }
-#    - { role: kubedev, tags: [ 'kubedev' ] }
-#    - { role: ocp, tags: [ 'ocp' ] }
-#    - { role: minikube, tags: [ 'minikube' ] }
 #    # Work stuff
 #    - { role: ansible, tags: [ 'ansible' ] }
 #    - { role: redhat, tags: [ 'redhat' ] }

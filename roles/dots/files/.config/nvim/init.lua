@@ -46,5 +46,5 @@ require('dzager.plugins')
 
 vim.cmd('highlight WinSeparator guibg=None')
 vim.cmd('highlight SignColumn guibg=None')
-vim.opt.laststatus = 3
+--vim.opt.laststatus = 3
 
