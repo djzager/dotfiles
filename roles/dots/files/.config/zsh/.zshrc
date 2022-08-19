@@ -6,6 +6,11 @@ if command -v rg >/dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
+# Use nord theme for fzf
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+--color fg:#D8DEE9,bg:-1,hl:#A3BE8C,fg+:#D8DEE9,bg+:#434C5E,hl+:#A3BE8C,gutter:-1
+--color pointer:#BF616A,info:#4C566A,spinner:#4C566A,header:#4C566A,prompt:#81A1C1,marker:#EBCB8B
+'
 if command -v bat >/dev/null 2>&1; then
   export BAT_THEME="base16"
 fi
@@ -92,7 +97,10 @@ unset config_file
 
 source "/etc/profile.d/fzf.zsh"
 # [ -s "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
-[ -s "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && source "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-[ -s "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && source "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-BASE16_SHELL="$HOME/.local/src/base16-shell/"
-[ -n "$PS1" ] && [ -s "$BASE16_SHELL/profile_helper.sh" ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
+source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+# Dropped base16 in favor of just setting it in ST and NEOVIM directly
+# export BASE16_SHELL="$HOME/.local/src/base16-shell/"
+# export BASE16_SHELL_SET_BACKGROUND="false"
+# [ -n "$PS1" ] && [ -s "$BASE16_SHELL/profile_helper.sh" ] && eval "$($BASE16_SHELL/profile_helper.sh)"

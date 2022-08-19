@@ -12,6 +12,7 @@
     name:
       - bat
       - dunst
+      - feh
       - fuse-overlayfs # for podman
       - git
       - github-cli  # gh cli tool for interacting with GH repos
@@ -25,11 +26,14 @@
       - noto-fonts-emoji
       - pipewire
       - pipewire-pulse
+      - podman
       - pulsemixer
       - ripgrep
       - slirp4netns
+      - starship
       - sudo
       - sxhkd
+      - sxiv
       - telegram-desktop
       - tmux
       - tree
@@ -39,9 +43,17 @@
       - xdg-user-dirs
       - xdg-utils
       - xorg
+      - xprintidle # consider xidlehook
       - zsh
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
       # GPG stuff
       - gnupg
+      # JS Stuff
+      - nodejs
+      - npm
+      - typescript
+      - yarn
 
 - name: Install yay (and packages)
   ansible.builtin.include_role:
@@ -60,17 +72,9 @@
       - kubectl-bin
       - openshift-client-bin
       - minikube-git
+      - crc-bin
       - krew-bin
+      - podman-desktop
       # - operator-sdk
   tags:
     - 'aur'
-
-- name: Install JS stuff
-  become: true
-  ansible.builtin.package:
-    state: present
-    name:
-      - nodejs
-      - npm
-      - typescript
-      - yarn

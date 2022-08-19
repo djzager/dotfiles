@@ -39,7 +39,5 @@
 #    - { role: sxiv, tags: [ 'sxiv' ] }
 #    # K8s Stuff
 #    - { role: container-tools, tags: [ 'container-tools' ] }
-#    - { role: crc, tags: [ 'crc' ] }
 #    # Work stuff
-#    - { role: ansible, tags: [ 'ansible' ] }
 #    - { role: redhat, tags: [ 'redhat' ] }

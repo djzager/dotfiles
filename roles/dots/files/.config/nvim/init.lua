@@ -21,7 +21,7 @@ vim.o.expandtab = true
 vim.o.cindent = true
 vim.o.wrap = true
 vim.o.textwidth = 300
-vim.o.tabstop = 4
+vim.o.tabstop = 2
 vim.o.shiftwidth = 0
 vim.o.softtabstop = -1 -- If negative, shiftwidth value is used
 vim.o.scrolloff = 8
@@ -47,4 +47,8 @@ require('dzager.plugins')
 vim.cmd('highlight WinSeparator guibg=None')
 vim.cmd('highlight SignColumn guibg=None')
 --vim.opt.laststatus = 3
-
+vim.cmd('colorscheme nord')
+vim.g.nord_contrast = true
+vim.g.nord_borders = true
+vim.g.nord_disable_background = true
+require('nord').set()
