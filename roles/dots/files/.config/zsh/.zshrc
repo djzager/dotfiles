@@ -33,8 +33,11 @@ setopt HIST_SAVE_NO_DUPS
 setopt SHARE_HISTORY
 
 zmodload zsh/complist
-autoload -U compinit
-compinit -u
+autoload -Uz compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+compinit -C
 
 # Make completion:
 # - Try exact (case-sensitive) match first.
@@ -61,6 +64,11 @@ zstyle ':completion:*:descriptions' format %F{default}%B%{$'\e[3m'%}--- %d ---%{
 # Enable keyboard navigation of completions in menu
 # (not just tab/shift-tab but cursor keys as well):
 zstyle ':completion:*' menu select
+
+# Load completions
+for completion in $ZDOTDIR/completions/*.zsh; do
+  source "$completion"
+done
 
 # vi mode
 bindkey -v

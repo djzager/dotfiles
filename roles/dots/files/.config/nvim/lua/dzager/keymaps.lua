@@ -1,5 +1,5 @@
 local function map(mode, lhs, rhs)
-    vim.keymap.set(mode, lhs, rhs, { silent = true })
+  vim.keymap.set(mode, lhs, rhs, { silent = true })
 end
 
 -- Exit insert mode

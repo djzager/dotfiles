@@ -7,7 +7,7 @@ xrandr --dpi 96		# Set DPI. User may want to use a larger number for larger scre
 setbg &			# set the background with the `setbg` script
 xset dpms 300 &         # Sleep after 5 minutes
 xset r rate 200 25 &    # Speed xrate up
-picom --daemon --config=/dev/null --experimental-backends --backend glx --vsync --blur-method="dual_kawase" --blur-size="2" # Transparency
+picom --daemon --config=/dev/null --backend glx --vsync --blur-method="dual_kawase" --blur-size="2" # Transparency
 
 xrdb ${XDG_CONFIG_HOME}/X11/Xresources & xrdbpid=$!
 

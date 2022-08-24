@@ -1,6 +1,0 @@
----
-
-# dependencies:
-#   - { role: st, tags: [ 'st' ] }
-#   - { role: sxhkd, tags: [ 'sxhkd' ] }
-#   - { role: dunst, tags: [ 'dunst' ] }

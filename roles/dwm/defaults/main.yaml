@@ -1,3 +1,0 @@
----
-
-dwm_dir: "{{ workspace_dir }}/dwm"

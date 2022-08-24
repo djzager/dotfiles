@@ -69,12 +69,13 @@
       - slack-desktop
       - vim-startuptime
       # Kube stuff
+      - kind
       - kubectl-bin
       - openshift-client-bin
       - minikube-git
       - crc-bin
       - krew-bin
       - podman-desktop
-      # - operator-sdk
+      - operator-sdk
   tags:
     - 'aur'

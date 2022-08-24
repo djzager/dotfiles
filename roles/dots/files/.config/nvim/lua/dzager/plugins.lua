@@ -15,18 +15,18 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'Buf
 
 return require('packer').startup({
   function(use)
-    ---------------------
-    -- Package Manager --
-    ---------------------
+    --------------
+    -- Required --
+    --------------
     use('wbthomason/packer.nvim')
-
-    --------------
-    -- The Rest --
-    --------------
     use('nvim-lua/plenary.nvim')
-    use('shaunsingh/nord.nvim')
-    use('L3MON4D3/LuaSnip')
 
+    -- Colorscheme
+    use('shaunsingh/nord.nvim')
+
+    ----------------
+    -- LSP Config --
+    ----------------
     use({
       {
         'neovim/nvim-lspconfig',
@@ -152,6 +152,10 @@ return require('packer').startup({
         end,
       },
     })
+
+    ----------------
+    -- Treesitter --
+    ----------------
     use({
       {
         'nvim-treesitter/nvim-treesitter',
@@ -184,6 +188,10 @@ return require('packer').startup({
       },
       { 'windwp/nvim-ts-autotag', after = 'nvim-treesitter' },
     })
+
+    --------------
+    -- TMUX nav --
+    --------------
     use({
       'alexghergh/nvim-tmux-navigation',
       config = function()
@@ -202,18 +210,57 @@ return require('packer').startup({
         }
       end,
     })
+
+    ----------------------
+    -- Markdown preview --
+    ----------------------
     use({
       'iamcco/markdown-preview.nvim',
       run = function()
         vim.fn["mkdp#util#install"]()
       end,
     })
+
+    ---------------------------
+    -- Code formatting/Style --
+    ---------------------------
     use({
-      'numToStr/Comment.nvim',
-      config = function()
-        require('Comment').setup()
-      end
+      {
+        'numToStr/Comment.nvim',
+        config = function()
+          require('Comment').setup()
+        end
+      },
+      {
+        'windwp/nvim-autopairs',
+        event = 'InsertCharPre',
+        config = function()
+          require('nvim-autopairs').setup()
+        end,
+      },
+      {
+        'lewis6991/gitsigns.nvim',
+        config = function()
+          require('gitsigns').setup({
+            signs = {
+              add = { text = '+' },
+              change = { text = '~' },
+              changedelete = { text = '=' },
+            },
+          })
+        end,
+      },
+      {
+        'norcalli/nvim-colorizer.lua',
+        config = function()
+          require('colorizer').setup()
+        end,
+      }
     })
+
+    ---------------
+    -- Telescope --
+    ---------------
     use({
       {
         'nvim-telescope/telescope.nvim',
@@ -253,7 +300,7 @@ return require('packer').startup({
           local find_files_cmd = ':Telescope find_files hidden=true<cr>'
           vim.keymap.set('n', '<leader>ff', find_files_cmd, { noremap = true })
           vim.keymap.set('n', '<C-o>', find_files_cmd, { noremap = true })
-          vim.keymap.set('n', '<leader>fg', ':Telescope live_grep<cr>', { noremap = true })
+          vim.keymap.set('n', '<leader>fg', ':Telescope live_grep hidden=true<cr>', { noremap = true })
           vim.keymap.set('n', '<leader>fb', ':Telescope buffers<cr>', { noremap = true })
           vim.keymap.set('n', '<leader>fh', ':Telescope help_tags<cr>', { noremap = true })
 
@@ -276,31 +323,10 @@ return require('packer').startup({
         end,
       },
     })
-    use({
-      'windwp/nvim-autopairs',
-      event = 'InsertCharPre',
-      config = function()
-        require('nvim-autopairs').setup()
-      end,
-    })
-    use({
-      'norcalli/nvim-colorizer.lua',
-      config = function()
-        require('colorizer').setup()
-      end,
-    })
-    use({
-      'lewis6991/gitsigns.nvim',
-      config = function()
-        require('gitsigns').setup({
-          signs = {
-            add = { text = '+' },
-            change = { text = '~' },
-            changedelete = { text = '=' },
-          },
-        })
-      end,
-    })
+
+    ------------------------
+    -- Status line config --
+    ------------------------
     use({
       'nvim-lualine/lualine.nvim',
       requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -346,6 +372,165 @@ return require('packer').startup({
           extensions = {}
         }
       end
+    })
+
+    -----------------------------
+    -- Snippets and completion --
+    -----------------------------
+    use({
+      "hrsh7th/nvim-cmp",
+      requires = {
+        { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
+        { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
+        { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+        { "hrsh7th/cmp-path", after = "nvim-cmp" },
+        { "hrsh7th/cmp-cmdline", after = "nvim-cmp" },
+        { "hrsh7th/cmp-calc", after = "nvim-cmp" },
+        { "lukas-reineke/cmp-rg", after = "nvim-cmp" },
+        { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" },
+        { "L3MON4D3/LuaSnip", requires = "rafamadriz/friendly-snippets" },
+        { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" },
+      },
+      config   = function()
+        ---@diagnostic disable
+        local cmp = require("cmp")
+        local compare = require("cmp.config.compare")
+        local ok, ls = pcall(require, "luasnip")
+        if not ok then
+          return
+        end
+
+        --               ⌘  ⌂              ﲀ  練  ﴲ    ﰮ    
+        --       ﳤ          ƒ          了    ﬌      <    >  ⬤      襁
+        --                                                 
+        -- stylua: ignore
+        local kind_icons = { --{{{
+          Buffers       = " ",
+          Class         = " ",
+          Color         = " ",
+          Constant      = " ",
+          Constructor   = " ",
+          Enum          = " ",
+          EnumMember    = " ",
+          Event         = " ",
+          Field         = "ﰠ ",
+          File          = " ",
+          Folder        = " ",
+          Function      = "ƒ ",
+          Interface     = " ",
+          Keyword       = " ",
+          Method        = " ",
+          Module        = " ",
+          Operator      = " ",
+          Property      = " ",
+          Reference     = " ",
+          Snippet       = " ",
+          Struct        = " ",
+          TypeParameter = " ",
+          Unit          = "塞 ",
+          Value         = " ",
+          Variable      = " ",
+          Text          = " ",
+        } --}}}
+
+
+        cmp.setup({
+          snippet = {
+            expand = function(args)
+              ls.lsp_expand(args.body)
+            end,
+          },
+
+          preselect = cmp.PreselectMode.None,
+
+          mapping = cmp.mapping.preset.insert({ --{{{
+            ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+            ["<C-f>"] = cmp.mapping.scroll_docs(4),
+            ["<C-e>"] = cmp.mapping.close(),
+            ["<C-Space>"] = cmp.mapping.complete(),
+            ["<C-y>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
+            ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select, }),
+            ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select, }),
+          }), --}}}
+
+          sources = cmp.config.sources({ --{{{
+            { name = "nvim_lsp" },
+            { name = "nvim_lua" },
+            { name = "luasnip" },
+            { name = "path", max_item_count = 4 },
+            { name = "calc" },
+            { name = "nvim_lsp_signature_help" },
+            { name = "dap" },
+            { name = "neorg", keyword_length = 1 },
+            {
+              name = "buffer",
+              priority = 5,
+              keyword_length = 3,
+              max_item_count = 5,
+              option = {
+                get_bufnrs = function()
+                  return vim.api.nvim_list_bufs()
+                end,
+              },
+            },
+            { name = "rg", keyword_length = 3, max_item_count = 10, priority = 1 },
+          }), --}}}
+
+          formatting = { --{{{
+            fields = { "abbr", "kind", "menu" },
+            format = function(entry, vim_item)
+              local client_name = ""
+              if entry.source.name == "nvim_lsp" then
+                client_name = "/" .. entry.source.source.client.name
+              end
+
+              vim_item.menu = string.format("[%s%s]", ({
+                buffer = "Buffer",
+                nvim_lsp = "LSP",
+                luasnip = "LuaSnip",
+                vsnip = "VSnip",
+                nvim_lua = "Lua",
+                latex_symbols = "LaTeX",
+                path = "Path",
+                rg = "RG",
+                omni = "Omni",
+                copilot = "Copilot",
+                dap = "DAP",
+                neorg = "ORG",
+              })[entry.source.name] or entry.source.name, client_name)
+
+              vim_item.kind = string.format("%s %-9s", kind_icons[vim_item.kind], vim_item.kind)
+              vim_item.dup = {
+                buffer = 1,
+                path = 1,
+                nvim_lsp = 0,
+                luasnip = 1,
+              }
+              return vim_item
+            end,
+          }, --}}}
+
+          view = {
+            max_height = 20,
+          },
+
+          sorting = { --{{{
+            comparators = {
+              function(...)
+                return require("cmp_buffer"):compare_locality(...)
+              end,
+              compare.offset,
+              compare.exact,
+              compare.score,
+              compare.recently_used,
+              compare.kind,
+              compare.sort_text,
+              compare.length,
+              compare.order,
+            },
+          }, --}}}
+        })
+      end,
     })
 
   end

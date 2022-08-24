@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+function _timehack {
+	echo ""
+	echo "Date: $(date +"%F")"
+	echo "Local Time   : $(date +"%R")"
+	echo "Arizona Time : $(TZ=:"America/Phoenix" date +"%R")"
+	echo "Spain Time   : $(TZ=:Etc/GMT-1 date +"%R")"
+	echo "Israel Time  : $(TZ=:Etc/GMT-3 date +"%R")"
+	echo "Taiwan Time  : $(TZ=:Etc/GMT-8 date +"%R")"
+	echo "Memory       : $(free -h | awk '/^Mem:/ {print $3 "/" $2}')"
+	echo "CPU          : $(cat /sys/class/thermal/thermal_zone2/temp | sed 's/\(.\)..$/.\1°C/')"
+}
+notify-send -a TimeHack "$(_timehack)"

@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if [[ $(nmcli radio wifi) == "disabled" ]]; then
+    nmcli radio wifi on
+else
+    nmcli radio wifi off
+fi && notify-send -u critical "WLAN $(nmcli radio wifi)"

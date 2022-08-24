@@ -29,9 +29,20 @@ super + shift + b
 	${BROWSER}
 
 # System
-super + shift + x
-	dmenuprompt "Shutdown computer?" "sudo -A shutdown -h now"
-super + shift + BackSpace
-	dmenuprompt "Reboot?" "sudo -A shutdown -r now"
-super + shift + e
-	dmenuprompt 'Leave Xorg?' 'killall Xorg'
+super + shift + q
+	powermenu
+super + shift + l
+  slock
+
+# Dunst
+ctrl + space
+  dunstctl close
+
+ctrl + shift + space
+  dunstctl close-all
+
+ctrl + grave
+  dunstctl history-pop
+
+ctrl + shift + period
+  dunstctl context

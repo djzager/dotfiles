@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+battery0="/sys/class/power_supply/BAT0"
+
+dunstify --appname="power_level" \
+	--urgency=low \
+	--replace="9992" \
+	--timeout=2000 \
+	--hints=int:value:"$(<${battery0}/capacity)" \
+	"Battery: $(<${battery0}/capacity_level)"

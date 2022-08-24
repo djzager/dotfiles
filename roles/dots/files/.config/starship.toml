@@ -1,0 +1,27 @@
+[character]
+success_symbol = "[➜ ](bold green)"
+error_symbol = "[➜ ](bold red)"
+vimcmd_symbol = "[ ](bold green)"
+vimcmd_visual_symbol = "[ ](bold yellow)"
+vimcmd_replace_symbol = "[ ](bold purple)"
+vimcmd_replace_one_symbol = "[ ](bold purple)"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "blue"
+
+[shlvl]
+format = '[$symbol]($style)'
+threshold = 5
+disabled = false
+
+# [git_status]
+# conflicted = "  "
+# ahead = "  "
+# deleted = " k"
+# modified = "  "
+# stashed = "  "
+# staged = "  "
+# renamed = "  "
+# untracked = "  "
