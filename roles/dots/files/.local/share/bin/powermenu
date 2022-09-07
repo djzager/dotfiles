@@ -10,6 +10,7 @@ esac
 
 cmds="\
 🔒 lock	slock	
+💤 sleep	xset dpms force off
 🚪 leave dwm	kill -TERM $(pidof -s dwm)
 ♻  renew dwm	kill -HUP $(pidof -s dwm)
 🐻 hibernate	${hib:-sudo -A systemctl suspend-then-hibernate}

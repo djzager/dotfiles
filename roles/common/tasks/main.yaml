@@ -23,6 +23,7 @@
       - mpv
       - neovim
       - networkmanager
+      - networkmanager-openvpn
       - noto-fonts-emoji
       - pipewire
       - pipewire-pulse
@@ -54,6 +55,7 @@
       - npm
       - typescript
       - yarn
+      - krb5
 
 - name: Install yay (and packages)
   ansible.builtin.include_role:
@@ -67,7 +69,6 @@
       - picom-git
       - nvim-packer-git
       - slack-desktop
-      - vim-startuptime
       # Kube stuff
       - kind
       - kubectl-bin
