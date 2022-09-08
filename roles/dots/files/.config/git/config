@@ -8,8 +8,8 @@
 	pr-clean = "!git for-each-ref refs/heads/pr/* --format=\"%(refname)\" | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
 [core]
 	excludesfile = ~/.gitignore
-; [commit]
-; 	gpgsign = true
+[commit]
+	gpgsign = true
 [gpg]
 	program = gpg2
 [merge]
