@@ -2,10 +2,9 @@
 
 # This file runs when a DM logs you into a graphical session.
 # If you use startx/xinit like a Chad, this file will also be sourced.
-
 xrandr --dpi 96		# Set DPI. User may want to use a larger number for larger screens.
 setbg &			# set the background with the `setbg` script
-xset dpms 300 &         # Sleep after 5 minutes
+xset dpms 600 &         # Sleep after 10 minutes
 xset r rate 200 25 &    # Speed xrate up
 picom --daemon --config=/dev/null --backend glx --vsync --blur-method="dual_kawase" --blur-size="2" # Transparency
 

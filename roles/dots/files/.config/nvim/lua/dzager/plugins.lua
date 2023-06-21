@@ -62,7 +62,7 @@ return require('packer').startup({
             vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+            vim.keymap.set('n', '<space>k', vim.lsp.buf.signature_help, bufopts)
             vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
             vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
             vim.keymap.set('n', '<space>wl', function()
@@ -82,7 +82,7 @@ return require('packer').startup({
 
           local lsp = require('lspconfig')
 
-          lsp.sumneko_lua.setup({
+          lsp.lua_ls.setup({
             on_attach = on_attach,
             flags = lsp_flags,
             settings = {
@@ -139,7 +139,7 @@ return require('packer').startup({
           require('mason-lspconfig').setup({
             ensure_installed = {
               "ansiblels",
-              "sumneko_lua",
+              "lua_ls",
               "rust_analyzer",
               "gopls",
               "bashls",

@@ -10,16 +10,23 @@
   ansible.builtin.package:
     state: present
     name:
+      - avahi
+      - nss-mdns
       - bat
+      - cups
       - dunst
       - feh
+      - flameshot
       - fuse-overlayfs # for podman
       - git
       - github-cli  # gh cli tool for interacting with GH repos
       - imagemagick # image manipulator
+      - jq
+      - yq
       - lvm2
       - maim        # Screenshot
       - mediainfo
+      - minikube
       - mpv
       - neovim
       - networkmanager
@@ -27,9 +34,11 @@
       - noto-fonts-emoji
       - pipewire
       - pipewire-pulse
+      - docker
       - podman
       - pulsemixer
       - ripgrep
+      - rust
       - slirp4netns
       - starship
       - sudo
@@ -56,6 +65,10 @@
       - typescript
       - yarn
       - krb5
+      # Camera as webcam stuff
+      - gphoto2
+      - v4l2loopback-utils
+      - v4l2loopback-dkms
 
 - name: Install yay (and packages)
   ansible.builtin.include_role:
@@ -73,10 +86,18 @@
       - kind
       - kubectl-bin
       - openshift-client-bin
-      - minikube-git
-      - crc-bin
       - krew-bin
       - podman-desktop
       - operator-sdk
   tags:
     - 'aur'
+
+- name: Enable (and start) common services
+  become: true
+  systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - avahi-daemon.service
+    - cups.socket

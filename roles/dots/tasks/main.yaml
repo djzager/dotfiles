@@ -10,4 +10,4 @@
     dest: "{{ ansible_user_dir }}/{{ item | regex_replace(role_path + '/files/') }}"
     force: yes
     state: link
-  with_lines: "find {{ role_path }}/files -mindepth 1 -type f"
+  with_lines: "find {{ role_path }}/files -mindepth 1 -type f -not -path '*/nvim/*'"
