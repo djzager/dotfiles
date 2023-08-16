@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-screenshot="${HOME}/Pictures/Screenshots/$(date +%s).png"
-maim -o -s ${screenshot}
-xclip -selection clipboard -t image/png -i ${screenshot}
