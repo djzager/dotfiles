@@ -1,27 +1,10 @@
 autoload -U colors && colors
 
-# Use ripgrep if available with fzf
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-if command -v rg >/dev/null 2>&1; then
-  export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-fi
-# Use nord theme for fzf
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
---color fg:#D8DEE9,bg:-1,hl:#A3BE8C,fg+:#D8DEE9,bg+:#434C5E,hl+:#A3BE8C,gutter:-1
---color pointer:#BF616A,info:#4C566A,spinner:#4C566A,header:#4C566A,prompt:#81A1C1,marker:#EBCB8B
-'
-if command -v bat >/dev/null 2>&1; then
-  export BAT_THEME="base16"
-fi
 if command -v gpg2 >/dev/null 2>&1; then
   alias gpg='gpg2'
 fi
 
 # History in cache directory:
-HISTSIZE=100000
-SAVEHIST=100000
-export HISTFILE="${XDG_STATE_HOME}/zsh/history"
 # Other history options
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_FIND_NO_DUPS
@@ -65,11 +48,6 @@ zstyle ':completion:*:descriptions' format %F{default}%B%{$'\e[3m'%}--- %d ---%{
 # (not just tab/shift-tab but cursor keys as well):
 zstyle ':completion:*' menu select
 
-# Load completions
-for completion in $ZDOTDIR/completions/*.zsh; do
-  source "$completion"
-done
-
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
@@ -83,19 +61,25 @@ bindkey -v '^?' backward-delete-char
 
 # show vim status
 # http://zshwiki.org/home/examples/zlewidgets
-function zle-line-init zle-keymap-select {
-    local cursor="${${KEYMAP/vicmd/\e[1 q}/(main|viins)/\e[5 q/}"
-    # RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/}"
-    # RPS2=$RPS1
-    echo -ne $cursor
-    zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
+#function zle-line-init zle-keymap-select {
+#    local cursor="${${KEYMAP/vicmd/\e[1 q}/(main|viins)/\e[5 q/}"
+#    # RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/}"
+#    # RPS2=$RPS1
+#    echo -ne $cursor
+#    zle reset-prompt
+#}
+#zle -N zle-line-init
+#zle -N zle-keymap-select
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
+
+# Load completions
+for completion ($ZDOTDIR/completions/*.zsh(N)); do
+  source "$completion"
+done
+unset completion
 
 # Load all custom config
 for config_file ($ZDOTDIR/*.zsh(N)); do
@@ -103,16 +87,19 @@ for config_file ($ZDOTDIR/*.zsh(N)); do
 done
 unset config_file
 
-source "/etc/profile.d/fzf.zsh"
-# [ -s "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
-
-source "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-# Dropped base16 in favor of just setting it in ST and NEOVIM directly
-# export BASE16_SHELL="$HOME/.local/src/base16-shell/"
-# export BASE16_SHELL_SET_BACKGROUND="false"
-# [ -n "$PS1" ] && [ -s "$BASE16_SHELL/profile_helper.sh" ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+source "${XDG_CONFIG_HOME}/fzf/fzf.zsh"
+source "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+#export SDKMAN_DIR="$HOME/.sdkman"
+#[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# Prompt
+eval "$(starship init zsh)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/dzager/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dzager/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/dzager/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/dzager/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

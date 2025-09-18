@@ -1,0 +1,38 @@
+export XDG_CONFIG_HOME="{{ xdg_config_home }}"
+export XDG_CACHE_HOME="${XDG_CONFIG_HOME}/cache"
+export XDG_DATA_HOME="${XDG_CONFIG_HOME}/local/share"
+export XDG_STATE_HOME="${XDG_CONFIG_HOME}/local/state"
+
+export XDG_DOWNLOAD_DIR="$HOME/Downloads"
+export XDG_MUSIC_DIR="$HOME/Music"
+export XDG_PICTURES_DIR="$HOME/Pictures"
+export XDG_VIDEOS_DIR="$HOME/Movies"
+export PATH="$PATH:${$(find $XDG_DATA_HOME/bin -type d -exec echo {}: \;)%%:}"
+{% if ansible_os_family == 'Darwin' -%}
+export PATH="/opt/homebrew/bin:$PATH"
+export HOMEBREW_PREFIX="/opt/homebrew"
+{%- endif %}
+
+## Default programs:
+#export EDITOR="nvim"
+#export VISUAL="nvim"
+
+# Config
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+export CODE="{{ code_dir }}"
+export ANSIBLE_CONFIG="$XDG_CONFIG_HOME/ansible/ansible.cfg"
+export BAT_THEME="Nord"
+
+# FZF
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+
+# Use nord theme for fzf
+# export FZF_DEFAULT_OPTS="--preview-window 'right:60%' --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
+
+# zsh specifics
+export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
+export HISTSIZE=100000
+export SAVEHIST=100000
+export HISTFILE="${ZDOTDIR}/history"

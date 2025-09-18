@@ -1,3 +1,12 @@
+
+- ansible.builtin.template:
+    src: zprofile.j2
+    dest: "{{ ansible_user_dir }}/.zprofile"
+
+- name: Ensure XDG_BASE directories are created
+  ansible.builtin.shell:
+    cmd: zsh -ic 'mkdir -p $XDG_CONFIG_HOME $XDG_CACHE_HOME $XDG_DATA_HOME $XDG_DATA_HOME/bin $XDG_STATE_HOME $ZDOTDIR'
+
 - name: Ensure dot dirs exist
   ansible.builtin.file:
     dest: "{{ ansible_user_dir }}/{{ item | regex_replace(role_path + '/files/') }}"
@@ -10,4 +19,4 @@
     dest: "{{ ansible_user_dir }}/{{ item | regex_replace(role_path + '/files/') }}"
     force: yes
     state: link
-  with_lines: "find {{ role_path }}/files -mindepth 1 -type f -not -path '*/nvim/*'"
+  with_lines: "find {{ role_path }}/files -mindepth 1 -type f -not -path '*/X11/*' -not -path '*/dunst/*'"

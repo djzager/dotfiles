@@ -41,8 +41,7 @@ bindkey '^P' fzf-tmux-widget
 # relies on fzf's key-bindings for zsh
 fzf-vim-widget() {
   setopt localoptions pipefail 2> /dev/null
-  local files=$(__fsel --preview '(bat --style=numbers --color=always {} ||
-                  cat {}) 2> /dev/null' | xargs)
+  local files=$(__fzf_select --tmux center --preview '(bat --style=numbers --color=always {} || cat {}) 2> /dev/null' |  xargs)
   if [[ -n "$files" ]]; then
     LBUFFER="${LBUFFERS} ${EDITOR:-vim} ${files[@]}"
     zle reset-prompt

@@ -1,3 +1,0 @@
----
-
-crc_dir: "{{ xdg_data_home }}/crc"
